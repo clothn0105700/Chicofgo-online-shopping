@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:700");
+@import '../../../global-styles/global.scss';
+
+
+
+
+.hidden,
+.hidden * {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.footer {
+  align-items: center;
+  background-color: 
+#eeeeee;
+  border: 1px none;
+  display: flex;
+  gap: 100px;
+  height: 100vh;
+  justify-content: center;
+  min-height: 400px;
+  min-width: 1920px;
+  padding: 0px 344px;
+  width: 100%;
+}
+
+.frame_338 {
+  align-items: center;
+  display: flex;
+  gap: 160px;
+  width: fit-content;
+}
+
+.text_3 {
+  letter-spacing: 0;
+  line-height: normal;
+  margin-top: -1px;
+  width: 179px;
+//   color: 
+}
+
+.text_2 {
+  letter-spacing: 0;
+  line-height: normal;
+  margin-top: -1px;
+  width: 95px;
+}
+
+.test {
+  letter-spacing: 0;
+  line-height: normal;
+  margin-top: -1px;
+  width: 98px;
+  background-color: black;
+}
+
+.frame_337 {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 358px;
+  justify-content: center;
+  width: fit-content;
+}
+
+.logo {
+  height: 129.08px;
+  min-width: 360px;
+}

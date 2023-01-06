@@ -2,7 +2,6 @@ import React from 'react'
 import styles from './css/Header.module.scss'
 
 const Header = () => {
-  ;<div className="text_label_1">商品</div>
   const {
     header,
     component,
@@ -22,6 +21,7 @@ const Header = () => {
     component_27,
     component_25,
   } = styles
+
   return (
     <div className={header}>
       <div className={component} />
