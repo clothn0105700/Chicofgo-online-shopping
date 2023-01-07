@@ -1,53 +1,88 @@
 import React from 'react'
-import styles from './css/Footer.module.scss'
+import './css/Footer.module.scss'
+import logoSVG from '../../img/logo.svg'
 
 const Footer = () => {
-  const { footer, frame_337, frame_338, test, text_2, text_3, test1 } = styles
-
   return (
-    <div className={footer}>
-      <div className={frame_337}>
-        <img
-          className="logo"
-          src="https://anima-uploads.s3.amazonaws.com/projects/63a3ef767235f4e0ffbaf9be/releases/63b3e77d4b950e99f52e8f4a/img/logo@2x.png"
-          alt="logo"
-        />
+    <footer className="pt-5">
+      <div className="container foor_container row m-auto mt-5 pt-2">
+        <div className="col-4">
+          <a href="">
+            <img src={logoSVG} alt="" />
+          </a>
+        </div>
+        <div className="col-md-7">
+          <div className="d-flex justify-content-md-end pe-md-0">
+            <ul className="list-unstyled px-5">
+              <li className="py-2">
+                <a className="foot_a" href="">
+                  關於我們
+                </a>
+              </li>
+              <li className="py-2">
+                <a className="foot_a" href="">
+                  品牌故事
+                </a>
+              </li>
+              <li className="py-2">
+                <a className="foot_a" href="">
+                  商店介紹
+                </a>
+              </li>
+              <li className="py-2">
+                <a className="foot_a" href="">
+                  會員權益說明
+                </a>
+              </li>
+            </ul>
+            <ul className="list-unstyled px-5">
+              <li className="py-2">
+                <a className="foot_a" href="">
+                  購物說明
+                </a>
+              </li>
+              <li className="py-2">
+                <a className="foot_a" href="">
+                  付款方式
+                </a>
+              </li>
+              <li className="py-2">
+                <a className="foot_a" href="">
+                  運送方式
+                </a>
+              </li>
+              <li className="py-2">
+                <a className="foot_a" href="">
+                  退換貨方式
+                </a>
+              </li>
+            </ul>
+            <ul className="list-unstyled px-5">
+              <li className="py-2">
+                <a href="" className="foot_a">
+                  客服資訊
+                </a>
+              </li>
+              <li className="py-2">
+                <a className="foot_a" href="">
+                  客服留言
+                </a>
+              </li>
+              <li className="py-2">
+                <a className="foot_a" href="">
+                  常見問題
+                </a>
+              </li>
+              <li className="py-2">
+                <a className="foot_a" href="">
+                  隱私權及網站使用條款
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div className={frame_338}>
-        <p className={test}>
-          關於我們 <br />
-          <br />
-          品牌故事 <br />
-          <br />
-          商店簡介 <br />
-          &nbsp;&nbsp;
-          <br />
-          會員權益聲明
-        </p>
-        <p className={text_2}>
-          購物說明 <br />
-          <br />
-          付款方式 <br />
-          <br />
-          運送方式 <br />
-          <br />
-          退換貨方式
-        </p>
-        <p className={text_3}>
-          客服資訊 <br />
-          <br />
-          客服留言 <br />
-          <br />
-          常見問題 <br />
-          <br />
-          隱私權及網站使用條款
-          <br />
-          <p className={test1}>123456</p>
-          <p className="test1">123456</p>
-          <button className="btn btn-info">123</button>
-        </p>
-      </div>
-    </div>
+    </footer>
   )
 }
 

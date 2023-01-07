@@ -1,4 +1,4 @@
-$mainColor:rgb(235, 66, 15);
+$mainColor:rgb(161, 113, 98);
 
 
 
@@ -6,10 +6,22 @@ $mainColor:rgb(235, 66, 15);
 
 
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,900&display=swap');
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
 
 
 
-.test1 {
-    color: $mainColor;
+.foot_a {
+    text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+  font-size: 17px;
+  color: black;
+}
+.foot_a:hover {
+    color: rgb(54, 111, 84);
+
+}
+
+.foor_container {
+    padding-left: 7%;
 }
