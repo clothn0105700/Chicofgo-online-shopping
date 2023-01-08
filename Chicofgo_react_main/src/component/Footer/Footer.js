@@ -1,10 +1,15 @@
 import React from 'react'
-import './css/Footer.module.scss'
+import './css/Footer.scss'
 import logoSVG from '../../img/logo.svg'
+import { Link } from 'react-router-dom'
+import logotw from '../../img/twitter.svg'
+import logofb from '../../img/facebook.svg'
+import logoyt from '../../img/youtube.svg'
+import logoig from '../../img/instagram.svg'
 
 const Footer = () => {
   return (
-    <footer className="pt-5">
+    <footer className="pt-3">
       <div className="container foor_container row m-auto mt-5 pt-2">
         <div className="col-4">
           <a href="">
@@ -80,6 +85,25 @@ const Footer = () => {
               </li>
             </ul>
           </div>
+        </div>
+      </div>
+      <div className="sociallink-wrap py-3 d-flex justify-content-between">
+        <p className="Copyrighttext">
+          © 2023 Copyright Chicofgo Shop All Rights Reserved.
+        </p>
+        <div className="sociallink d-flex justify-content-between align-items-center">
+          <a href="" className="px-2">
+            <img src={logotw} alt="" />
+          </a>
+          <a href="" className="px-2">
+            <img src={logofb} alt="" />
+          </a>
+          <a href="" className="px-2">
+            <img src={logoyt} alt="" />
+          </a>
+          <a href="" className="px-2">
+            <img src={logoig} alt="" />
+          </a>
         </div>
       </div>
     </footer>
