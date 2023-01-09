@@ -10,7 +10,12 @@ $mainColor:rgb(161, 113, 98);
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
 
 
-
+.maincolor {
+    color:rgb(161, 113, 98);
+}
+.mainbackground {
+    background-color:rgb(161, 113, 98);
+}
 
 .foot_a:hover {
     color: rgb(54, 111, 84);
@@ -20,3 +25,20 @@ $mainColor:rgb(161, 113, 98);
 .foor_container {
     padding-left: 7%;
 }
+
+.btn1 {
+    color: whitesmoke;
+    height: 36px;
+    width: 140px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 3px 12px  black;
+    background-color:rgb(161, 113, 98);
+    
+}
+.btn1:hover {
+    background-color:  rgb(166, 155, 132);
+    box-shadow: none;
+    transition: .5s;
+}
+
