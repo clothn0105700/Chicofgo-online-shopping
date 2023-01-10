@@ -13,7 +13,7 @@ const Footer = () => {
   const { sociallink_wrap, foot_a, sociallink } = styles
   return (
     <footer className="pt-3">
-      <div className="container footer_container row m-auto mt-5 pt-2">
+      <div className="custom-container row m-auto mt-5 pt-2">
         <div className="col-2">
           <Link to="/">
             <img src={logoSVG} alt="" />

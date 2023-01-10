@@ -15,10 +15,12 @@ const List = () => {
     block_price,
     Inquire,
     text_c,
+    card_group,
+    card_control,
   } = styles
   return (
-    <div className="container">
-      <div className={`${list_control} row`}>
+    <div className="custom-container ">
+      <div className={`${list_control} row mx-3`}>
         <div className={`${sidebar} col-md-2 d-flex flex-column `}>
           <div className={`${block_brand} d-flex flex-column px-2`}>
             <h4>品牌</h4>
@@ -206,8 +208,59 @@ const List = () => {
             </button>
           </div>
         </div>
-        <div className="col-md-10">
-          <p>123</p>
+        <div className="col-md-10 p-0">
+          <div
+            className={`${card_group} row justify-content-between flex-wrap mx-3`}
+          >
+            <div className={`${card_control}`}>
+              <Card />
+            </div>
+            <div className={`${card_control}`}>
+              <Card />
+            </div>
+            <div className={`${card_control}`}>
+              <Card />
+            </div>
+            <div className={`${card_control}`}>
+              <Card />
+            </div>
+            <div className={`${card_control}`}>
+              <Card />
+            </div>
+            <div className={`${card_control}`}>
+              <Card />
+            </div>
+            <div className={`${card_control}`}>
+              <Card />
+            </div>
+            <div className={`${card_control}`}>
+              <Card />
+            </div>
+            <div className={`${card_control}`}>
+              <Card />
+            </div>
+            <div className={`${card_control}`}>
+              <Card />
+            </div>
+            <div className={`${card_control}`}>
+              <Card />
+            </div>
+            <div className={`${card_control}`}>
+              <Card />
+            </div>
+            <div className={`${card_control}`}>
+              <Card />
+            </div>
+            <div className={`${card_control}`}>
+              <Card />
+            </div>
+            <div className={`${card_control}`}>
+              <Card />
+            </div>
+            <div className={`${card_control}`}>
+              <Card />
+            </div>
+          </div>
         </div>
       </div>
     </div>

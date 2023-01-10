@@ -9,7 +9,7 @@ const Path = ({ pathObj, backgroundColor, url = [] }) => {
   const { Path_font, Path_wrap } = styles
 
   return (
-    <div className="container Path">
+    <div className="custom-container Path">
       <div className={`${Path_font} ${Path_wrap} d-flex align-items-center`}>
         <Link to="/">
           <span className="maincolor">首頁</span>
