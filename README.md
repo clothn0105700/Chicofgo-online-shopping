@@ -1,12 +1,12 @@
 # Chicofgo
 
 ```
-##大專暫定區域
+## 大專暫定區域
 ```
-###請先遷到
+### 請先遷到
 ex簽到: githubId
 
-####簽到區
+#### 簽到區
 ```
 簽到:  -> JerichoNash
        -> clothn0105700
@@ -16,7 +16,7 @@ ex簽到: githubId
        -> cowboy29457511
 ```
 
-###SQL資料庫名稱
+### SQL資料庫名稱
 ```
 project_chicofgo
 ```
