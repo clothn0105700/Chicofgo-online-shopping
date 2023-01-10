@@ -8,7 +8,7 @@ import {
 
 function NavScrollExample() {
   return (
-    <div class="container">
+    <div class="custom-container">
       <nav class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-1 border-bottom navbar navbar-expand-lg">
         <a
           href="/"

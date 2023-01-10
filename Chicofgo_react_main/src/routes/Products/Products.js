@@ -4,13 +4,12 @@ import Footer from '../../component/Footer/Footer'
 import Path from '../../component/Item/Path/Path'
 import List from '../../component/Products/List'
 
-
 const Products = () => {
   return (
     <>
       <Navbaror />
       <Path pathObj={{ path: ['．商品列表'] }} />
-      <List/>
+      <List />
       <Footer />
     </>
   )
