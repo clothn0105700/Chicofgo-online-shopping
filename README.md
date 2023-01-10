@@ -15,3 +15,9 @@ ex簽到: githubId
        -> nname123
        -> cowboy29457511
 ```
+
+###SQL資料庫名稱
+```
+project_chicofgo
+```
+
