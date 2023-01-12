@@ -15,8 +15,8 @@ import './navbar.scss'
 
 function NavScrollExample() {
   return (
-    <header bg="light" className="navbar-w">
-      <div className="custom-container">
+    <header bg="light" className="navbar-w fixed-top">
+      <div className="custom-container ">
         <Navbar expand="lg" className="">
           <Container fluid>
             <Navbar.Brand href="#">
