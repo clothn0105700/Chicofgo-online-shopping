@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect, useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Card from './Card'
+import Card from '../../component_share/Card'
 import styles from './List.module.scss'
 
 const List = () => {
@@ -20,7 +20,7 @@ const List = () => {
   } = styles
   return (
     <div className="custom-container ">
-      <div className={`${list_control} row mx-3`}>
+      <div className={`${list_control} row mx-2`}>
         <div className={`${sidebar} col-md-2 d-flex flex-column `}>
           <div className={`${block_brand} d-flex flex-column px-2`}>
             <h4>品牌</h4>
@@ -208,9 +208,9 @@ const List = () => {
             </button>
           </div>
         </div>
-        <div className="col-md-10 p-0">
+        <div className="col-md-10 ">
           <div
-            className={`${card_group} row justify-content-between flex-wrap mx-3`}
+            className={`${card_group} d-flex justify-content-between flex-wrap mx-0`}
           >
             <div className={`${card_control}`}>
               <Card />

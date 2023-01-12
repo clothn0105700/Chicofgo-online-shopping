@@ -7,7 +7,7 @@ import logofb from '../../img/facebook.svg'
 import logoyt from '../../img/youtube.svg'
 import logoig from '../../img/instagram.svg'
 import styles from '../Footer/css/Footer.module.scss'
-import Path from '../../component/Item/Path/Path'
+
 
 const Footer = () => {
   const { sociallink_wrap, foot_a, sociallink } = styles

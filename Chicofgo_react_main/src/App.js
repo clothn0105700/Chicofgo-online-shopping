@@ -1,13 +1,15 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom'
-import Footer from './component/Footer/Footer'
-import Navbaror from './component/Navber/navbar-or'
-import Products from './routes/Products/Products'
+import Footer from './Layout/Footer/Footer'
+import Navbaror from './Layout/Navber/navbar'
+import Products from './pages/Products/Products'
 
 function App() {
   return (
     <>
       <BrowserRouter>
+      <Navbaror/>
         <Products />
+        <Footer/>
       </BrowserRouter>
     </>
   )
