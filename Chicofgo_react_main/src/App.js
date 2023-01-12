@@ -1,11 +1,20 @@
-// import Navbar from './component/navbar'
-import Navbaro from './component/navbar-or'
-// import Carousel from './component/carousel'
+
+
+import { Route, BrowserRouter, Routes } from 'react-router-dom'
+
+import Products from './routes/Products/Products'
+
 
 function App() {
   return (
     <>
-      <Navbaro />
+
+  
+
+      <BrowserRouter>
+        <Products />
+      </BrowserRouter>
+
     </>
   )
 }
