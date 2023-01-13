@@ -17,6 +17,7 @@ const List = () => {
     text_c,
     card_group,
     card_control,
+    card_block,
   } = styles
   return (
     <div className="custom-container ">
@@ -208,7 +209,7 @@ const List = () => {
             </button>
           </div>
         </div>
-        <div className="col-md-10 ">
+        <div className={`${card_block} col-md-10`}>
           <div
             className={`${card_group} d-flex justify-content-between flex-wrap mx-0`}
           >

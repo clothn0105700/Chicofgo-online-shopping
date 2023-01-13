@@ -3,8 +3,15 @@ import styles from './Card.module.scss'
 import testpic from '../../img/productstest/test.jpg'
 
 const Card = () => {
-  const { card_contorl, card_body, p_img_c, content, text_contorl, evaluate, keepshop } =
-    styles
+  const {
+    card_contorl,
+    card_body,
+    p_img_c,
+    content,
+    text_contorl,
+    evaluate,
+    keepshop,
+  } = styles
   return (
     <div className={`${card_contorl}`}>
       <div className={`${card_body} card`}>
@@ -25,9 +32,7 @@ const Card = () => {
             <p>⭐</p>
           </div>
         </div>
-        <div className={`${keepshop} card-img-bottom`}>
-
-        </div>
+        <div className={`${keepshop} card-img-bottom`}></div>
       </div>
     </div>
   )
