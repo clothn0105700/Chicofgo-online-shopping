@@ -1,9 +1,12 @@
+
+
+
 body {
     background-color: rgb(250, 250, 250);
 }
 
 label {
-    font-size: 20PX;
+    font-size: 14PX;
 }
 
 .list_control {
@@ -17,6 +20,13 @@ label {
     
     height: 1731px;
     // background-color: palegoldenrod;
+}
+
+@media screen and (min-width:1700px) {
+    .list_control {
+        width: 90%;
+        padding-left: 110px;
+    }
 }
 
 .block_brand {
@@ -42,7 +52,7 @@ label {
     margin-top: 19px;
     width: 140px;
     border-radius: 5px;
-    box-shadow: 0 4px 7px black;
+    box-shadow: 0 3px 4px black;
 }
 
 .text_c {
@@ -60,16 +70,16 @@ label {
 //   }
 
 .card_group {
-    width: 1000px;
-    height: 1490px;
-    background-color: pink;
+    width: 100%;
+    height: 1480px;
+    // background-color: pink;
 }
 
 .card_control {
-    width: 240px;
+    width: 24%;
     height: 360px;
     padding: 0px;
-    background-color: peachpuff;
+    // background-color: rgb(65, 41, 20);
 }
 
   

@@ -1,20 +1,20 @@
 
-import Navbar from './Layout/navbar/navbar'
-import Member from './Pages/member/member'
-import ChangePassword from './Pages/member/password/changePassword'
-import Sidebar from './Layout/sidebar/sidebar'
-// import Navbaro from './component/navbar-or'
-// import Carousel from './component/carousel'
+import { Route, BrowserRouter, Routes } from 'react-router-dom'
+import Footer from './Layout/Footer/Footer'
+import Navbar from './Layout/Navber/navbar'
+import Products from './pages/Products/Products'
+import ProductDetail from './pages/Products/Product_detail/ProductDetail'
 
 
 function App() {
   return (
     <>
 
-      <Navbar />
-      {/* <Member />
-      <ChangePassword /> */}
-      {/* <Sidebar /> */}
+      <BrowserRouter>
+        <Navbar />
+        <ProductDetail />
+        <Footer />
+      </BrowserRouter>
 
     </>
   )
