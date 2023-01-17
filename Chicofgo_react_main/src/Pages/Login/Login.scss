@@ -1,0 +1,71 @@
+.background {
+  height: 100vh;
+  background-image: url('./Component/LoginBackground.jfif');
+  background-position: 0 0 0 0;
+}
+
+.textNoDecoration {
+  text-decoration: none;
+}
+
+.content {
+  max-width: 450px;
+  // height: 500px;
+  padding: 30px 50px;
+  background-color: #fff;
+  box-shadow: -30px 20px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 30px;
+}
+
+.registerContent {
+  background-color: #f8f5ea;
+}
+
+title {
+  color: #a17162;
+  font-weight: 900;
+}
+
+.img {
+  width: 100px;
+  height: 100px;
+  margin: 20px auto;
+  background-image: url('./Component/PersonCircle.png');
+  background-size: contain;
+}
+
+.formControl {
+  padding: 30px;
+  border-top: 8px solid #f8f5ea;
+}
+
+.registerControl {
+  border-top: 8px solid #fff;
+}
+
+.goRegisterBtn {
+  color: #a17162;
+}
+
+.form {
+  width: 300px;
+}
+
+.loginBtn {
+  display: inline-block;
+  width: 200px;
+  height: 40px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  background-color: #a17162;
+  color: #a17162;
+}
+
+.doRegisterBtn {
+  width: 200px;
+  height: 40px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  background-color: #a17162;
+  color: #a17162;
+}

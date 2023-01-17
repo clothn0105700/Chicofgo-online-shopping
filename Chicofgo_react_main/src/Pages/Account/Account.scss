@@ -1,0 +1,21 @@
+// 這裡導入所有要預設變數覆蓋
+.accountWidth {
+  width: 60%;
+}
+
+.test {
+  object-fit: cover !important;
+}
+
+.h5-border-button {
+  padding-bottom: 5px;
+  border-bottom: 2px solid black;
+}
+
+.icon {
+  color: white;
+  font-size: 30px;
+  padding-right: 10px;
+}
+// 導入bootstrap所有的樣式與預設變數
+@import '~bootstrap/scss/bootstrap';
