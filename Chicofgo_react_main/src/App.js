@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './Layout/Navbar/Navbar';
-import Home from './Pages/Home';
+// import Home from './Pages/Home';
 import Products from './Pages/Products/Products';
 import Event from './Pages/Event';
 import Coupon from './Pages/Coupon/Coupon';
@@ -23,6 +23,7 @@ import OrderHistory from './Pages/Order/OrderHistory';
 import OrderStatus from './Pages/Order/OrderStatus';
 import Login from './Pages/Login/Login';
 import Register from './Pages/Login/Register';
+import Home from './Pages/Home/Home';
 
 function App() {
   return (
@@ -31,9 +32,10 @@ function App() {
         <Navbar />
 
         {/* <Path /> */}
-        <MemberSideBar />
+        {/* <MemberSideBar /> */}
         <Routes>
           <Route path="home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="products" element={<Products />} />
           <Route path="event" element={<Event />} />
           <Route path="coupon" element={<Coupon />} />

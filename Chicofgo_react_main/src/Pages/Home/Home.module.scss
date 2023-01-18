@@ -1,0 +1,27 @@
+@import 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Roboto:wght@400;700;900&display=swap';
+
+.homePage {
+  max-width: 1440px;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+.adBanner {
+  height: 250px;
+  width: 100%;
+}
+.homeCategory {
+  height: 100px;
+  background: rgb(238, 238, 238);
+  border: 9px solid #fafafa;
+}
+.categoryTitle {
+  color: rgb(161, 113, 98);
+  font-weight: 700;
+}
+span {
+  color: rgb(73, 67, 61);
+  margin: 0;
+  font-weight: 500;
+
+}
