@@ -24,7 +24,7 @@ import OrderStatus from './Pages/Order/OrderStatus';
 import Login from './Pages/Login/Login';
 import Register from './Pages/Login/Register';
 import Home from './Pages/Home/Home';
-import ScrollToTop from './Pages/Hook/ScrollToTop';
+import ScrollToTop from './Hook/ScrollToTop';
 
 function App() {
   return (
