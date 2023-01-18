@@ -7,7 +7,9 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function Login() {
+import { BsPencilSquare, BsArrowReturnLeft } from 'react-icons/bs';
+
+function Register() {
   return (
     <Fragment>
       <Container fluid className="background py-4">
@@ -15,11 +17,16 @@ function Login() {
           <div>
             <h2 className="title text-center fs-1 fw-bold">會員註冊</h2>
           </div>
-          <div className="img"></div>
+          <div className="img position-relative">
+            <Button className="p-0 bg-white text-primary border-0 position-absolute top-100 start-100">
+              <BsPencilSquare />
+            </Button>
+          </div>
           <div className="formControl registerControl">
             <Form className="form mx-auto">
               <div className="mb-3">
                 <Link to="/Login" className="goRegisterBtn textNoDecoration">
+                  <BsArrowReturnLeft />
                   前往登入
                 </Link>
               </div>
@@ -80,4 +87,4 @@ function Login() {
     </Fragment>
   );
 }
-export default Login;
+export default Register;

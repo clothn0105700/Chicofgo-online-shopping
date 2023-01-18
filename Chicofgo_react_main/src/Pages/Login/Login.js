@@ -8,6 +8,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Row, Col } from 'react-bootstrap';
 
+import { BsPencilSquare, BsArrowReturnLeft } from 'react-icons/bs';
+import Path from '../../Layout/Item/Path/Path';
+
 function Login() {
   return (
     <Fragment>
@@ -21,6 +24,7 @@ function Login() {
             <Form className="form mx-auto">
               <div className="mb-3">
                 <Link to="/register" className="goRegisterBtn textNoDecoration">
+                  <BsArrowReturnLeft />
                   前往註冊會員
                 </Link>
               </div>
@@ -40,7 +44,7 @@ function Login() {
                 <Form.Control type="email" placeholder=" " />
               </FloatingLabel>
 
-              <Row className="mb-3 justify-content-bewteen">
+              <Row className="mb-3 d-flex justify-content-between">
                 <Col md="auto">
                   <Form.Group controlId="showPassword">
                     <Form.Check type="checkbox" label="顯示密碼" />
