@@ -17,13 +17,14 @@ import AddressDetail from './Pages/Account/Address/AddressDetail';
 // import Carousel from './component/carousel'
 import Path from './Layout/Item/Path/Path';
 import Footer from './Layout/Footer/Footer';
-import ProductDetail from './Pages/Products/ProductDetail/ProductDetail';
+import ProductDetail from './Pages/Products/ProductDetail/ProductDetailPage';
 // order
 import OrderHistory from './Pages/Order/OrderHistory';
 import OrderStatus from './Pages/Order/OrderStatus';
 import Login from './Pages/Login/Login';
 import Register from './Pages/Login/Register';
 import Home from './Pages/Home/Home';
+import ScrollToTop from './Pages/Hook/ScrollToTop';
 
 function App() {
   return (
@@ -33,30 +34,38 @@ function App() {
 
         {/* <Path /> */}
         {/* <MemberSideBar /> */}
-        <Routes>
-          <Route path="home" element={<Home />} />
-          <Route path="/" element={<Home />} />
-          <Route path="products" element={<Products />} />
-          <Route path="event" element={<Event />} />
-          <Route path="coupon" element={<Coupon />} />
-          <Route path="account" element={<Account />} />
-          <Route path="password" element={<Password />} />
-          <Route path="creditcard" element={<Creditcard />} />
-          <Route path="cardDetail" element={<CardDetail />} />
-          <Route path="address" element={<Address />} />
-          <Route path="addressDatail" element={<AddressDetail />} />
-          <Route path="orderHistory" element={<OrderHistory />} />
-          <Route path="orderStatus" element={<OrderStatus />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route
-            path="/product_detail/:product_id"
-            element={<ProductDetail />}
-          />
-          {/* <Route path="/">
+        <ScrollToTop>
+          <Routes>
+            <Route path="home" element={<Home />} />
+            <Route path="/" element={<Home />} />
+            {/*product*/}
+            <Route path="/products">
+              <Route path="/products" element={<Products />} />
+              <Route
+                path="/products/product_detail/:product_id"
+                element={<ProductDetail />}
+              />
+            </Route>
+            {/*product*/}
+            <Route path="event" element={<Event />} />
+            <Route path="coupon" element={<Coupon />} />
+            <Route path="account" element={<Account />} />
+            <Route path="password" element={<Password />} />
+            <Route path="creditcard" element={<Creditcard />} />
+            <Route path="cardDetail" element={<CardDetail />} />
+            <Route path="address" element={<Address />} />
+            <Route path="addressDatail" element={<AddressDetail />} />
+            <Route path="orderHistory" element={<OrderHistory />} />
+            <Route path="orderStatus" element={<OrderStatus />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+
+            {/* <Route path="/">
             <Route index element={}
           </Route> */}
-        </Routes>
+          </Routes>
+        </ScrollToTop>
+
         <Footer />
       </BrowserRouter>
     </>

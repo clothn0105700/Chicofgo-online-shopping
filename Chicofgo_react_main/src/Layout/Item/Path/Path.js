@@ -12,7 +12,7 @@ const Path = ({ pathObj, backgroundColor, url = [] }) => {
     <div className={` ${Path}`}>
       <div className={`${Path_font} ${Path_wrap} d-flex align-items-center`}>
         <Link to="/">
-          <span className="maincolor">首頁</span>
+          <span className="chicofgo_brown_font">首頁</span>
         </Link>
         {pathObj.path.map((path, i) => {
           return (
@@ -20,7 +20,7 @@ const Path = ({ pathObj, backgroundColor, url = [] }) => {
               to={url && i === newUrl - 1 ? url[newUrl - 1] : '#'}
               key={v4()}
             >
-              <span className="maincolor">{path}</span>
+              <span className="chicofgo_brown_font">{path}</span>
             </Link>
           );
         })}
