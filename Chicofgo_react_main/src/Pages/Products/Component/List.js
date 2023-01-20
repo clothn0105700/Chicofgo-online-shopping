@@ -1,7 +1,6 @@
 import React from 'react';
 import { useEffect, useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Card from '../../ComponentShare/Card';
 import styles from './List.module.scss';
 import Path from '../../../Layout/Item/Path/Path';
@@ -31,7 +30,7 @@ const List = () => {
   }
 
   function goToDetail(cardId) {
-    navigate(`/product_detail/${cardId}`, { replace: false });
+    navigate(`/products/product_detail/${cardId}`, { replace: false });
   }
 
   return (
@@ -202,14 +201,12 @@ const List = () => {
               </button>
             </div>
           </div>
-          <div className={`${card_block} col-md-10`}>
-            <div
-              className={`${card_group} d-flex justify-content-between flex-wrap mx-0`}
-            >
+          <div className={`${card_block} col-12 col-md-10 `}>
+            <div className={`${card_group} row mx-0`}>
               {cardInfo.map((info) => {
                 return (
                   <div
-                    className={`${card_control}`}
+                    className={`${card_control} col-6 col-md-3 px-0 mb-3 `}
                     key={info.id}
                     onClick={() => goToDetail(info.id)}
                   >

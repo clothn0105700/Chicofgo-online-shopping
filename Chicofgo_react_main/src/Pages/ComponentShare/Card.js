@@ -18,7 +18,7 @@ const Card = (props) => {
     <div className={`${card_contorl}`}>
       <div className={`${card_body} card`}>
         <div className={`${p_img_c} `}>
-          <img src={testpic} className="card-img-top" alt=""></img>
+          <img src={testpic} className="card-img-top" alt="" />
         </div>
         <div
           className={`${content} d-flex flex-column align-items-center mt-2`}
