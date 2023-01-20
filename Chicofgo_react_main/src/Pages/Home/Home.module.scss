@@ -23,5 +23,24 @@ span {
   color: rgb(73, 67, 61);
   margin: 0;
   font-weight: 500;
+}
+.pageOne{
+  height: 100vh;
+}
+.pageOneTitle {
+  font-size: 32px;
+  font-weight: 700;
+  color: rgb(161, 113, 98);
+}
 
+.cardListS p {
+  background-image: url(./Component/RecommendedToday.svg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #FFFFFF;
+  font-size: 20px;
+  text-align: center;
+  padding: 10px 20px 20px 20px;
+  z-index: 1;
 }
