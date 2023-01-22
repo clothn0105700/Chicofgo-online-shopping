@@ -1,5 +1,6 @@
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
+// import style from './CardListS.module.scss';
 
 function CardListS(props) {
   const imgName = props.showImg;
@@ -8,11 +9,20 @@ function CardListS(props) {
       <CardGroup>
         {imgName.map((v, i) => {
           return (
-            <Card className=" text-white " key={i}>
+            <Card
+              className={`text-white`}
+              key={i}
+              style={{
+                border: '0px solid #000',
+              }}
+            >
               <Card.Img
                 src={require('./' + v)}
                 alt="Card image"
-                style={{ height: props.cardHeight, objectFit: 'contain' }}
+                style={{
+                  height: props.cardHeight,
+                  objectFit: 'contain',
+                }}
               />
               {/* <Card.ImgOverlay>
                 <Card.Title>Card title</Card.Title>
