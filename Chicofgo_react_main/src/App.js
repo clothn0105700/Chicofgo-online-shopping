@@ -10,7 +10,6 @@ import Password from './Pages/Account/Password/ChangePassword';
 import Creditcard from './Pages/Account/CreditCard/CreditCard';
 import CardDetail from './Pages/Account/CreditCard/CardDetail';
 import Address from './Pages/Account/Address/Address';
-import MemberSideBar from './Pages/Account/Components/MemberSideBar';
 import AddressDetail from './Pages/Account/Address/AddressDetail';
 // import ChangePassword from './Pages/account/password/changePassword';
 // import Sidebar from './Layout/sidebar/sidebar'
@@ -27,6 +26,8 @@ import Register from './Pages/Login/Register';
 import Home from './Pages/Home/Home';
 
 import Member from './Pages/Member';
+import Coupons from './Pages/Account/Coupons/Coupons';
+import Messages from './Pages/Account/Messages/Messages';
 
 function App() {
   return (
@@ -58,14 +59,14 @@ function App() {
             <Route index element={<Account />} />
             <Route path="account" element={<Account />} />
             <Route path="orderHistory" element={<OrderHistory />} />
-            <Route path="coupon" element={<OrderHistory />} />
-            <Route path="messages" element={<OrderHistory />} />
             <Route path="orderStatus/:order_id" element={<OrderStatus />} />
             <Route path="password" element={<Password />} />
             <Route path="creditcard" element={<Creditcard />} />
             <Route path="cardDetail" element={<CardDetail />} />
             <Route path="address" element={<Address />} />
             <Route path="addressDatail" element={<AddressDetail />} />
+            <Route path="coupons" element={<Coupons />} />
+            <Route path="messages" element={<Messages />} />
           </Route>
         </Routes>
         <Footer />

@@ -111,7 +111,7 @@ function OrderStatus() {
           </Col>
         </Row>
         <Row
-          className={`${style.bgGray} justify-content-evenly text-center px-4 py-3 mb-3`}
+          className={`chicofgo_gray justify-content-evenly text-center px-4 py-3 mb-3`}
         >
           <Col className={`col-7`}>商家/商品資訊</Col>
           <Col className={`col-5`}>
@@ -216,7 +216,7 @@ function OrderStatus() {
             })}
           </Col>
         </Row>
-        <Row className={`${style.bgGray}  mt-5`}>
+        <Row className={`chicofgo_gray  mt-5`}>
           {/* 收件人資訊 */}
           <Col className={`pt-4 pb-3 mx-5 `}>
             <Table
@@ -258,7 +258,7 @@ function OrderStatus() {
             </Table>
           </Col>
         </Row>
-        <Row className={`${style.bgGray} mb-5 `}>
+        <Row className={`chicofgo_gray mb-5 `}>
           <Col className={`${style.bgYellow} px-5 my-3 text-end`}>
             {/* 內容4 */}
             <p className={`${style.priceTotal} my-4 `}>

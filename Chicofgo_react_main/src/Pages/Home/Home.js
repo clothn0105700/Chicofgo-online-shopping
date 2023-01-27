@@ -5,15 +5,13 @@ import style from './Home.module.scss';
 import Carousels from './Component/Carousels';
 import CardListS from './Component/CardListS';
 import Card from '../ComponentShare/Card';
-import { brands, cardInfo } from '../../Config/ProductConfig';
+import { cardInfo } from '../../Config/ProductConfig';
 import { useNavigate } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
 import Nav from 'react-bootstrap/Nav';
-// import Card from 'react-bootstrap/Card';
-
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
+
 function Home() {
   const navigate = useNavigate();
   function goToDetail(cardId) {
@@ -296,15 +294,16 @@ function Home() {
               <p
                 class={`${style.leftUpImgBody} position-absolute top-5 start-0 translate-middle `}
               >
-                <Image src={require('./Component/bird_friendly.png')} />
+                <Image src={require('../../Img/Home/bird_friendly.png')} />
+                {/* ./Component/bird_friendly.png */}
               </p>
               <Image
                 className={`${style.leftUpImg} m-3`}
-                src={require('./Component/producet2.png')}
+                src={require('../../Img/Home/producet2.png')}
               />
               <Image
                 className={`${style.leftUpImg} m-3`}
-                src={require('./Component/producet3.png')}
+                src={require('../../Img/Home/producet3.png')}
               />
             </Col>
             <Col
@@ -314,12 +313,12 @@ function Home() {
               <p
                 class={`${style.leftUpImgBody} position-absolute top-0 start-0 translate-middle `}
               >
-                <Image src={require('./Component/rain_friendly.png')} />
+                <Image src={require('../../Img/Home/rain_friendly.png')} />
               </p>
               <br />
               <Image
                 className={`${style.leftUpImg2} m-3`}
-                src={require('./Component/total_friendly.png')}
+                src={require('../../Img/Home/total_friendly.png')}
               />
             </Col>
           </Row>
@@ -330,7 +329,9 @@ function Home() {
               <p
                 class={`${style.leftUpImgBody} position-absolute top-5 start-0 translate-middle `}
               >
-                <Image src={require('./Component/organic_certification.png')} />
+                <Image
+                  src={require('../../Img/Home/organic_certification.png')}
+                />
               </p>
               <Row
                 className={`justify-content-between align-items-center  text-center my-5`}
@@ -338,7 +339,7 @@ function Home() {
                 <Col className={`col-7`}>
                   <Image
                     className={`${style.leftUpImg3} m-3`}
-                    src={require('./Component/p3_big.png')}
+                    src={require('../../Img/Home/p3_big.png')}
                     thumbnail
                   />
                 </Col>
@@ -376,7 +377,7 @@ function Home() {
             >
               <Image
                 className={` my-4 img-fluid object-fit-contain`}
-                src={require('./Component/brand_list.png')}
+                src={require('../../Img/Home/brand_list.png')}
               />
             </Col>
           </Row>

@@ -19,7 +19,7 @@ function ChangePassword() {
             />
             <label htmlFor="floatingInputCustom">
               帳號:
-              <span className="chicofgo-font-700 chicofgo_dark_font">
+              <span className="chicofgo-font-700 chicofgo_dark_font ">
                 87878787@suck.com
               </span>
             </label>

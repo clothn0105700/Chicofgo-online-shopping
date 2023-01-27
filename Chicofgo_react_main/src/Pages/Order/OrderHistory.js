@@ -38,7 +38,7 @@ function OrderHistory() {
                   <th>查詢詳細</th>
                 </tr>
               </thead>
-              <br />
+              {/* <br /> */}
               <tbody>
                 {orderInfo.map((info) => {
                   return (

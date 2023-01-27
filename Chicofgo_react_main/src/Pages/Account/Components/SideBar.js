@@ -44,7 +44,7 @@ function SideBar() {
             歷史訂單
           </p>
         </Nav.Link>
-        <Nav.Link as={Link} to="/member/coupon">
+        <Nav.Link as={Link} to="/member/coupons">
           <p>
             <RiCoupon2Line />
             我的優惠券

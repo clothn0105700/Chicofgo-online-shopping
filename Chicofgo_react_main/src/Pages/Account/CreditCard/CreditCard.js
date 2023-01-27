@@ -9,7 +9,6 @@ import {
   InputGroup,
 } from 'react-bootstrap';
 import MemberBar from '../Components/MemberBar';
-import './CreditCard.scss';
 import ChContainer from '../../ComponentShare/ChContainer';
 
 function CreditCard() {

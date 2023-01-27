@@ -17,7 +17,6 @@ import {
 } from 'react-icons/bs';
 import { IconContext } from 'react-icons';
 import MemberBar from '../Components/MemberBar';
-import './CreditCard.scss';
 import ChContainer from '../../ComponentShare/ChContainer';
 
 function CardDetail() {
