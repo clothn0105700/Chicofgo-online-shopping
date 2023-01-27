@@ -105,3 +105,48 @@ $mainColor: rgb(161, 113, 98);
   box-shadow: none;
   transition: 0.5s;
 }
+
+// **********************************
+.btn-chicofgo-white {
+  background-color: rgb(250, 250, 250);
+  @include button-variant(rgb(250, 250, 250), rgb(250, 250, 250));
+}
+
+.btn-chicofgo-brown {
+  background-color: rgb(161, 113, 98);
+  @include button-variant(rgb(161, 113, 98), rgb(161, 113, 98));
+}
+
+.btn-chicofgo-green {
+  background-color: rgb(54, 111, 84);
+  @include button-variant(rgb(54, 111, 84), rgb(54, 111, 84));
+}
+
+.btn-outline-chicofgo-brown {
+  border-color: rgb(206, 212, 218);
+  @include button-outline-variant(rgb(161, 113, 98));
+}
+
+.btn-outline-chicofgo-green {
+  border-color: rgb(206, 212, 218);
+  @include button-outline-variant(rgb(54, 111, 84));
+}
+
+// **********************************
+
+// **********************************
+@import 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Roboto:wght@400;700;900&display=swap';
+.chicofgo-font {
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+.chicofgo-font-700 {
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 700;
+}
+.chicofgo-font-900 {
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 900;
+}

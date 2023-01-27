@@ -5,6 +5,7 @@ import Products from './Pages/Products/Products';
 import Event from './Pages/Event';
 import Coupon from './Pages/Coupon/Coupon';
 import Account from './Pages/Account/Account';
+
 import Password from './Pages/Account/Password/ChangePassword';
 import Creditcard from './Pages/Account/CreditCard/CreditCard';
 import CardDetail from './Pages/Account/CreditCard/CardDetail';
@@ -25,12 +26,13 @@ import Login from './Pages/Login/Login';
 import Register from './Pages/Login/Register';
 import Home from './Pages/Home/Home';
 
+import Member from './Pages/Member';
+
 function App() {
   return (
     <>
       <BrowserRouter>
         <Navbar />
-
         {/* <Path /> */}
         {/* <MemberSideBar /> */}
         <Routes>
@@ -40,11 +42,7 @@ function App() {
           <Route path="event" element={<Event />} />
           <Route path="coupon" element={<Coupon />} />
           <Route path="account" element={<Account />} />
-          <Route path="password" element={<Password />} />
-          <Route path="creditcard" element={<Creditcard />} />
-          <Route path="cardDetail" element={<CardDetail />} />
-          <Route path="address" element={<Address />} />
-          <Route path="addressDatail" element={<AddressDetail />} />
+
           <Route path="orderHistory" element={<OrderHistory />} />
           <Route path="orderStatus" element={<OrderStatus />} />
           <Route path="login" element={<Login />} />
@@ -56,6 +54,19 @@ function App() {
           {/* <Route path="/">
             <Route index element={}
           </Route> */}
+          <Route path="member" element={<Member />}>
+            <Route index element={<Account />} />
+            <Route path="account" element={<Account />} />
+            <Route path="orderHistory" element={<OrderHistory />} />
+            <Route path="coupon" element={<OrderHistory />} />
+            <Route path="messages" element={<OrderHistory />} />
+            <Route path="orderStatus/:order_id" element={<OrderStatus />} />
+            <Route path="password" element={<Password />} />
+            <Route path="creditcard" element={<Creditcard />} />
+            <Route path="cardDetail" element={<CardDetail />} />
+            <Route path="address" element={<Address />} />
+            <Route path="addressDatail" element={<AddressDetail />} />
+          </Route>
         </Routes>
         <Footer />
       </BrowserRouter>

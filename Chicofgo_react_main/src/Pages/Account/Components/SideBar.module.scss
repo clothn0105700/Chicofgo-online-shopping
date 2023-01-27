@@ -1,0 +1,16 @@
+@import 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Roboto:wght@400;700;900&display=swap';
+// @import '~bootstrap/scss/bootstrap';
+.SideBarBody {
+  background: rgba(238, 238, 238, 0.9);
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Noto Sans TC', sans-serif;
+  padding-top: 100px;
+}
+.SideBarBody p {
+  color: rgb(166, 155, 132);
+  margin: auto;
+  font-weight: 700;
+  font-size: 18px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
