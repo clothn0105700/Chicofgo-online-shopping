@@ -6,7 +6,10 @@ function ChangePassword() {
     <ChContainer ChClass={'chicofgo-font-700'} breadCrumb={'修改密碼'}>
       <MemberBar />
       <Row className="d-flex justify-content-center">
-        <Col sm={9} className="border rounded-5  pt-3 pb-4 px-5 mb-5 mt-3 ">
+        <Col
+          sm={9}
+          className="border border-5 rounded-5  pt-3 pb-4 px-5 mb-5 mt-3 "
+        >
           <h2 className="text-center chicofgo_brown_font chicofgo-font-700 py-3">
             修改密碼
           </h2>

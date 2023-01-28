@@ -35,7 +35,7 @@ function Account() {
         </h5>
       </Col>
       <Col sm={7} className={`border py-3 px-5 mb-5 mt-3`}>
-        <Form className={`${style.formText}`}>
+        <Form className={`${style.formText} `}>
           <h2 className={`text-center mb-3`}>我的帳號</h2>
           <h5>
             姓名：皮卡丘

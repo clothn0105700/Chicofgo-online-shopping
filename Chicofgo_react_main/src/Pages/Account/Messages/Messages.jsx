@@ -4,7 +4,7 @@ import style from './Messages.module.scss';
 import MessagesCard from './Component/MessagesCard';
 function Messages() {
   return (
-    <ChContainer ChClass={'chicofgo-font-700'} breadCrumb={'我的優惠券'}>
+    <ChContainer ChClass={'chicofgo-font-700'} breadCrumb={'全部通知'}>
       <Col>
         <Row>
           <Col>
@@ -50,6 +50,12 @@ function Messages() {
               title="到貨通知"
               timestamp="2023/3/3 10:25"
               content="您在純粹飲品下訂的[膠囊咖啡]  黃金克立瑪風味已到達超商，提醒您請於2023/2/6之前完成超商取貨"
+            />
+            <MessagesCard
+              msgType="8787"
+              title="錯誤測試"
+              timestamp="9999/9/9 9:59"
+              content="8787666"
             />
           </Col>
         </Row>

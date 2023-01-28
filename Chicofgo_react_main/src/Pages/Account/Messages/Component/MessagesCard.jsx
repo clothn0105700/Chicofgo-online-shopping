@@ -3,51 +3,76 @@ import React, { useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-// import yourImg from './coupon-card-bg.svg'
 import style from './MessagesCard.module.scss';
-// import styled from 'styled-components'
-
 import { BsFillBagCheckFill } from 'react-icons/bs';
+import { RiTruckLine } from 'react-icons/ri';
+import { GiTicket } from 'react-icons/gi';
+import { MdOutlineImageNotSupported } from 'react-icons/md';
+
+function SetIconColor(props) {
+  return (
+    <div className={`${style.messageIcon} ${props.setColorClass} text-center `}>
+      <h1 className={`chicofgo_white_font`}>{props.setIcon}</h1>
+    </div>
+  );
+}
 
 function MessagesCard(props) {
-  //   const [btnText, setBtnText] = useState('領取');
-
   const MessageType = props.msgType;
-
-  function checkTypeSetIcon(props) {
+  function CheckTypeSetIcon(props) {
     if (MessageType === 'order') {
+      return (
+        <SetIconColor
+          setColorClass="chicofgo_brown pt-2"
+          setIcon={<BsFillBagCheckFill />}
+        />
+      );
     } else if (MessageType === 'coupon') {
+      return (
+        <SetIconColor
+          setColorClass="chicofgo_green pt-2"
+          setIcon={<GiTicket />}
+        />
+      );
     } else if (MessageType === 'delivery') {
+      return (
+        <SetIconColor
+          setColorClass="chicofgo_brown pt-2"
+          setIcon={<RiTruckLine />}
+        />
+      );
     } else {
+      return (
+        <SetIconColor
+          setColorClass="chicofgo_gray pt-2"
+          setIcon={<MdOutlineImageNotSupported />}
+        />
+      );
     }
   }
 
   return (
     <Container fluid className={`${style.messageContent} my-1 `}>
-      <Row className={`${style.messageAll} justify-content-center`}>
+      <Row
+        className={`${style.messageAll} justify-content-center chicofgo_khaki_font`}
+      >
         <Col className={`col-3 px-0 justify-content-center`}>
-          <div
-            className={`${style.messageIcon}  text-center chicofgo_brown pt-2`}
-          >
-            <h1 className={`chicofgo_white_font`}>
-              <BsFillBagCheckFill />
-            </h1>
-          </div>
+          <CheckTypeSetIcon />
         </Col>
         <Col className={`col-9 ps-1 pe-5 py-3`}>
           <Row>
             <Col>
               <h3>
-                訂單完成<span className={`px-3`}>2022/1/1 20:17</span>
+                {props.title}
+                <span className={`px-3 chicofgo_khaki_font`}>
+                  {props.timestamp}
+                </span>
               </h3>
             </Col>
           </Row>
           <Row>
             <Col>
-              <h2>
-                您在純粹飲品下訂的[膠囊咖啡]
-                黃金克立瑪風味已完成交易，前往評價區留下您的使用評價吧!
-              </h2>
+              <h2>{props.content}</h2>
             </Col>
           </Row>
         </Col>

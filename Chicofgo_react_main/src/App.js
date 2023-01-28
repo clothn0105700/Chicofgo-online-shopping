@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './Layout/Navbar/Navbar';
 // import Home from './Pages/Home';
 import Products from './Pages/Products/Products';
@@ -15,7 +15,7 @@ import AddressDetail from './Pages/Account/Address/AddressDetail';
 // import Sidebar from './Layout/sidebar/sidebar'
 // import Navbaro from './component/navbar-or'
 // import Carousel from './component/carousel'
-import Path from './Layout/Item/Path/Path';
+// import Path from './Layout/Item/Path/Path';
 import Footer from './Layout/Footer/Footer';
 import ProductDetail from './Pages/Products/ProductDetail/ProductDetail';
 // order
@@ -28,6 +28,9 @@ import Home from './Pages/Home/Home';
 import Member from './Pages/Member';
 import Coupons from './Pages/Account/Coupons/Coupons';
 import Messages from './Pages/Account/Messages/Messages';
+import Collect from './Pages/Account/Collect/Collect';
+import CollectItem from './Pages/Account/Collect/Component/CollectItem';
+import CollectShop from './Pages/Account/Collect/Component/CollectShop';
 
 function App() {
   return (
@@ -67,6 +70,14 @@ function App() {
             <Route path="addressDatail" element={<AddressDetail />} />
             <Route path="coupons" element={<Coupons />} />
             <Route path="messages" element={<Messages />} />
+            <Route path="collect" element={<Collect />}>
+              <Route
+                index
+                element={<Navigate to="/member/collect/shop" replace={true} />}
+              />
+              <Route path="shop" element={<CollectShop />} />
+              <Route path="items" element={<CollectItem />} />
+            </Route>
           </Route>
         </Routes>
         <Footer />

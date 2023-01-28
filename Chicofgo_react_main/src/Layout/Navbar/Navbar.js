@@ -19,9 +19,9 @@ import style from './Navbar.module.scss';
 
 function ChicofgoNavBar() {
   return (
-    <Navbar expand="md" sticky="top" className={`p-0`}>
+    <Navbar expand="md" sticky="top" className={`p-0 chicofgo-font-700`}>
       <Container fluid className={`${style.navbarBody} py-2`}>
-        <Navbar.Brand href="#">
+        <Navbar.Brand as={NavLink} to="/home">
           <Image
             src={require('./logo.png')}
             className={`d-inline-block align-top ms-5`}
@@ -35,7 +35,7 @@ function ChicofgoNavBar() {
             className={`${style.navbarCustom} my-0 text-nowrap py-2`}
             style={{ maxHeight: '100px' }}
             navbarScroll
-            variant="customNavbarColor"
+            variant="chicofgo-brown"
             defaultActiveKey="/home"
           >
             <Nav.Item>
