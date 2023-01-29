@@ -28,7 +28,7 @@ function SideBar() {
             &thinsp; 歷史訂單
           </p>
         </Nav.Link>
-        <Nav.Link as={Link} to="/member/">
+        <Nav.Link as={Link} to="/member/shoppingcart">
           <p>
             <BsCartCheck />
             &thinsp; 我的購物車

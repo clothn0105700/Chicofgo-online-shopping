@@ -31,6 +31,7 @@ import Messages from './Pages/Account/Messages/Messages';
 import Collect from './Pages/Account/Collect/Collect';
 import CollectItem from './Pages/Account/Collect/Component/CollectItem';
 import CollectShop from './Pages/Account/Collect/Component/CollectShop';
+import ShoppingCart from './Pages/Account/ShoppingCart/ShoppingCart';
 
 function App() {
   return (
@@ -41,7 +42,7 @@ function App() {
         {/* <MemberSideBar /> */}
         <Routes>
           <Route path="home" element={<Home />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Navigate to="home" replace={true} />} />
           <Route path="products" element={<Products />} />
           <Route path="event" element={<Event />} />
           <Route path="coupon" element={<Coupon />} />
@@ -70,6 +71,8 @@ function App() {
             <Route path="addressDatail" element={<AddressDetail />} />
             <Route path="coupons" element={<Coupons />} />
             <Route path="messages" element={<Messages />} />
+            <Route path="shoppingcart" element={<ShoppingCart />} />
+
             <Route path="collect" element={<Collect />}>
               <Route
                 index

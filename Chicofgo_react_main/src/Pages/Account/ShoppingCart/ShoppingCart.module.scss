@@ -1,0 +1,49 @@
+.shoppingcartTitle {
+  font-size: 32px;
+  font-weight: 700;
+  color: rgb(161, 113, 98);
+}
+.shoppingcartSubTitle {
+  font-size: 14px;
+  color: black;
+}
+
+.productPic {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.tableText {
+  border: 5px solid rgb(250, 250, 250);
+  border-color: rgb(250, 250, 250);
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  tbody {
+    th {
+      width: 30%;
+    }
+    td {
+      width: 70%;
+      text-align: end;
+    }
+  }
+}
+.totalPrice {
+  background-color: rgb(250, 250, 250);
+  span {
+    font-size: 20px;
+    color: rgb(54, 111, 84);
+    font-weight: 700;
+    padding-left: 10px;
+  }
+}
+.brandname {
+  font-size: 1rem;
+}
+.brandArea {
+  button {
+    font-size: 0.8rem;
+  }
+}
