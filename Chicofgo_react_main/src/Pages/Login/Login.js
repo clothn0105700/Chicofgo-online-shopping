@@ -53,7 +53,12 @@ function Login() {
                 </Col>
               </Row>
               <div className="mx-auto" style={{ width: 200 }}>
-                <Button className="loginBtn mx-auto">登入</Button>
+                <Button
+                  variant="chicofgo-brown"
+                  className="loginBtn mx-auto chicofgo_white_font"
+                >
+                  登入
+                </Button>
               </div>
             </Form>
           </div>
