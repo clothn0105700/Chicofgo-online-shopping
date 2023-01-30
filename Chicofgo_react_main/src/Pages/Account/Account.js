@@ -15,9 +15,9 @@ import style from './Account.module.scss';
 import ChContainer from '../ComponentShare/ChContainer';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { registerLocale, setDefaultLocale } from  "react-datepicker";
-import es from 'date-fns/locale/es';
-registerLocale('es', es)
+import { registerLocale, setDefaultLocale } from 'react-datepicker';
+import ZhTW from 'date-fns/locale/zh-TW';
+registerLocale('zh-TW', ZhTW);
 
 function Account() {
   // const [imageUrl, setImageUrl] = useState('../../Layout/Navbar/logo.png');
@@ -182,6 +182,7 @@ function Account() {
               <Col sm={2}>生日：</Col>
               <Col>
                 <DatePicker
+                  locale="zh-TW"
                   selected={startDate}
                   onChange={(date) => setStartDate(date)}
                 />
