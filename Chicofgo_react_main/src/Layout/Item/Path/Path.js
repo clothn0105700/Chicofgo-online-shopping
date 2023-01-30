@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './Path.module.scss';
 import { v4 } from 'uuid';
 import { Link } from 'react-router-dom';
-import '../../../GlobalStyles/Global.scss';
 
 const Path = ({ pathObj, backgroundColor, url = [] }) => {
   const newUrl = url.length;
@@ -20,7 +19,9 @@ const Path = ({ pathObj, backgroundColor, url = [] }) => {
               to={url && i === newUrl - 1 ? url[newUrl - 1] : '#'}
               key={v4()}
             >
-              <span className="chicofgo_brown_font">{path}</span>
+
+              <span className="maincolor">&nbsp;/&nbsp;{path}</span>
+
             </Link>
           );
         })}
