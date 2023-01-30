@@ -4,7 +4,11 @@ import { useLocation } from 'react-router-dom';
 const ScrollToTop = (props) => {
   const location = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      behavior: 'instant',
+      top: 0,
+      left: 0,
+    });
   }, [location]);
 
   return <>{props.children}</>;

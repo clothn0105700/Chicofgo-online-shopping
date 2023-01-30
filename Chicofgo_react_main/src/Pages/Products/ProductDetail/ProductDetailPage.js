@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { cardDetail } from '../../../Config/ProductConfig';
 import Path from '../../../Layout/Item/Path/Path';
 import styles from './ProductDetail.module.scss';
 // import axios from 'axios';
 import { BsFillReplyFill } from 'react-icons/bs';
 import mainPic from '../../../Img/ProductsTest/test.jpg';
+import PicRender from './Component/PicRender';
+import ProductInfo from './Component/ProductInfo';
+import Specification from './Component/Specification';
+import OrtherWrap from './Component/OrtherSwiper';
 
 const ProductDetail = () => {
+  const [productsCount, setProductsCount] = useState(1);
+  const [dataLoaded, setDataLoaded] = useState(false);
   const {
     detail_contorl,
     product_detail,
@@ -19,6 +25,8 @@ const ProductDetail = () => {
     group_pic_box,
     group_pic,
     test,
+    specification_box,
+    orther_product,
   } = styles;
 
   const [detail, setDetail] = useState({});
@@ -31,37 +39,51 @@ const ProductDetail = () => {
       return cardDetail.find((card) => card.id === id);
     });
   }, []);
+
   return (
     <div className={`${test}`}>
       <div className="custom-container d-flex justify-content-center">
         <div className={`${detail_contorl}`}>
-          <Path pathObj={{ path: ['．商品詳細'] }} />
-          <div className={`${btn_contorl} d-flex justify-content-end mb-3`}>
-            <button className="btn1 d-flex align-items-center justify-content-center fs-5">
-              <BsFillReplyFill />
-              回商品頁
-            </button>
-          </div>
+          <Path
+            pathObj={{ path: ['．商品列表', `．${detail.title}`] }}
+            url={['/products']}
+          />
+          <Link to="/products" style={{ textDecoration: 'none' }}>
+            <div className={`${btn_contorl} d-flex justify-content-end mb-3`}>
+              <button className="btn1 d-flex align-items-center justify-content-center fs-5">
+                <BsFillReplyFill />
+                回商品列表
+              </button>
+            </div>
+          </Link>
+
           <div className={`${product_detail}`}>
             <div className={`${product_box} d-flex`}>
-              <div className={`${left_picbox} d-flex flex-column`}>
-                <div className={`${main_pic}`}>
-                  <img src={mainPic} alt="" />
-                </div>
-                <div className={`${group_pic_box} d-flex align-items-center`}>
-                  <div className={`${group_pic}`}>
-                    <img src={mainPic} alt="" />
-                  </div>
-                </div>
+              <PicRender />
+
+              <div className={`${detail_content}`}>
+                <ProductInfo
+                  productsCount={productsCount}
+                  setProductsCount={setProductsCount}
+                  title={detail.title}
+                  content={detail.content}
+                  price={detail.price}
+                  dataLoaded={dataLoaded}
+                />
               </div>
-              <div className={`${detail_content}`}></div>
             </div>
           </div>
+          <div className={`${specification_box}`}>
+            <br />
+            <br />
+            <Specification />
+          </div>
+          <div className={`${orther_product}`}>
+            <br />
+            <br />
+            <OrtherWrap />
+          </div>
         </div>
-      </div>
-      <div>
-        <h4>{detail.title}</h4>
-        <p>{detail.content}</p>
       </div>
     </div>
   );
