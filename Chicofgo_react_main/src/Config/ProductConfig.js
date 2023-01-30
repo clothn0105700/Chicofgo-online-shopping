@@ -39,6 +39,22 @@ export const origins = [
   { id: 7, name: '日本' },
 ];
 
+export const filterRating = [
+  { id: 1, name: '全部(100)' },
+  { id: 2, name: '五星評價(90)' },
+  { id: 3, name: '四星評價(5)' },
+  { id: 4, name: '三星評價(4)' },
+  { id: 5, name: '二星評價(1)' },
+  { id: 6, name: '一星評價(0)' },
+];
+
+export const filterYear = [
+  { id: 1, name: '全部' },
+  { id: 2, name: '當月份' },
+  { id: 3, name: '三個月內' },
+  { id: 4, name: '一年內' },
+];
+
 export const cardInfo = [
   {
     id: 1,

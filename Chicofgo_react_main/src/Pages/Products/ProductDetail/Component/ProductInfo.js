@@ -15,13 +15,20 @@ const Productinfo = (props) => {
     collect_cart,
     btn_collect,
     btn_cart,
+    title_box,
+    content_box,
   } = styles;
 
   return (
     <div>
       <div className={`${info_contorl} d-flex flex-column`}>
-        <h3>{title}</h3>
-        <p className="mt-2">{content}</p>
+        <div className={`${title_box}`}>
+          <h3>{title}</h3>
+        </div>
+        <div className={`${content_box}`}>
+          <p className="mt-2">{content}</p>
+        </div>
+
         <h4 className="d-flex mt-2">
           價格:<div className="mx-3">{price}</div>
         </h4>
