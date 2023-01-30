@@ -2,9 +2,10 @@ import React from 'react';
 import styles from './Card.module.scss';
 import testpic from '../../Img/ProductsTest/test.jpg';
 import { v4 } from 'uuid';
+import { FaShoppingCart, FaBookmark } from "react-icons/fa";
 
 const Card = (props) => {
-  const { title, rating } = props;
+  const { title, rating, price } = props;
   const {
     card_contorl,
     card_body,
@@ -13,6 +14,9 @@ const Card = (props) => {
     text_contorl,
     evaluate,
     keepshop,
+    price_contorl,
+    mark_contorl,
+    cart_contorl,
   } = styles;
   return (
     <div className={`${card_contorl}`}>
@@ -33,7 +37,17 @@ const Card = (props) => {
             })}
           </div>
         </div>
-        <div className={`${keepshop} card-img-bottom`}></div>
+        <div
+          className={`${keepshop} card-img-bottom d-flex align-items-center `}
+        >
+          <div className={`${price_contorl} `}>{price}</div>
+          <div className={`${mark_contorl} `}>
+            <FaBookmark />
+          </div>
+          <div className={`${cart_contorl} `}>
+            <FaShoppingCart />
+          </div>
+        </div>
       </div>
     </div>
   );
