@@ -10,17 +10,19 @@ import style from './ShoppingItem.module.scss';
 import React, { useState } from 'react';
 
 const ShoppingItem = ({
-  key,
+  id,
   brandname,
   title,
   desc,
-  // quantity,
+  quantity2,
   price,
   productImg,
   onCalculate,
+  handleClick2,
+  isChecked2,
 }) => {
   // 用{大括號}接受prop
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(quantity2 || 1);
   const increment = () => {
     setQuantity(quantity + 1);
     onCalculate(price); //每次點擊時執行 onCalculate(price) = totalCash + price
@@ -31,19 +33,32 @@ const ShoppingItem = ({
       onCalculate(-price); // 減少時為-price
     }
   };
-
   return (
-    <Row className={`px-4 `}>
+    <Row className={`px-4 `} key={id}>
       <Col className={`col-1 d-flex justify-content-center align-items-center`}>
-        <Form className={``}>
-          <Form.Check type="checkbox" id="custom-switch" label="" />
-        </Form>
+        <Form.Group className={``}>
+          <Form.Check
+            type="checkbox"
+            id={id}
+            // label=""
+            onChange={handleClick2}
+            checked={isChecked2}
+            controlId="formBasicCheckbox"
+          />
+        </Form.Group>
+        {/* <input
+          type="checkbox"
+          id={id}
+          label=""
+          onChange={handleClick2}
+          checked={isChecked2}
+        /> */}
       </Col>
       <Col className={`col-11 chicofgo_gray pb-4 mb-4 rounded-3 shadow`}>
         <Row>
           <Col className={`text-end p-0 `}>
             <Button variant="" className={` chicofgo_brown_font m-0 pb-0`}>
-              <h3 className={`p-0`}>
+              <h3 className={`p-0 chicofgo_brown_font`}>
                 <FaWindowClose />
               </h3>
             </Button>
@@ -107,7 +122,7 @@ const ShoppingItem = ({
                       className={` chicofgo_brown_font m-0 py-0`}
                       onClick={decrement}
                     >
-                      <h3 className={`p-0`}>
+                      <h3 className={`p-0 chicofgo_brown_font`}>
                         <BsCaretLeftSquareFill />
                       </h3>
                     </Button>
@@ -117,7 +132,7 @@ const ShoppingItem = ({
                       className={` chicofgo_brown_font m-0 py-0`}
                       onClick={increment}
                     >
-                      <h3 className={`p-0`}>
+                      <h3 className={`p-0 chicofgo_brown_font`}>
                         <BsCaretRightSquareFill />
                       </h3>
                     </Button>
