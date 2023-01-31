@@ -73,7 +73,7 @@ const List = () => {
                 })}
               {/* <button onClick={clickHandler}>{showMore ? '▲' : '▼'}</button> */}
               {!showMore && (
-                <button className="btn1" onClick={clickHandler}>
+                <button className="btn2" onClick={clickHandler}>
                   更多 ▼
                 </button>
               )}
@@ -95,7 +95,7 @@ const List = () => {
                 })}
               {/* <button onClick={clickHandler}>{showMore ? '▲' : '▼'}</button> */}
               {!showMoreCate && (
-                <button className="btn1" onClick={clickHandlerCate}>
+                <button className="btn2" onClick={clickHandlerCate}>
                   更多▼
                 </button>
               )}
@@ -117,7 +117,7 @@ const List = () => {
                 })}
               {/* <button onClick={clickHandler}>{showMore ? '▲' : '▼'}</button> */}
               {!showMoreItem && (
-                <button className="btn1" onClick={clickHandlerItem}>
+                <button className="btn2" onClick={clickHandlerItem}>
                   更多▼
                 </button>
               )}
@@ -139,7 +139,7 @@ const List = () => {
                 })}
               {/* <button onClick={clickHandler}>{showMore ? '▲' : '▼'}</button> */}
               {!showMoreOrigin && (
-                <button className="btn1" onClick={clickHandlerOrigin}>
+                <button className="btn2" onClick={clickHandlerOrigin}>
                   更多▼
                 </button>
               )}
