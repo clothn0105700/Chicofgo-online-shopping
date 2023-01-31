@@ -21,10 +21,13 @@ import ChContainer from '../../ComponentShare/ChContainer';
 
 function CardDetail() {
   return (
-    <ChContainer ChClass={'chicofgo-font-700'} breadCrumb={'編輯信用卡'}>
+    <ChContainer
+      ChClass={'chicofgo-font-700 border border-5'}
+      breadCrumb={'編輯信用卡'}
+    >
       <MemberBar />
       <div className="d-flex justify-content-center ">
-        <Col sm={7} className="border m-5 p-5 rounded-5">
+        <Col sm={7} className="border m-5 p-5">
           <h2 className="">編輯信用卡</h2>
           <InputGroup className="mb-3">
             <InputGroup.Text className="">信用卡號碼</InputGroup.Text>

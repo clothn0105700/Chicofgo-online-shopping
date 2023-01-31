@@ -16,10 +16,13 @@ import ChContainer from '../../ComponentShare/ChContainer';
 
 function Address() {
   return (
-    <ChContainer ChClass={'chicofgo-font-700'} breadCrumb={'地址'}>
+    <ChContainer
+      ChClass={'chicofgo-font-700 border border-5'}
+      breadCrumb={'地址'}
+    >
       <MemberBar />
       <div className="d-flex justify-content-center ">
-        <Col sm={7} className="border m-5 p-5 rounded-5">
+        <Col sm={7} className="border m-5 p-5 ">
           <h2 className="">我的地址</h2>
           <p>桃園市中壢區新生路二段421號</p>
           <Link to="/member/addressDatail" className="btn border">
