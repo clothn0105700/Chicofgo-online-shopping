@@ -7,10 +7,10 @@ import './Products.scss';
 
 const Products = () => {
   return (
-    <>
+    <div className="body_color">
       {/* <Path pathObj={{ path: ['．商品列表'] }} /> */}
       <List />
-    </>
+    </div>
   );
 };
 

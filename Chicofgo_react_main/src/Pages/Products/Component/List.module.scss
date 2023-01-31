@@ -1,6 +1,8 @@
 .list_container {
+
   max-width: 1015px;
   min-width: 1015px;
+
 }
 
 label {
@@ -8,6 +10,7 @@ label {
 }
 
 .list_control {
+
   width: 100%;
   height: 1731px;
   // background-color: rgb(126, 109, 109);
@@ -18,6 +21,9 @@ label {
   height: 1731px;
   // background-color: palegoldenrod;
 }
+
+
+
 
 .block_brand {
   margin-top: 55px;
@@ -39,10 +45,17 @@ label {
 }
 
 .Inquire {
-  margin-top: 19px;
-  width: 140px;
-  border-radius: 5px;
-  box-shadow: 0 3px 4px black;
+
+    margin-top: 19px;
+    width: 140px;
+    border-radius: 5px;
+    box-shadow: 0 3px 4px #0005;
+    &:hover {
+
+    }&:active {
+        transform: scale(0.95);
+    }
+
 }
 
 .text_c {
@@ -51,14 +64,10 @@ label {
 }
 
 .card_group {
-  width: 100%;
-  height: 1480px;
-  // background-color: pink;
-}
 
-.card_control {
-  width: 24%;
-  height: 360px;
-  padding: 0px;
-  // background-color: rgb(65, 41, 20);
+    width: 100%;
+   
+    margin-bottom: 200px;
+    
+
 }

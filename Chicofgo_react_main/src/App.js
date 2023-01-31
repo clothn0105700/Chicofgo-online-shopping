@@ -17,13 +17,14 @@ import AddressDetail from './Pages/Account/Address/AddressDetail';
 // import Carousel from './component/carousel'
 // import Path from './Layout/Item/Path/Path';
 import Footer from './Layout/Footer/Footer';
-import ProductDetail from './Pages/Products/ProductDetail/ProductDetail';
+import ProductDetail from './Pages/Products/ProductDetail/ProductDetailPage';
 // order
 import OrderHistory from './Pages/Order/OrderHistory';
 import OrderStatus from './Pages/Order/OrderStatus';
 import Login from './Pages/Login/Login';
 import Register from './Pages/Login/Register';
 import Home from './Pages/Home/Home';
+import ScrollToTop from './Hook/ScrollToTop';
 
 import Member from './Pages/Member';
 import Coupons from './Pages/Account/Coupons/Coupons';
@@ -40,10 +41,19 @@ function App() {
         <Navbar />
         {/* <Path /> */}
         {/* <MemberSideBar /> */}
+ <ScrollToTop>
         <Routes>
           <Route path="home" element={<Home />} />
           <Route path="/" element={<Navigate to="home" replace={true} />} />
-          <Route path="products" element={<Products />} />
+          {/*product*/}
+            <Route path="/products">
+              <Route path="/products" element={<Products />} />
+              <Route
+                path="/products/product_detail/:product_id"
+                element={<ProductDetail />}
+              />
+            </Route>
+            {/*product*/}
           <Route path="event" element={<Event />} />
           <Route path="coupon" element={<Coupon />} />
           <Route path="account" element={<Account />} />
@@ -83,6 +93,8 @@ function App() {
             </Route>
           </Route>
         </Routes>
+         </ScrollToTop>
+
         <Footer />
       </BrowserRouter>
     </>
