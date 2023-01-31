@@ -45,6 +45,7 @@ function ShoppingCart(props) {
   const calculate = (price) => {
     setTotalCash(totalCash + price); // totalCash =  totalCash + price
   };
+
   // ---------------------------------------------------------------------
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
@@ -56,6 +57,8 @@ function ShoppingCart(props) {
   useEffect(() => {
     if ((isCheck.length > 0) & (isCheck.length - list.length >= 0)) {
       setIsCheckAll(true);
+      // const { id, price, quantity } = list;
+      // console.log(id, price, quantity);
     } else if (isCheck.length - list.length < 0) {
       setIsCheckAll(false);
     }
@@ -71,14 +74,21 @@ function ShoppingCart(props) {
 
   const handleClick = (e) => {
     const { id, checked } = e.target;
+    let itemData = list.filter((item) => item.id == id)[0];
     setIsCheck([...isCheck, id]);
+    setTotalCash(totalCash + 87);
+    console.log(itemData.price);
+    console.log(itemData.quantity);
 
     if (!checked) {
       setIsCheck(isCheck.filter((item) => item !== id));
+      setTotalCash(totalCash - 87);
     }
   };
 
-  console.log(isCheck);
+  // console.log(isCheck);
+  console.log('------------------------');
+  // console.log(list.filter((item) => item.id === 1)[0].title);
 
   return (
     <ChContainer ChClass={'chicofgo-font'} breadCrumb={'我的購物車'}>
@@ -133,9 +143,7 @@ function ShoppingCart(props) {
                 className={`${style.totalSum} col-5 chicofgo_gray text-nowrap `}
               >
                 (已選擇{isCheck.length}件商品) 商品總計:
-                <span>
-                  <Total totalCash={totalCash} />
-                </span>
+                <span>{totalCash}</span>
               </Col>
             </Row>
             <Row className={`mt-5`}>

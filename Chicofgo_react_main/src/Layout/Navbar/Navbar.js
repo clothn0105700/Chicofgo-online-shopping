@@ -81,16 +81,21 @@ function ChicofgoNavBar() {
             </Button>
           </InputGroup>
 
-          <Button as={Link} to="/" variant="" className={`mx-1`}>
+          <Button as={Link} to="/" variant="" className={`mx-1 mb-1`}>
             <BsFillBellFill />
           </Button>
-          <Button as={Link} to="/login " variant="" className={`me-1`}>
+          <Button as={Link} to="/login " variant="" className={`me-1 mb-1`}>
             <BsSuitHeartFill />
           </Button>
-          <Button as={Link} to="/member" variant="" className={`me-1`}>
+          <Button as={Link} to="/member" variant="" className={`me-1 mb-1`}>
             <BsFillPersonFill />
           </Button>
-          <Button as={Link} to="/" variant="" className={`me-1`}>
+          <Button
+            as={Link}
+            to="/"
+            variant=""
+            className={`me-1 align-center mb-1`}
+          >
             <BsFillCartFill />
           </Button>
         </Navbar.Collapse>

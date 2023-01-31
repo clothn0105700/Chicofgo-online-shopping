@@ -58,7 +58,7 @@ const ShoppingItem = ({
         <Row>
           <Col className={`text-end p-0 `}>
             <Button variant="" className={` chicofgo_brown_font m-0 pb-0`}>
-              <h3 className={`p-0`}>
+              <h3 className={`p-0 chicofgo_brown_font`}>
                 <FaWindowClose />
               </h3>
             </Button>
@@ -122,7 +122,7 @@ const ShoppingItem = ({
                       className={` chicofgo_brown_font m-0 py-0`}
                       onClick={decrement}
                     >
-                      <h3 className={`p-0`}>
+                      <h3 className={`p-0 chicofgo_brown_font`}>
                         <BsCaretLeftSquareFill />
                       </h3>
                     </Button>
@@ -132,7 +132,7 @@ const ShoppingItem = ({
                       className={` chicofgo_brown_font m-0 py-0`}
                       onClick={increment}
                     >
-                      <h3 className={`p-0`}>
+                      <h3 className={`p-0 chicofgo_brown_font`}>
                         <BsCaretRightSquareFill />
                       </h3>
                     </Button>
