@@ -87,7 +87,7 @@ function Coupon() {
           xxl={4}
         >
           <Row className={`${style.threeAreaTitle} `}>
-            <h1 className={`my-3`}>聖誕優惠券</h1>
+            <h1 className={`mt-5 mb-3`}>聖誕優惠券</h1>
           </Row>
           <Row className={`${style.twoArea}`}>
             <Col className={`col-12`}>
@@ -123,7 +123,7 @@ function Coupon() {
           xxl={5}
         >
           <Row className={`${style.oneAreaTitle} `}>
-            <h1 className={`my-3`}>指定商城優惠券</h1>
+            <h1 className={`mt-5 mb-3`}>指定商城優惠券</h1>
           </Row>
           <Row className={`${style.fourArea}`}>
             <Col className={`col-4 p-1`}>

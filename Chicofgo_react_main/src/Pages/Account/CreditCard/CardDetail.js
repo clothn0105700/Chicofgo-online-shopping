@@ -17,55 +17,56 @@ import {
 } from 'react-icons/bs';
 import { IconContext } from 'react-icons';
 import MemberBar from '../Components/MemberBar';
-import './CreditCard.scss';
+import ChContainer from '../../ComponentShare/ChContainer';
 
 function CardDetail() {
   return (
-    <div className="custom-container cardicardWidth">
-      <Row className="border border-5 rounded-5 border-radious">
-        <MemberBar />
-        <div className="d-flex justify-content-center ">
-          <Col sm={7} className="border m-5 p-5 rounded-5">
-            <h2 className="">編輯信用卡</h2>
-            <InputGroup className="mb-3">
-              <InputGroup.Text className="">信用卡號碼</InputGroup.Text>
-              <Form.Control
-                placeholder="**** **** **** ****"
-                aria-label="Recipient's username"
-                aria-describedby="basic-addon2"
-              />
-            </InputGroup>
-            <InputGroup className="mb-3">
-              <InputGroup.Text className="">到期日</InputGroup.Text>
-              <Form.Control
-                placeholder="MM"
-                aria-label="Recipient's username"
-                aria-describedby="basic-addon2"
-              />
-              <Form.Control
-                placeholder="YY"
-                aria-label="Recipient's username"
-                aria-describedby="basic-addon2"
-              />
-              <InputGroup.Text className="">安全驗證碼</InputGroup.Text>
-              <Form.Control
-                placeholder="123"
-                aria-label="Recipient's username"
-                aria-describedby="basic-addon2"
-              />
-            </InputGroup>
-            <InputGroup className="mb-3">
-              <InputGroup.Text className="">帳單地址</InputGroup.Text>
-              <Form.Control
-                placeholder=""
-                aria-label="Recipient's username"
-                aria-describedby="basic-addon2"
-              />
-            </InputGroup>
-          </Col>
-        </div>
-      </Row>
-    </div>
+    <ChContainer
+      ChClass={'chicofgo-font-700 border border-5'}
+      breadCrumb={'編輯信用卡'}
+    >
+      <MemberBar />
+      <div className="d-flex justify-content-center ">
+        <Col sm={7} className="border m-5 p-5">
+          <h2 className="">編輯信用卡</h2>
+          <InputGroup className="mb-3">
+            <InputGroup.Text className="">信用卡號碼</InputGroup.Text>
+            <Form.Control
+              placeholder="**** **** **** ****"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+            />
+          </InputGroup>
+          <InputGroup className="mb-3">
+            <InputGroup.Text className="">到期日</InputGroup.Text>
+            <Form.Control
+              placeholder="MM"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+            />
+            <Form.Control
+              placeholder="YY"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+            />
+            <InputGroup.Text className="">安全驗證碼</InputGroup.Text>
+            <Form.Control
+              placeholder="123"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+            />
+          </InputGroup>
+          <InputGroup className="mb-3">
+            <InputGroup.Text className="">帳單地址</InputGroup.Text>
+            <Form.Control
+              placeholder=""
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+            />
+          </InputGroup>
+        </Col>
+      </div>
+    </ChContainer>
   );
 }
 

@@ -71,7 +71,12 @@ function Login() {
                 <Form.Control type="datetime" placeholder=" " />
               </FloatingLabel>
               <div className="mx-auto" style={{ width: 200 }}>
-                <Button className="doRegisterBtn mx-auto">送出</Button>
+                <Button
+                  className="doRegisterBtn mx-auto chicofgo_white_font"
+                  variant="chicofgo-brown"
+                >
+                  送出
+                </Button>
               </div>
             </Form>
           </div>

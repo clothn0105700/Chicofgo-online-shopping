@@ -1,14 +1,9 @@
-
 @import '../../../Global-styles/Global.scss';
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,900&display=swap'); 
-
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,900&display=swap');
 
 .img1 {
   object-fit: contain;
-  
 }
-
 
 footer {
   margin: auto;
@@ -17,19 +12,19 @@ footer {
 }
 
 .sociallink-wrap {
- padding-left: 17%;
- padding-right: 17%;
+  padding-left: 17%;
+  padding-right: 17%;
 }
 
 .foot_a {
-text-decoration: none;
-font-family: 'Roboto', sans-serif;
-font-size: 17px;
-color: black;
-font-weight: bold;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif;
+  font-size: 17px;
+  color: black;
+  font-weight: bold;
 }
 
-.sociallink a img{
+.sociallink a img {
   width: 48px;
   height: 48px;
   margin-top: 20px;
@@ -37,4 +32,3 @@ font-weight: bold;
 .sociallink {
   margin-top: -20px;
 }
-

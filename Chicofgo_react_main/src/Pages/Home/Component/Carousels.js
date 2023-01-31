@@ -11,7 +11,7 @@ function HomeCarousel(props) {
             <Carousel.Item interval={props.changeDelay} key={i}>
               <img
                 className="d-block w-100"
-                src={require('./' + v)}
+                src={require('../../../Img/Home/' + v)}
                 alt="slide"
               />
             </Carousel.Item>
