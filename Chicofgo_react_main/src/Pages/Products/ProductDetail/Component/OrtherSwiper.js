@@ -18,10 +18,8 @@ import { Pagination, Navigation } from 'swiper';
 const OrtherWrap = () => {
   const { orther_swiper, title_contorl } = styles;
   return (
-    <div
-      className={`${orther_swiper} d-flex justify-content-center flex-column`}
-    >
-      <h3 className={`${title_contorl}`}>其他商品</h3>
+    <div className={`${orther_swiper} d-flex  flex-column align-items-center`}>
+      <h3 className={`${title_contorl} mb-3`}>其他商品</h3>
       <Swiper
         slidesPerView={4}
         spaceBetween={30}

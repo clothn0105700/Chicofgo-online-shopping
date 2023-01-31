@@ -10,6 +10,8 @@ import PicRender from './Component/PicRender';
 import ProductInfo from './Component/ProductInfo';
 import Specification from './Component/Specification';
 import OrtherWrap from './Component/OrtherSwiper';
+import EvaluateArea from './Component/EvaluateArea';
+import MessageArea from './Component/MessageArea';
 
 const ProductDetail = () => {
   const [productsCount, setProductsCount] = useState(1);
@@ -27,6 +29,7 @@ const ProductDetail = () => {
     test,
     specification_box,
     orther_product,
+    evaluate_area,
   } = styles;
 
   const [detail, setDetail] = useState({});
@@ -83,6 +86,24 @@ const ProductDetail = () => {
             <br />
             <OrtherWrap />
           </div>
+          <div
+            className={`${evaluate_area} d-flex flex-column align-items-center `}
+          >
+            <h3 className="my-5">顧客評論區</h3>
+            <EvaluateArea />
+          </div>
+          <br />
+          <br />
+          <MessageArea />
+          <br />
+          <br />
+          <MessageArea />
+          <br />
+          <br />
+          <MessageArea />
+          <br />
+          <br />
+          <MessageArea />
         </div>
       </div>
     </div>
