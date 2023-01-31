@@ -122,3 +122,15 @@ $mainColor: rgb(161, 113, 98);
   box-shadow: none;
   transition: background-color .5s, box-shadow 0.5s, transform 0.1s;
 }
+
+.btn2 {
+  color: black;
+  height: 36px;
+  width: auto;
+  border-radius: 5px;
+  border: none;
+  
+  background-color: transparent;
+  text-decoration:none;
+  outline: none;
+}
