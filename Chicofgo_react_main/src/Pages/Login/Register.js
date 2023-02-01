@@ -6,8 +6,45 @@ import Container from 'react-bootstrap/Container';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { useState } from 'react';
+import axios from 'axios';
 
 function Login() {
+  const [member, setMember] = useState({
+    email: '7788@gmail.com',
+    name: 'name',
+    password: 'test1234',
+    confirmPassword: 'test1234',
+    photo: '',
+    account: 'c8763',
+    birthday: '1990/10/10',
+    address: '火星',
+  });
+
+  // email input 的 change
+  // e.target ==> email input
+  // name input 的 change
+  // e.target ==> name input
+  function handleChange(e) {
+    // console.log(e);
+    let newMember = { ...member };
+    newMember[e.target.name] = e.target.value;
+    setMember(newMember);
+
+    // setMember({ ...member, [e.target.name]: e.target.value });
+  }
+
+  async function handleSubmit(e) {
+    console.log('handleSubmit');
+    // 關閉表單的預設行為
+    e.preventDefault();
+    let response = await axios.post(
+      'http://localhost:3001/api/auth/register',
+      member
+    );
+
+    console.log(response.data);
+  }
   return (
     <Fragment>
       <Container fluid className="background py-4">
@@ -28,7 +65,12 @@ function Login() {
                 label="創建帳號："
                 className="mb-3"
               >
-                <Form.Control type="text" placeholder=" " />
+                <Form.Control
+                  type="text"
+                  placeholder=" "
+                  value={member.account}
+                  onChange={handleChange}
+                />
               </FloatingLabel>
 
               <FloatingLabel
@@ -36,7 +78,14 @@ function Login() {
                 label="創建密碼："
                 className="mb-3"
               >
-                <Form.Control type="password" placeholder=" " />
+                <Form.Control
+                  type="password"
+                  placeholder=" "
+                  // id="password"
+                  name="password"
+                  value={member.password}
+                  onChange={handleChange}
+                />
               </FloatingLabel>
 
               <FloatingLabel
@@ -44,7 +93,14 @@ function Login() {
                 label="密碼確認："
                 className="mb-3"
               >
-                <Form.Control type="password" placeholder=" " />
+                <Form.Control
+                  type="password"
+                  placeholder=" "
+                  // id="confirmPassword"
+                  name="confirmPassword"
+                  value={member.confirmPassword}
+                  onChange={handleChange}
+                />
               </FloatingLabel>
 
               <FloatingLabel
@@ -52,7 +108,14 @@ function Login() {
                 label="email："
                 className="mb-3"
               >
-                <Form.Control type="email" placeholder=" " />
+                <Form.Control
+                  type="email"
+                  placeholder=" "
+                  // id="email"
+                  name="email"
+                  value={member.email}
+                  onChange={handleChange}
+                />
               </FloatingLabel>
 
               <FloatingLabel
@@ -60,7 +123,14 @@ function Login() {
                 label="地址："
                 className="mb-3"
               >
-                <Form.Control type="text" placeholder=" " />
+                <Form.Control
+                  type="text"
+                  placeholder=" "
+                  // id="address"
+                  name="address"
+                  value={member.address}
+                  onChange={handleChange}
+                />
               </FloatingLabel>
 
               <FloatingLabel
@@ -68,12 +138,20 @@ function Login() {
                 label="生日："
                 className="mb-3"
               >
-                <Form.Control type="datetime" placeholder=" " />
+                <Form.Control
+                  type="datetime"
+                  placeholder=" "
+                  // id="birthday"
+                  name="birthday"
+                  value={member.birthday}
+                  onChange={handleChange}
+                />
               </FloatingLabel>
               <div className="mx-auto" style={{ width: 200 }}>
                 <Button
                   className="doRegisterBtn mx-auto chicofgo_white_font"
                   variant="chicofgo-brown"
+                  onClick={handleSubmit}
                 >
                   送出
                 </Button>

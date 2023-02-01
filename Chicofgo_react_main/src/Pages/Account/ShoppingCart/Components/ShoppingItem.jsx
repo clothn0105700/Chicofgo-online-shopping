@@ -7,22 +7,24 @@ import { FaWindowClose } from 'react-icons/fa';
 import { BsCaretRightSquareFill, BsCaretLeftSquareFill } from 'react-icons/bs';
 // import ChContainer from '../../ComponentShare/ChContainer';
 import style from './ShoppingItem.module.scss';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ShoppingItem = ({
   id,
   brandname,
   title,
   desc,
-  quantity2,
+  theQuantity,
   price,
   productImg,
   onCalculate,
+
   handleClick2,
   isChecked2,
 }) => {
   // 用{大括號}接受prop
-  const [quantity, setQuantity] = useState(quantity2 || 1);
+  const [quantity, setQuantity] = useState(theQuantity || 1);
+           
   const increment = () => {
     setQuantity(quantity + 1);
     onCalculate(price); //每次點擊時執行 onCalculate(price) = totalCash + price

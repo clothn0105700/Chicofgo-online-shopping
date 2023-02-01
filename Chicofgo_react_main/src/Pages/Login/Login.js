@@ -7,8 +7,31 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Row, Col } from 'react-bootstrap';
+import { useState } from 'react';
+import axios from 'axios';
 
 function Login() {
+  const [member, setMember] = useState({
+    email: '7788@gmail.com',
+    password: 'test1234',
+  });
+
+  function handleChange(e) {
+    setMember({ ...member, [e.target.name]: e.target.value });
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    let response = await axios.post(
+      'http://localhost:3001/api/auth/login',
+      member,
+      {
+        // 為了跨源存取 cookie
+        withCredentials: true,
+      }
+    );
+    console.log(response.data);
+  }
   return (
     <Fragment>
       <Container fluid className="background py-4">
@@ -29,7 +52,12 @@ function Login() {
                 label="帳號："
                 className="mb-3"
               >
-                <Form.Control type="email" placeholder=" " />
+                <Form.Control
+                  type="email"
+                  placeholder=" "
+                  value={member.email}
+                  onChange={handleChange}
+                />
               </FloatingLabel>
 
               <FloatingLabel
@@ -37,7 +65,12 @@ function Login() {
                 label="密碼："
                 className="mb-3"
               >
-                <Form.Control type="email" placeholder=" " />
+                <Form.Control
+                  type="password"
+                  placeholder=" "
+                  value={member.password}
+                  onChange={handleChange}
+                />
               </FloatingLabel>
 
               <Row className="mb-3 justify-content-bewteen">
@@ -56,6 +89,7 @@ function Login() {
                 <Button
                   variant="chicofgo-brown"
                   className="loginBtn mx-auto chicofgo_white_font"
+                  onClick={handleSubmit}
                 >
                   登入
                 </Button>

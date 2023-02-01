@@ -10,6 +10,7 @@ import style from './ShoppingCart.module.scss';
 import React, { useState, useEffect } from 'react';
 import ShoppingItem from './Components/ShoppingItem';
 import Total from './Components/Total';
+
 const products = [
   {
     id: 1,
@@ -67,6 +68,7 @@ function ShoppingCart(props) {
   const handleSelectAll = (e) => {
     setIsCheckAll(!isCheckAll);
     setIsCheck(list.map((li) => String(li.id)));
+    calculate();
     if (isCheckAll) {
       setIsCheck([]);
     }
@@ -77,6 +79,9 @@ function ShoppingCart(props) {
     let itemData = list.filter((item) => item.id == id)[0];
     setIsCheck([...isCheck, id]);
     setTotalCash(totalCash + 87);
+
+
+    
     console.log(itemData.price);
     console.log(itemData.quantity);
 
@@ -111,7 +116,7 @@ function ShoppingCart(props) {
                 brandname={p.brandname}
                 title={p.title}
                 desc={p.desc}
-                quantity2={p.quantity}
+                theQuantity={p.quantity}
                 price={p.price}
                 productImg={p.productImg}
                 onCalculate={calculate}
