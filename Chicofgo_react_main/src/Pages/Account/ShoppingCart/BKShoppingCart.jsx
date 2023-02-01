@@ -11,7 +11,7 @@ import React, { useState, useEffect } from 'react';
 import ShoppingItem from './Components/ShoppingItem';
 // import Total from './Components/Total';
 
-const productsData = [
+const products = [
   {
     id: 1,
     brandname: '西雅圖咖啡',
@@ -45,43 +45,61 @@ const productsData = [
 ];
 
 function ShoppingCart(props) {
-  const [products, setProducts] = useState(productsData);
+  const totalAmount = products.reduce(
+    (sum, product) => sum + product.quantity * product.price,
+    0
+  );
+  const [totalCash, setTotalCash] = useState(totalAmount); // totalCash預設值為0
+  const calculate = (price) => {
+    setTotalCash(totalCash + price); // totalCash =  totalCash + price
+  };
+
+  // ---------------------------------------------------------------------
   const [isCheckAll, setIsCheckAll] = useState(false);
+  const [isCheck, setIsCheck] = useState([]);
+  const [list, setList] = useState([]);
+  useEffect(() => {
+    setList(products);
+  }, [list]);
 
-  const handleCheckboxChange = (id) => {
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product.id === id ? { ...product, checked: !product.checked } : product
-      )
-    );
-    setIsCheckAll((prevIsCheckAll) =>
-      products.every((product) => product.checked)
-    );
+  useEffect(() => {
+    if ((isCheck.length > 0) & (isCheck.length - list.length >= 0)) {
+      setIsCheckAll(true);
+      // const { id, price, quantity } = list;
+      // console.log(id, price, quantity);
+    } else if (isCheck.length - list.length < 0) {
+      setIsCheckAll(false);
+    }
+  }, [isCheck.length]);
+
+  const handleSelectAll = (e) => {
+    setIsCheckAll(!isCheckAll);
+    setIsCheck(list.map((li) => String(li.id)));
+    calculate();
+    if (isCheckAll) {
+      setIsCheck([]);
+    }
   };
 
-  const handleCheckAllChange = () => {
-    setIsCheckAll((prevIsCheckAll) => !prevIsCheckAll);
-    setProducts((prevProducts) =>
-      prevProducts.map((product) => ({
-        ...product,
-        checked: !isCheckAll,
-      }))
-    );
+  const handleClick = (e) => {
+    const { id, checked } = e.target;
+    let itemData = list.filter((item) => item.id == id)[0];
+    setIsCheck([...isCheck, id]);
+    setTotalCash(totalCash + 87);
+
+    console.log(itemData.price);
+    console.log(itemData.quantity);
+
+    if (!checked) {
+      setIsCheck(isCheck.filter((item) => item !== id));
+      setTotalCash(totalCash - 87);
+    }
   };
 
-  const handleQuantityChange = (id, delta) => {
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product.id === id
-          ? { ...product, quantity: product.quantity + delta }
-          : product
-      )
-    );
-  };
+  console.log(isCheck);
+  console.log('------------------------');
+  // console.log(list.filter((item) => item.id === 1)[0].title);
 
-  const totalPrice = products
-    .filter((product) => product.checked)
-    .reduce((sum, product) => sum + product.price * product.quantity, 0);
   return (
     <ChContainer ChClass={'chicofgo-font'} breadCrumb={'我的購物車'}>
       {/* 標題 */}
@@ -103,12 +121,12 @@ function ShoppingCart(props) {
                 brandname={p.brandname}
                 title={p.title}
                 desc={p.desc}
-                quantity={p.quantity}
-                checked={p.checked}
+                theQuantity={p.quantity}
                 price={p.price}
                 productImg={p.productImg}
-                onCheckboxChange={() => handleCheckboxChange(p.id)}
-                onQuantityChange={(delta) => handleQuantityChange(p.id, delta)}
+                onCalculate={calculate}
+                handleClick2={handleClick}
+                isChecked2={isCheck.includes(String(p.id))}
                 // isChecked2={true}
               />
             ))}
@@ -123,19 +141,19 @@ function ShoppingCart(props) {
                   <Form.Check
                     type="checkbox"
                     label="全選"
-                    // id="selectAll"
-                    // name="selectAll"
+                    id="selectAll"
+                    name="selectAll"
                     className={`text-start`}
+                    onChange={handleSelectAll}
                     checked={isCheckAll}
-                    onChange={handleCheckAllChange}
                   />
                 </Form>
               </Col>
               <Col
                 className={`${style.totalSum} col-5 chicofgo_gray text-nowrap `}
               >
-                (已選擇3件商品) 商品總計:
-                <span>{totalPrice}</span>
+                (已選擇{isCheck.length}件商品) 商品總計:
+                <span>{totalCash}</span>
               </Col>
             </Row>
             <Row className={`mt-5`}>

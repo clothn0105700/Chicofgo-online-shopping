@@ -1,12 +1,12 @@
 import React from 'react';
-import './Login.scss';
+// import './Login.scss';
 import { Link } from 'react-router-dom';
 import { Fragment } from 'react';
-import Container from 'react-bootstrap/Container';
+import { Container, Row, Col } from 'react-bootstrap';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { Row, Col } from 'react-bootstrap';
+import style from './Login.module.scss';
 import { useState } from 'react';
 import axios from 'axios';
 
@@ -34,23 +34,30 @@ function Login() {
   }
   return (
     <Fragment>
-      <Container fluid className="background py-4">
-        <div className="content mx-auto">
+      <Container fluid className={`${style.background} py-4`}>
+        <div className={`${style.content} mx-auto`}>
           <div>
-            <h2 className="title text-center fs-1 fw-bold">會員登入</h2>
+            <h2
+              className={`text-center fs-2 chicofgo-font-700 chicofgo_brown_font`}
+            >
+              會員登入
+            </h2>
           </div>
-          <div className="img"></div>
-          <div className="formControl">
-            <Form className="form mx-auto">
-              <div className="mb-3">
-                <Link to="/register" className="goRegisterBtn textNoDecoration">
+          <div className={`${style.img}`}></div>
+          <div className={`${style.formControl}`}>
+            <Form className={`${style.form} mx-auto`}>
+              <div className={`mb-3`}>
+                <Link
+                  to="/register"
+                  className={`chicofgo_brown_font text-decoration-none`}
+                >
                   前往註冊會員
                 </Link>
               </div>
               <FloatingLabel
                 controlId="floatingInput"
                 label="帳號："
-                className="mb-3"
+                className={`mb-3`}
               >
                 <Form.Control
                   type="email"
@@ -63,7 +70,7 @@ function Login() {
               <FloatingLabel
                 controlId="floatingInput"
                 label="密碼："
-                className="mb-3"
+                className={`mb-3`}
               >
                 <Form.Control
                   type="password"
@@ -73,22 +80,22 @@ function Login() {
                 />
               </FloatingLabel>
 
-              <Row className="mb-3 justify-content-bewteen">
+              <Row className={`mb-3 justify-content-bewteen`}>
                 <Col md="auto">
                   <Form.Group controlId="showPassword">
                     <Form.Check type="checkbox" label="顯示密碼" />
                   </Form.Group>
                 </Col>
-                <Col className="col-auto">
+                <Col className={`col-auto`}>
                   <Form.Group controlId="remeberMe">
                     <Form.Check type="checkbox" label="記住我的帳號" />
                   </Form.Group>
                 </Col>
               </Row>
-              <div className="mx-auto" style={{ width: 200 }}>
+              <div className={`mx-auto`} style={{ width: 200 }}>
                 <Button
                   variant="chicofgo-brown"
-                  className="loginBtn mx-auto chicofgo_white_font"
+                  className={`${style.loginBtn} mx-auto chicofgo_white_font`}
                   onClick={handleSubmit}
                 >
                   登入

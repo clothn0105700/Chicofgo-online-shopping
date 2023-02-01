@@ -1,30 +1,49 @@
 import { Row, Col, Button, Form, Image, Table } from 'react-bootstrap';
 import { FaWindowClose } from 'react-icons/fa';
+// import { Link } from 'react-router-dom';
+// import Path from '../../Layout/Item/Path/Path';
+// import { orderInfo } from '../../Config/orderConfig';
+// import { useNavigate } from 'react-router-dom';
 import { BsCaretRightSquareFill, BsCaretLeftSquareFill } from 'react-icons/bs';
+// import ChContainer from '../../ComponentShare/ChContainer';
 import style from './ShoppingItem.module.scss';
+import React, { useState, useEffect } from 'react';
 
 const ShoppingItem = ({
   id,
   brandname,
   title,
   desc,
-  quantity,
+  theQuantity,
   price,
   productImg,
-  checked,
-  onCheckboxChange,
-  onQuantityChange,
+  onCalculate,
+  handleClick2,
+  isChecked2,
 }) => {
+  // 用{大括號}接受prop
+  const [quantity, setQuantity] = useState(theQuantity || 1);
+
+  const increment = () => {
+    setQuantity(quantity + 1);
+    onCalculate(price); //每次點擊時執行 onCalculate(price) = totalCash + price
+  };
+  const decrement = () => {
+    if (quantity > 0) {
+      setQuantity(quantity - 1);
+      onCalculate(-price); // 減少時為-price
+    }
+  };
   return (
     <Row className={`px-4 `} key={id}>
       <Col className={`col-1 d-flex justify-content-center align-items-center`}>
         <Form.Group className={``}>
           <Form.Check
             type="checkbox"
-            // id={id}
+            id={id}
             // label=""
-            onChange={onCheckboxChange}
-            checked={checked}
+            onChange={handleClick2}
+            checked={isChecked2}
             controlId="formBasicCheckbox"
           />
         </Form.Group>
@@ -102,7 +121,7 @@ const ShoppingItem = ({
                     <Button
                       variant=""
                       className={` chicofgo_brown_font m-0 py-0`}
-                      onClick={() => onQuantityChange(-1)}
+                      onClick={decrement}
                     >
                       <h3 className={`p-0 chicofgo_brown_font`}>
                         <BsCaretLeftSquareFill />
@@ -112,7 +131,7 @@ const ShoppingItem = ({
                     <Button
                       variant=""
                       className={` chicofgo_brown_font m-0 py-0`}
-                      onClick={() => onQuantityChange(1)}
+                      onClick={increment}
                     >
                       <h3 className={`p-0 chicofgo_brown_font`}>
                         <BsCaretRightSquareFill />

@@ -92,7 +92,7 @@ function ChicofgoNavBar() {
           </Button>
           <Button
             as={Link}
-            to="/"
+            to="/member/shoppingcart"
             variant=""
             className={`me-1 align-center mb-1`}
           >
