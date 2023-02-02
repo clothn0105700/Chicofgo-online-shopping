@@ -40,12 +40,11 @@ export const origins = [
 ];
 
 export const filterRating = [
-  { id: 1, name: '全部(100)' },
-  { id: 2, name: '五星評價(90)' },
-  { id: 3, name: '四星評價(5)' },
-  { id: 4, name: '三星評價(4)' },
-  { id: 5, name: '二星評價(1)' },
-  { id: 6, name: '一星評價(0)' },
+  { id: 1, name: '五星評價(90)' },
+  { id: 2, name: '四星評價(90)' },
+  { id: 3, name: '三星評價(5)' },
+  { id: 4, name: '二星評價(4)' },
+  { id: 5, name: '一星評價(1)' },
 ];
 
 export const filterYear = [
