@@ -28,13 +28,6 @@ const ShoppingItem = ({
             controlId="formBasicCheckbox"
           />
         </Form.Group>
-        {/* <input
-          type="checkbox"
-          id={id}
-          label=""
-          onChange={handleClick2}
-          checked={isChecked2}
-        /> */}
       </Col>
       <Col className={`col-11 chicofgo_gray pb-4 mb-4 rounded-3 shadow`}>
         <Row>
@@ -120,8 +113,6 @@ const ShoppingItem = ({
                     </Button>
                     件
                   </td>
-                  {/* <th>評價:</th>
-                            <td>{props.review}</td> */}
                 </tr>
                 <tr>
                   <th>單價:</th>

@@ -1,6 +1,6 @@
 import React from 'react';
 // import './Login.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Fragment } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -11,6 +11,8 @@ import { useState } from 'react';
 import axios from 'axios';
 
 function Login() {
+  const navigate = useNavigate();
+
   const [member, setMember] = useState({
     email: '7788@gmail.com',
     password: 'test1234',
@@ -31,6 +33,12 @@ function Login() {
       }
     );
     console.log(response.data);
+    console.log(response.status);
+
+    if (response.status === 200) {
+      console.log('登入成功');
+      navigate('/');
+    }
   }
   return (
     <Fragment>
@@ -56,12 +64,13 @@ function Login() {
               </div>
               <FloatingLabel
                 controlId="floatingInput"
-                label="帳號："
+                label="信箱："
                 className={`mb-3`}
               >
                 <Form.Control
                   type="email"
                   placeholder=" "
+                  name="email"
                   value={member.email}
                   onChange={handleChange}
                 />
@@ -75,6 +84,7 @@ function Login() {
                 <Form.Control
                   type="password"
                   placeholder=" "
+                  name="password"
                   value={member.password}
                   onChange={handleChange}
                 />

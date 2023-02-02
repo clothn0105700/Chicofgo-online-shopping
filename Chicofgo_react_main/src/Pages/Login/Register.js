@@ -13,13 +13,11 @@ import axios from 'axios';
 function Login() {
   const [member, setMember] = useState({
     email: '7788@gmail.com',
-    name: 'name',
     password: 'test1234',
     confirmPassword: 'test1234',
-    photo: '',
-    account: 'c8763',
-    birthday: '1990/10/10',
-    address: '火星',
+    account: 'c87632',
+    birthday: '1990-10-10',
+    address: '火星火星火星',
   });
 
   // email input 的 change
@@ -76,6 +74,7 @@ function Login() {
                 <Form.Control
                   type="text"
                   placeholder=" "
+                  name="account"
                   value={member.account}
                   onChange={handleChange}
                 />
@@ -89,7 +88,6 @@ function Login() {
                 <Form.Control
                   type="password"
                   placeholder=" "
-                  // id="password"
                   name="password"
                   value={member.password}
                   onChange={handleChange}

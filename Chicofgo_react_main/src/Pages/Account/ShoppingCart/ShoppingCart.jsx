@@ -1,15 +1,8 @@
-import { Row, Col, Button, Form, Image, Table } from 'react-bootstrap';
-// import { FaWindowClose } from 'react-icons/fa';
-// import { Link } from 'react-router-dom';
-// import Path from '../../Layout/Item/Path/Path';
-// import { orderInfo } from '../../Config/orderConfig';
-// import { useNavigate } from 'react-router-dom';
-// import { BsCaretRightSquareFill, BsCaretLeftSquareFill } from 'react-icons/bs';
+import { Row, Col, Button, Form } from 'react-bootstrap';
 import ChContainer from '../../ComponentShare/ChContainer';
 import style from './ShoppingCart.module.scss';
 import React, { useState, useEffect } from 'react';
 import ShoppingItem from './Components/ShoppingItem';
-// import Total from './Components/Total';
 
 const productsData = [
   {
@@ -48,14 +41,17 @@ function ShoppingCart(props) {
   const [products, setProducts] = useState(productsData);
   const [isCheckAll, setIsCheckAll] = useState(false);
 
+  useEffect(() => {
+    setIsCheckAll((prevIsCheckAll) =>
+      products.every((product) => product.checked)
+    );
+  }, [products]);
+
   const handleCheckboxChange = (id) => {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
         product.id === id ? { ...product, checked: !product.checked } : product
       )
-    );
-    setIsCheckAll((prevIsCheckAll) =>
-      products.every((product) => product.checked)
     );
   };
 
@@ -73,7 +69,11 @@ function ShoppingCart(props) {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
         product.id === id
-          ? { ...product, quantity: product.quantity + delta }
+          ? {
+              ...product,
+              quantity:
+                product.quantity + delta >= 0 ? product.quantity + delta : 0,
+            }
           : product
       )
     );
