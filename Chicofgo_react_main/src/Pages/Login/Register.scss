@@ -22,6 +22,10 @@
   
 }
 
+.registerContent {
+  background-color: #f8f5ea;
+}
+
 title {
   color: #a17162;
   font-weight: 900;
@@ -45,6 +49,10 @@ title {
   }
 }
 
+.registerControl {
+  border-top: 8px solid #fff;
+}
+
 .goRegisterBtn {
   color: #a17162;
 }
@@ -53,8 +61,7 @@ title {
   max-width: 300px;
 }
 
-.loginBtn {
-  display: inline-block;
+.doRegisterBtn {
   width: 200px;
   height: 40px;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
@@ -62,4 +69,3 @@ title {
   background-color: #a17162;
   color: #fff;
 }
-

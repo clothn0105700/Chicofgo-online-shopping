@@ -8,14 +8,11 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Row, Col } from 'react-bootstrap';
 
-import { BsPencilSquare, BsArrowReturnLeft } from 'react-icons/bs';
-import Path from '../../Layout/Item/Path/Path';
-
 function Login() {
   return (
     <Fragment>
       <Container fluid className="background py-4">
-        <div className="content mx-auto">
+        <div className="content mx-auto my-5">
           <div>
             <h2 className="title text-center fs-1 fw-bold">會員登入</h2>
           </div>
@@ -24,7 +21,6 @@ function Login() {
             <Form className="form mx-auto">
               <div className="mb-3">
                 <Link to="/register" className="goRegisterBtn textNoDecoration">
-                  <BsArrowReturnLeft />
                   前往註冊會員
                 </Link>
               </div>
@@ -44,8 +40,8 @@ function Login() {
                 <Form.Control type="email" placeholder=" " />
               </FloatingLabel>
 
-              <Row className="mb-3 d-flex justify-content-between">
-                <Col md="auto">
+              <Row className="mb-3 justify-content-between">
+                <Col className="col-auto">
                   <Form.Group controlId="showPassword">
                     <Form.Check type="checkbox" label="顯示密碼" />
                   </Form.Group>
@@ -57,7 +53,12 @@ function Login() {
                 </Col>
               </Row>
               <div className="mx-auto" style={{ width: 200 }}>
-                <Button className="loginBtn mx-auto">登入</Button>
+                <Button
+                  variant="chicofgo-brown"
+                  className="loginBtn mx-auto chicofgo_white_font"
+                >
+                  登入
+                </Button>
               </div>
             </Form>
           </div>

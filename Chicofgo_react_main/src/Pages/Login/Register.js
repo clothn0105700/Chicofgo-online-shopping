@@ -1,5 +1,5 @@
 import React from 'react';
-import './Login.scss';
+import './Register.scss';
 import { Link } from 'react-router-dom';
 import { Fragment } from 'react';
 import Container from 'react-bootstrap/Container';
@@ -7,9 +7,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-import { BsPencilSquare, BsArrowReturnLeft } from 'react-icons/bs';
-
-function Register() {
+function Login() {
   return (
     <Fragment>
       <Container fluid className="background py-4">
@@ -17,16 +15,11 @@ function Register() {
           <div>
             <h2 className="title text-center fs-1 fw-bold">會員註冊</h2>
           </div>
-          <div className="img position-relative">
-            <Button className="p-0 bg-white text-primary border-0 position-absolute top-100 start-100">
-              <BsPencilSquare />
-            </Button>
-          </div>
+          <div className="img"></div>
           <div className="formControl registerControl">
             <Form className="form mx-auto">
               <div className="mb-3">
                 <Link to="/Login" className="goRegisterBtn textNoDecoration">
-                  <BsArrowReturnLeft />
                   前往登入
                 </Link>
               </div>
@@ -78,7 +71,12 @@ function Register() {
                 <Form.Control type="datetime" placeholder=" " />
               </FloatingLabel>
               <div className="mx-auto" style={{ width: 200 }}>
-                <Button className="doRegisterBtn mx-auto">送出</Button>
+                <Button
+                  className="doRegisterBtn mx-auto chicofgo_white_font"
+                  variant="chicofgo-brown"
+                >
+                  送出
+                </Button>
               </div>
             </Form>
           </div>
@@ -87,4 +85,4 @@ function Register() {
     </Fragment>
   );
 }
-export default Register;
+export default Login;
