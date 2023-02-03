@@ -52,7 +52,7 @@ const registerRules = [
   // 中間件: 檢查密碼的長度
   body('password').isLength({ min: 8 }).withMessage('密碼長度至少為 8'),
   // 中間件: 檢查 password 跟 confirmPassword 是否一致
-  body('account').isLength({ min: 6 }).withMessage('帳號長度至少為 6'),
+  body('name').isLength({ min: 1 }).withMessage('姓名長度至少為 1'),
 
   body('birthday').isBefore().withMessage('不是未來人吧'),
 
@@ -100,8 +100,8 @@ router.post('/register', registerRules, async (req, res, next) => {
   // 雜湊 hash 密碼
   const hashedPassword = await argon2.hash(req.body.password);
   // 存到資料庫
-  let result = await pool.execute('INSERT INTO user_member (account , password, email, address, birthday) VALUES (?, ?, ?, ?, ?);', [
-    req.body.account,
+  let result = await pool.execute('INSERT INTO user_member (name , password, email, address, birthday) VALUES (?, ?, ?, ?, ?);', [
+    req.body.name,
     hashedPassword,
     req.body.email,
     req.body.address,
@@ -160,7 +160,7 @@ router.post('/login', async (req, res, next) => {
   // 準備好要寫進 session 的內容
   let retMember = {
     id: member.id,
-    account: member.account,
+    name: member.name,
     email: member.email,
     // photo: member.photo,
   };
@@ -180,4 +180,3 @@ router.get('/logout', (req, res, next) => {
 });
 
 module.exports = router;
-

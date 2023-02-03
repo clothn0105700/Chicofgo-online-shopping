@@ -2,6 +2,7 @@
 
 cd Backend  
 npm i
+.env.example改成.env內容修改後再啟動
 
 ```
 npm install -g nodemon
