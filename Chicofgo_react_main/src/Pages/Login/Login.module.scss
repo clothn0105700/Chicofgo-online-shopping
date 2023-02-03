@@ -1,5 +1,4 @@
 .background {
-  min-height: 100vh;
   background-image: url('./Component/LoginBackground.jfif');
   background-position: 0 0 0 0;
 }
@@ -13,6 +12,11 @@
   border-radius: 30px;
 }
 
+@media (max-width: 767px) {
+  .content {
+    padding: 3vh;
+  }
+}
 .img {
   width: 100px;
   height: 100px;
@@ -26,8 +30,14 @@
   border-top: 5px solid #f8f5ea;
 }
 
+@media (max-width: 767px) {
+  .formControl {
+    padding: 10px 0 0 0;
+  }
+}
+
 .form {
-  width: 300px;
+  max-width: 300px;
 }
 
 .loginBtn {
