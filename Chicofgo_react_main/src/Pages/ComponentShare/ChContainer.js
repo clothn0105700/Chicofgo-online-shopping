@@ -15,7 +15,7 @@ function Layout(props) {
         >
           <Path pathObj={{ path: [props.breadCrumb] }} />
           <Row
-            className={`${props.ChClass} rounded-5 justify-content-center`}
+            className={`${props.ChClass} rounded-5 justify-content-center `}
             style={{
               backgroundColor: 'rgb(250, 250, 250)',
               border: props.ChBorder,

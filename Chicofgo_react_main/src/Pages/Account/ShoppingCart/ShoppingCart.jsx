@@ -47,7 +47,10 @@ function ShoppingCart(props) {
   ];
 
   return (
-    <ChContainer ChClass={'chicofgo-font'} breadCrumb={'我的購物車'}>
+    <ChContainer
+      ChClass={'chicofgo-font border border-5'}
+      breadCrumb={'我的購物車'}
+    >
       {/* 標題 */}
       <Col>
         <Row>

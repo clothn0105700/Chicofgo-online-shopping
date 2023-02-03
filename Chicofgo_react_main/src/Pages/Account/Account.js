@@ -13,6 +13,7 @@ import { FaEdit } from 'react-icons/fa';
 import MemberBar from './Components/MemberBar';
 import style from './Account.module.scss';
 import ChContainer from '../ComponentShare/ChContainer';
+// import Date
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { registerLocale, setDefaultLocale } from 'react-datepicker';
@@ -38,7 +39,7 @@ function Account() {
 
   return (
     <ChContainer
-      ChClass={'border border-5 chicofgo-font'}
+      ChClass={'border border-5 chicofgo-font border border-5'}
       breadCrumb={'我的帳號'}
     >
       <MemberBar />
