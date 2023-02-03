@@ -14,9 +14,7 @@ import { AuthContext } from '../../Hook/AuthContext';
 
 function Login() {
   const { isLoggedIn, setUsername, setIsLoggedIn } = useContext(AuthContext);
-
   const navigate = useNavigate();
-
   useEffect(() => {
     if (isLoggedIn) {
       navigate(-1);
@@ -49,6 +47,7 @@ function Login() {
       console.log('登入成功');
       setIsLoggedIn(true);
       setUsername(response.data.member.name);
+      console.log(navigate(-1));
       navigate(-1);
     }
   }
