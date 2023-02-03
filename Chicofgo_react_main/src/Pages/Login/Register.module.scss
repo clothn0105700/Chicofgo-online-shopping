@@ -1,8 +1,8 @@
 .background {
-  min-height: 100vh;
   background-image: url('./Component/LoginBackground.jfif');
   background-position: 0 0 0 0;
 }
+
 .content {
   margin-top: 70px;
   max-width: 450px;
@@ -13,8 +13,14 @@
   border-radius: 30px;
 }
 
+@media (max-width: 767px) {
+  .content {
+    padding: 3vh;
+  }
+}
+
 .registerContent {
-  background-color: rgb(248, 245, 234);
+  background-color: #fff;
 }
 
 .img {
@@ -27,15 +33,17 @@
 
 .formControl {
   padding: 30px;
-  border-top: 8px solid #f8f5ea;
+  border-top: 5px solid #f8f5ea;
 }
 
-.registerControl {
-  border-top: 8px solid #fff;
+@media (max-width: 767px) {
+  .formControl {
+    padding: 10px 0 0 0;
+  }
 }
 
 .form {
-  width: 300px;
+  max-width: 300px;
 }
 
 .doRegisterBtn {

@@ -53,7 +53,7 @@ const ProductDetail = () => {
           />
           <Link to="/products" style={{ textDecoration: 'none' }}>
             <div className={`${btn_contorl} d-flex justify-content-end mb-3`}>
-              <button className="btn1 d-flex align-items-center justify-content-center fs-5">
+              <button className="btn1 d-flex align-items-center justify-content-center ">
                 <BsFillReplyFill />
                 回商品列表
               </button>
@@ -92,16 +92,16 @@ const ProductDetail = () => {
             <h3 className="my-5">顧客評論區</h3>
             <EvaluateArea />
           </div>
-          <br />
-          <br />
-          <MessageArea />
-          <br />
+
           <br />
           <MessageArea />
-          <br />
+
           <br />
           <MessageArea />
+
           <br />
+          <MessageArea />
+
           <br />
           <MessageArea />
         </div>
