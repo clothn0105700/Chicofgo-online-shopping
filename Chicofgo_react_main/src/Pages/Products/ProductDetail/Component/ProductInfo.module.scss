@@ -9,18 +9,32 @@
 .spe_text {
   font-size: 13px;
 }
-.minus_style {
-  width: 36px;
-  height: 36px;
-  background-color: transparet;
-  border: 2px solid;
-  border-radius: 8px 0 0 8px;
-  outline: none;
-  color: rgb(73, 67, 61);
-  cursor: pointer;
-  background: center center / 16px 16px no-repeat;
-  flex-shrink: 0;
-  background: url(../../../../Img/minus.svg) center center / 16px 16px no-repeat;
+
+
+.title_box{
+    width: 100%;
+    height: 150px;
+  
+}
+
+.content_box{
+    width: 100%;
+    height: 150px;
+   
+}
+.minus_style{
+    width: 36px;
+    height: 36px;
+    background-color: transparet;
+    border: 2px solid ;
+    border-radius: 8px 0 0 8px;
+    outline: none;
+    color:  rgb(73, 67, 61) ;
+    cursor: pointer;
+    background: center center / 16px 16px no-repeat;
+    flex-shrink: 0;
+    background: url(../../../../Img/minus.svg) center
+        center / 16px 16px no-repeat;
 }
 
 .input_style {
