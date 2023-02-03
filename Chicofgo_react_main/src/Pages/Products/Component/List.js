@@ -1,11 +1,16 @@
 import React from 'react';
 import { useEffect, useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Card from '../../ComponentShare/Card';
 import styles from './List.module.scss';
 import Path from '../../../Layout/Item/Path/Path';
-import { brands, cardInfo } from '../../../Config/ProductConfig';
+import {
+  brands,
+  cates,
+  items,
+  origins,
+  cardInfo,
+} from '../../../Config/ProductConfig';
 
 const List = () => {
   const {
@@ -23,15 +28,27 @@ const List = () => {
     card_block,
     list_container,
   } = styles;
-
+  //列表選項下拉
   const [showMore, setShowMore] = useState(false);
+  const [showMoreCate, setShowMoreCate] = useState(false);
+  const [showMoreItem, setShowMoreItem] = useState(false);
+  const [showMoreOrigin, setShowMoreOrigin] = useState(false);
   const navigate = useNavigate();
   function clickHandler() {
     setShowMore((pre) => !pre);
   }
-
+  function clickHandlerCate() {
+    setShowMoreCate((pre) => !pre);
+  }
+  function clickHandlerItem() {
+    setShowMoreItem((pre) => !pre);
+  }
+  function clickHandlerOrigin() {
+    setShowMoreOrigin((pre) => !pre);
+  }
+  //到商品細節頁
   function goToDetail(cardId) {
-    navigate(`/product_detail/${cardId}`, { replace: false });
+    navigate(`/products/product_detail/${cardId}`, { replace: false });
   }
 
   return (
@@ -54,139 +71,78 @@ const List = () => {
                     </div>
                   );
                 })}
-              <button onClick={clickHandler}>{showMore ? '▲' : '▼'}</button>
+              {/* <button onClick={clickHandler}>{showMore ? '▲' : '▼'}</button> */}
+              {!showMore && (
+                <button className="btn2" onClick={clickHandler}>
+                  更多 ▼
+                </button>
+              )}
             </div>
 
             <div className={`${block_cate} d-flex flex-column px-2`}>
               <h4>類別</h4>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  罐裝咖啡
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  即溶咖啡
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  咖啡豆
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  膠囊咖啡
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  奶精
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  濾掛
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  冰滴壺
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  奶泡機
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  咖啡機
-                </label>
-              </div>
+              {cates
+                .filter((cate, index) => (showMoreCate ? true : index <= 3))
+                .map((cate) => {
+                  return (
+                    <div className="form-check">
+                      <input className="form-check-input" type="checkbox" />
+                      <label class="form-check-label" for="gridCheck1">
+                        {cate.name}
+                      </label>
+                    </div>
+                  );
+                })}
+              {/* <button onClick={clickHandler}>{showMore ? '▲' : '▼'}</button> */}
+              {!showMoreCate && (
+                <button className="btn2" onClick={clickHandlerCate}>
+                  更多▼
+                </button>
+              )}
             </div>
 
             <div className={`${block_items} d-flex flex-column px-2`}>
               <h4>品項</h4>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  三合一
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  二合一
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  黑咖啡
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  拿鐵
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  美式咖啡
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  義式咖啡
-                </label>
-              </div>
+              {items
+                .filter((item, index) => (showMoreItem ? true : index <= 3))
+                .map((item) => {
+                  return (
+                    <div className="form-check">
+                      <input className="form-check-input" type="checkbox" />
+                      <label class="form-check-label" for="gridCheck1">
+                        {item.name}
+                      </label>
+                    </div>
+                  );
+                })}
+              {/* <button onClick={clickHandler}>{showMore ? '▲' : '▼'}</button> */}
+              {!showMoreItem && (
+                <button className="btn2" onClick={clickHandlerItem}>
+                  更多▼
+                </button>
+              )}
             </div>
 
             <div className={`${block_origin} d-flex flex-column px-2`}>
               <h4>產地</h4>
-              <div className="form-check ">
-                <input className="form-check-input " type="checkbox" />
-                <label className="form-check-label" for="gridCheck1">
-                  巴西
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  印尼
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  肯尼亞
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  夏威夷
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" />
-                <label class="form-check-label" for="gridCheck1">
-                  義大利
-                </label>
-              </div>
+              {origins
+                .filter((origin, index) => (showMoreOrigin ? true : index <= 3))
+                .map((origin) => {
+                  return (
+                    <div className="form-check">
+                      <input className="form-check-input" type="checkbox" />
+                      <label class="form-check-label" for="gridCheck1">
+                        {origin.name}
+                      </label>
+                    </div>
+                  );
+                })}
+              {/* <button onClick={clickHandler}>{showMore ? '▲' : '▼'}</button> */}
+              {!showMoreOrigin && (
+                <button className="btn2" onClick={clickHandlerOrigin}>
+                  更多▼
+                </button>
+              )}
             </div>
 
             <div className={`${block_price} d-flex flex-column px-2`}>
@@ -202,18 +158,20 @@ const List = () => {
               </button>
             </div>
           </div>
-          <div className={`${card_block} col-md-10`}>
-            <div
-              className={`${card_group} d-flex justify-content-between flex-wrap mx-0`}
-            >
+          <div className={`${card_block} col-12 col-md-10 `}>
+            <div className={`${card_group} row mx-0`}>
               {cardInfo.map((info) => {
                 return (
                   <div
-                    className={`${card_control}`}
+                    className={`${card_control} col-6 col-md-3 px-0 mb-3 `}
                     key={info.id}
                     onClick={() => goToDetail(info.id)}
                   >
-                    <Card title={info.title} rating={info.rating} />
+                    <Card
+                      title={info.title}
+                      rating={info.rating}
+                      price={info.price}
+                    />
                   </div>
                 );
               })}
