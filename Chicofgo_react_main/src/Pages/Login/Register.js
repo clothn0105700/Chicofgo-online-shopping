@@ -15,9 +15,9 @@ function Login() {
     email: '7788@gmail.com',
     password: 'test1234',
     confirmPassword: 'test1234',
-    account: 'c87632',
     birthday: '1990-10-10',
     address: '火星火星火星',
+    name: '阿明',
   });
 
   // email input 的 change
@@ -68,14 +68,15 @@ function Login() {
               </div>
               <FloatingLabel
                 controlId="floatingInput"
-                label="創建帳號："
+                label="email："
                 className={`mb-3`}
               >
                 <Form.Control
-                  type="text"
+                  type="email"
                   placeholder=" "
-                  name="account"
-                  value={member.account}
+                  // id="email"
+                  name="email"
+                  value={member.email}
                   onChange={handleChange}
                 />
               </FloatingLabel>
@@ -111,15 +112,14 @@ function Login() {
 
               <FloatingLabel
                 controlId="floatingInput"
-                label="email："
+                label="姓名："
                 className={`mb-3`}
               >
                 <Form.Control
-                  type="email"
+                  type="text"
                   placeholder=" "
-                  // id="email"
-                  name="email"
-                  value={member.email}
+                  name="name"
+                  value={member.name}
                   onChange={handleChange}
                 />
               </FloatingLabel>

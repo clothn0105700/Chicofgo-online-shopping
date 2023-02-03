@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import Navbar from './Layout/Navbar/Navbar';
 import Products from './Pages/Products/Products';
 import Event from './Pages/Event';
@@ -24,66 +25,68 @@ import Collect from './Pages/Account/Collect/Collect';
 import CollectItem from './Pages/Account/Collect/Component/CollectItem';
 import CollectShop from './Pages/Account/Collect/Component/CollectShop';
 import ShoppingCart from './Pages/Account/ShoppingCart/ShoppingCart';
+import AuthContextProvider from './Hook/AuthContext';
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <Navbar />
-        <ScrollToTop>
-          <Routes>
-            <Route path="home" element={<Home />} />
-            <Route path="/" element={<Navigate to="home" replace={true} />} />
-            {/*product*/}
-            <Route path="/products">
-              <Route path="/products" element={<Products />} />
+        <AuthContextProvider>
+          <Navbar />
+          <ScrollToTop>
+            <Routes>
+              <Route path="home" element={<Home />} />
+              <Route path="/" element={<Navigate to="home" replace={true} />} />
+              {/*product*/}
+              <Route path="/products">
+                <Route path="/products" element={<Products />} />
+                <Route
+                  path="/products/product_detail/:product_id"
+                  element={<ProductDetail />}
+                />
+              </Route>
+              {/*product*/}
+              <Route path="event" element={<Event />} />
+              <Route path="coupon" element={<Coupon />} />
+              <Route path="account" element={<Account />} />
+
+              <Route path="orderHistory" element={<OrderHistory />} />
+              <Route path="orderStatus" element={<OrderStatus />} />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
               <Route
-                path="/products/product_detail/:product_id"
+                path="/product_detail/:product_id"
                 element={<ProductDetail />}
               />
-            </Route>
-            {/*product*/}
-            <Route path="event" element={<Event />} />
-            <Route path="coupon" element={<Coupon />} />
-            <Route path="account" element={<Account />} />
+              <Route path="member" element={<Member />}>
+                <Route index element={<Account />} />
+                <Route path="account" element={<Account />} />
+                <Route path="orderHistory" element={<OrderHistory />} />
+                <Route path="orderStatus/:order_id" element={<OrderStatus />} />
+                <Route path="password" element={<Password />} />
+                <Route path="creditcard" element={<Creditcard />} />
+                <Route path="cardDetail" element={<CardDetail />} />
+                <Route path="address" element={<Address />} />
+                <Route path="addressDatail" element={<AddressDetail />} />
+                <Route path="coupons" element={<Coupons />} />
+                <Route path="messages" element={<Messages />} />
+                <Route path="shoppingcart" element={<ShoppingCart />} />
 
-            <Route path="orderHistory" element={<OrderHistory />} />
-            <Route path="orderStatus" element={<OrderStatus />} />
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route
-              path="/product_detail/:product_id"
-              element={<ProductDetail />}
-            />
-            <Route path="member" element={<Member />}>
-              <Route index element={<Account />} />
-              <Route path="account" element={<Account />} />
-              <Route path="orderHistory" element={<OrderHistory />} />
-              <Route path="orderStatus/:order_id" element={<OrderStatus />} />
-              <Route path="password" element={<Password />} />
-              <Route path="creditcard" element={<Creditcard />} />
-              <Route path="cardDetail" element={<CardDetail />} />
-              <Route path="address" element={<Address />} />
-              <Route path="addressDatail" element={<AddressDetail />} />
-              <Route path="coupons" element={<Coupons />} />
-              <Route path="messages" element={<Messages />} />
-              <Route path="shoppingcart" element={<ShoppingCart />} />
-
-              <Route path="collect" element={<Collect />}>
-                <Route
-                  index
-                  element={
-                    <Navigate to="/member/collect/shop" replace={true} />
-                  }
-                />
-                <Route path="shop" element={<CollectShop />} />
-                <Route path="items" element={<CollectItem />} />
+                <Route path="collect" element={<Collect />}>
+                  <Route
+                    index
+                    element={
+                      <Navigate to="/member/collect/shop" replace={true} />
+                    }
+                  />
+                  <Route path="shop" element={<CollectShop />} />
+                  <Route path="items" element={<CollectItem />} />
+                </Route>
               </Route>
-            </Route>
-          </Routes>
-        </ScrollToTop>
-
-        <Footer />
+            </Routes>
+          </ScrollToTop>
+          <Footer />
+        </AuthContextProvider>
       </BrowserRouter>
     </>
   );

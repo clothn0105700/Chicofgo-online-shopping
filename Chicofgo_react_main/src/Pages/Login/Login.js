@@ -1,17 +1,27 @@
-import React from 'react';
-// import './Login.scss';
 import { Link, useNavigate } from 'react-router-dom';
-import { Fragment } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import { React, Fragment, useState, useEffect, useContext } from 'react';
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  FloatingLabel,
+} from 'react-bootstrap';
 import style from './Login.module.scss';
-import { useState } from 'react';
 import axios from 'axios';
+import { AuthContext } from '../../Hook/AuthContext';
 
 function Login() {
+  const { isLoggedIn, setUsername, setIsLoggedIn } = useContext(AuthContext);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(-1);
+    }
+  }, [isLoggedIn]);
 
   const [member, setMember] = useState({
     email: '7788@gmail.com',
@@ -32,12 +42,14 @@ function Login() {
         withCredentials: true,
       }
     );
-    console.log(response.data);
-    console.log(response.status);
+    // console.log(response.data);
+    // console.log(response.status);
 
     if (response.status === 200) {
       console.log('登入成功');
-      navigate('/');
+      setIsLoggedIn(true);
+      setUsername(response.data.member.name);
+      navigate(-1);
     }
   }
   return (
