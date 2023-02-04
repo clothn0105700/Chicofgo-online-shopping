@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import Navbar from './Layout/Navbar/Navbar';
 import Products from './Pages/Products/Products';
-import Event from './Pages/Event';
+import Event from './Pages/Event/Event';
 import Coupon from './Pages/Coupon/Coupon';
 import Account from './Pages/Account/Account';
 import Password from './Pages/Account/Password/ChangePassword';
