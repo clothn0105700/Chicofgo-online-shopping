@@ -1,13 +1,6 @@
-import { useState } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Button,
-  Image,
-  InputGroup,
-} from 'react-bootstrap';
+import { useState, useEffect, useLayoutEffect } from 'react';
+import axios from 'axios';
+import { Row, Col, Form, Button, Image, InputGroup } from 'react-bootstrap';
 import { BsFillPencilFill } from 'react-icons/bs';
 import { FaEdit } from 'react-icons/fa';
 import MemberBar from './Components/MemberBar';
@@ -21,9 +14,22 @@ registerLocale('zh-TW', ZhTW);
 
 function Account() {
   // const [imageUrl, setImageUrl] = useState('../../Layout/Navbar/logo.png');
-  const [edit, setEdit] = useState('');
+  // const [edit, setEdit] = useState('');
   const [inputDisable, setInputDisable] = useState('true');
+  const [backendData, setbackendData] = useState([]);
 
+  useLayoutEffect(() => {
+    async function getAccountData() {
+      let response = await axios.get(
+        'http://localhost:3001/api/members/account',
+        {
+          withCredentials: true,
+        }
+      );
+      setbackendData(response.data);
+    }
+    getAccountData();
+  }, []);
   //製作單一disable
   const handleClick = (currentInput) => {
     if (inputDisable === currentInput) {
@@ -34,7 +40,7 @@ function Account() {
   };
 
   //datePicker
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState();
 
   return (
     <ChContainer
@@ -76,10 +82,7 @@ function Account() {
                 type="text"
                 id="name"
                 name="name"
-                value={edit}
-                onChange={(e) => {
-                  setEdit(e.target.value);
-                }}
+                value={backendData.name}
               />
               <Button
                 variant=""
@@ -99,6 +102,7 @@ function Account() {
                 type="text"
                 id="account"
                 name="account"
+                value={backendData.account}
               />
               <Button
                 variant=""
@@ -118,6 +122,7 @@ function Account() {
                 type="text"
                 id="email"
                 name="email"
+                value={backendData.email}
               />
               <Button
                 variant=""
@@ -137,6 +142,7 @@ function Account() {
                 type="text"
                 id="phone"
                 name="phone"
+                value={backendData.phone}
               />
               <Button
                 variant=""
@@ -159,6 +165,7 @@ function Account() {
                   name="group1"
                   type={type}
                   id={`inline-${type}-1`}
+                  Checked={backendData.gender === 1 ? 'checked' : ''}
                 />
                 <Form.Check
                   inline
@@ -166,6 +173,7 @@ function Account() {
                   name="group1"
                   type={type}
                   id={`inline-${type}-2`}
+                  Checked={backendData.gender === 2 ? 'checked' : ''}
                 />
                 <Form.Check
                   inline
@@ -173,19 +181,29 @@ function Account() {
                   name="group1"
                   type={type}
                   id={`inline-${type}-3`}
+                  Checked={backendData.gender === 0 ? 'checked' : ''}
                 />
               </h5>
             </div>
           ))}
           <h5>
-            <Row className="py-2">
-              <Col sm={2}>生日：</Col>
-              <Col>
-                <DatePicker
-                  locale="zh-TW"
-                  selected={startDate}
-                  onChange={(date) => setStartDate(date)}
-                />
+            <Row className="py-2 align-items-center pb-3">
+              <Col className="col-2 text-nowrap ">生日：</Col>
+              <Col className={`col-5 `}>
+                <div className={`${style.datePicker} `}>
+                  <DatePicker
+                    className={`w-100`}
+                    dateFormat="yyyy-MM-dd"
+                    locale="zh-TW"
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    isClearable
+                    placeholderText={String(backendData.birthday).substring(
+                      0,
+                      10
+                    )}
+                  />
+                </div>
               </Col>
             </Row>
           </h5>
