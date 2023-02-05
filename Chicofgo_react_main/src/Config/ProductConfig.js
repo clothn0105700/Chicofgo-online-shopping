@@ -15,9 +15,7 @@ export const cates = [
   { id: 4, name: '膠囊咖啡' },
   { id: 5, name: '奶精' },
   { id: 6, name: '濾掛' },
-  { id: 7, name: '冰滴壺' },
-  { id: 8, name: '奶泡機' },
-  { id: 9, name: '咖啡機' },
+  { id: 7, name: '咖啡機' },
 ];
 
 export const items = [
