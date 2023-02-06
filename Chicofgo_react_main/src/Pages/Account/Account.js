@@ -13,11 +13,65 @@ import ZhTW from 'date-fns/locale/zh-TW';
 registerLocale('zh-TW', ZhTW);
 
 function Account() {
+  const convertDate = (str) => {
+    str = str.toString();
+    let parts = str.split(' ');
+    let months = {
+      Jan: '01',
+      Feb: '02',
+      Mar: '03',
+      Apr: '04',
+      May: '05',
+      Jun: '06',
+      Jul: '07',
+      Aug: '08',
+      Sep: '09',
+      Oct: '10',
+      Nov: '11',
+      Dec: '12',
+    };
+    return parts[3] + '-' + months[parts[1]] + '-' + parts[2];
+  };
   // const [imageUrl, setImageUrl] = useState('../../Layout/Navbar/logo.png');
   // const [edit, setEdit] = useState('');
   const [inputDisable, setInputDisable] = useState('true');
   const [backendData, setbackendData] = useState([]);
+  //datePicker
+  const [startDate, setStartDate] = useState();
 
+  //
+  function handleChange(e) {
+    let newMember = { ...backendData };
+    newMember[e.target.name] = e.target.value;
+    setbackendData(newMember);
+    console.log(newMember);
+  }
+  async function handleSubmit(e) {
+    console.log('handleSubmit');
+
+    setbackendData({
+      ...backendData,
+      birthday: convertDate(backendData.birthday),
+    });
+
+    // 關閉表單的預設行為
+    e.preventDefault();
+    let response = await axios.post(
+      'http://localhost:3001/api/members/accountChange',
+      backendData,
+      {
+        // 為了跨源存取 cookie
+        withCredentials: true,
+      }
+    );
+
+    console.log(response.data);
+    if (response.status === 200) {
+      console.log('更新成功');
+      // navigate('/login');
+    }
+  }
+  //
   useLayoutEffect(() => {
     async function getAccountData() {
       let response = await axios.get(
@@ -38,9 +92,6 @@ function Account() {
       setInputDisable(currentInput);
     }
   };
-
-  //datePicker
-  const [startDate, setStartDate] = useState();
 
   return (
     <ChContainer
@@ -83,6 +134,7 @@ function Account() {
                 id="name"
                 name="name"
                 value={backendData.name}
+                onChange={handleChange}
               />
               <Button
                 variant=""
@@ -103,6 +155,7 @@ function Account() {
                 id="account"
                 name="account"
                 value={backendData.account}
+                onChange={handleChange}
               />
               <Button
                 variant=""
@@ -123,6 +176,7 @@ function Account() {
                 id="email"
                 name="email"
                 value={backendData.email}
+                onChange={handleChange}
               />
               <Button
                 variant=""
@@ -143,6 +197,7 @@ function Account() {
                 id="phone"
                 name="phone"
                 value={backendData.phone}
+                onChange={handleChange}
               />
               <Button
                 variant=""
@@ -162,26 +217,29 @@ function Account() {
                 <Form.Check
                   inline
                   label="男性"
-                  name="group1"
+                  name="gender"
                   type={type}
                   id={`inline-${type}-1`}
                   Checked={backendData.gender === 1 ? 'checked' : ''}
+                  onChange={handleChange}
                 />
                 <Form.Check
                   inline
                   label="女性"
-                  name="group1"
+                  name="gender"
                   type={type}
                   id={`inline-${type}-2`}
                   Checked={backendData.gender === 2 ? 'checked' : ''}
+                  onChange={handleChange}
                 />
                 <Form.Check
                   inline
                   label="不透露"
-                  name="group1"
+                  name="gender"
                   type={type}
                   id={`inline-${type}-3`}
                   Checked={backendData.gender === 0 ? 'checked' : ''}
+                  onChange={handleChange}
                 />
               </h5>
             </div>
@@ -196,7 +254,7 @@ function Account() {
                     dateFormat="yyyy-MM-dd"
                     locale="zh-TW"
                     selected={startDate}
-                    onChange={(date) => setStartDate(date)}
+                    onChange={(date) => (setStartDate(date), console.log(date))}
                     isClearable
                     placeholderText={String(backendData.birthday).substring(
                       0,
@@ -213,6 +271,7 @@ function Account() {
             <Button
               variant="chicofgo-brown"
               className={` px-5 py-1 shadow chicofgo_white_font`}
+              onClick={handleSubmit}
             >
               儲存
             </Button>

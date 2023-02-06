@@ -73,17 +73,18 @@ app.use(
 // app.[Method]
 // get, post, put, patch, delete, option, head
 // 路由中間件
-// app.get('/', (req, res, next) => {
-//   console.log('這裡是首頁 2', req.mfee31, req.dt);
-//   res.send('Hello Express 9');
-// });
+app.get('/', (req, res, next) => {
+  console.log('這裡是首頁 2', req.mfee31, req.dt);
+  res.send('Hello Express 9');
+});
 
-// app.get('/api', (req, res, next) => {
-//   res.json({
-//     name: 'John',
-//     age: 18,
-//   });
-// });
+app.get('/api', (req, res, next) => {
+  res.json({
+    name: 'John',
+    age: 18,
+  });
+  console.log('這裡是API')
+});
 
 const stockRouter = require('./routers/stockRouter');
 app.use('/api/stocks', stockRouter);
@@ -94,10 +95,10 @@ app.use('/api/auth', authRouter);
 const memberRouter = require('./routers/memberRouter');
 app.use('/api/members', memberRouter);
 
-app.use((req, res, next) => {
-  console.log('這裡是的一個中間件 C');
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log('這裡是的一個中間件 C');
+//   next();
+// });
 
 // app.get('/test', (req, res, next) => {
 //   console.log('這裡是 test 頁面', req.dt);
