@@ -51,6 +51,13 @@ function Login() {
       navigate(-1);
     }
   }
+
+  // ---顯示密碼---
+  const [passwordIsOpen, setPasswordIsOpen] = useState(false);
+  const passwordOpen = () => {
+    setPasswordIsOpen(!passwordIsOpen);
+  };
+
   return (
     <Fragment>
       <Container fluid className={`${style.background} py-4`}>
@@ -93,7 +100,7 @@ function Login() {
                 className={`mb-3`}
               >
                 <Form.Control
-                  type="password"
+                  type={passwordIsOpen ? 'text' : 'password'}
                   placeholder=" "
                   name="password"
                   value={member.password}
@@ -103,7 +110,11 @@ function Login() {
               <Row className={`mb-3 justify-content-bewteen`}>
                 <Col md="auto">
                   <Form.Group controlId="showPassword">
-                    <Form.Check type="checkbox" label="顯示密碼" />
+                    <Form.Check
+                      type="checkbox"
+                      label="顯示密碼"
+                      onClick={passwordOpen}
+                    />
                   </Form.Group>
                 </Col>
                 <Col className={`col-auto`}>
