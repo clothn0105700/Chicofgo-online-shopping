@@ -3,7 +3,7 @@ import { React, useContext } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import SideBar from './Account/Components/SideBar';
 import memberBackground from './Account/Components/member_background.png';
-import { AuthContext } from '../Hook/AuthContext';
+import { AuthContext } from '../Contexts/AuthContext';
 function Member() {
   const { isLoggedIn } = useContext(AuthContext);
   if (!isLoggedIn) return <Navigate to="/login" replace={true} />;

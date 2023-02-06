@@ -10,7 +10,7 @@ import {
   BsFillCartFill,
 } from 'react-icons/bs';
 import style from './Navbar.module.scss';
-import { AuthContext } from '../../Hook/AuthContext';
+import { AuthContext } from '../../Contexts/AuthContext';
 import React, { useContext, useEffect } from 'react';
 import axios from 'axios';
 

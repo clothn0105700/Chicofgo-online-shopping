@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 import style from './Login.module.scss';
 import axios from 'axios';
-import { AuthContext } from '../../Hook/AuthContext';
+import { AuthContext } from '../../Contexts/AuthContext';
 
 function Login() {
   const { isLoggedIn, setUsername, setIsLoggedIn } = useContext(AuthContext);

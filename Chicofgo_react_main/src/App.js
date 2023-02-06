@@ -25,7 +25,6 @@ import Collect from './Pages/Account/Collect/Collect';
 import CollectItem from './Pages/Account/Collect/Component/CollectItem';
 import CollectShop from './Pages/Account/Collect/Component/CollectShop';
 import ShoppingCart from './Pages/Account/ShoppingCart/ShoppingCart';
-import AuthContextProvider from './Hook/AuthContext';
 
 import AllProviders from './Contexts/AllProviders';
 
