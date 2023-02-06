@@ -1,31 +1,23 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import Navbar from './Layout/Navbar/Navbar';
-// import Home from './Pages/Home';
 import Products from './Pages/Products/Products';
-import Event from './Pages/Event';
+import Event from './Pages/Event/Event';
 import Coupon from './Pages/Coupon/Coupon';
 import Account from './Pages/Account/Account';
-
 import Password from './Pages/Account/Password/ChangePassword';
 import Creditcard from './Pages/Account/CreditCard/CreditCard';
 import CardDetail from './Pages/Account/CreditCard/CardDetail';
 import Address from './Pages/Account/Address/Address';
 import AddressDetail from './Pages/Account/Address/AddressDetail';
-// import ChangePassword from './Pages/account/password/changePassword';
-// import Sidebar from './Layout/sidebar/sidebar'
-// import Navbaro from './component/navbar-or'
-// import Carousel from './component/carousel'
-// import Path from './Layout/Item/Path/Path';
 import Footer from './Layout/Footer/Footer';
 import ProductDetail from './Pages/Products/ProductDetail/ProductDetailPage';
-// order
 import OrderHistory from './Pages/Order/OrderHistory';
 import OrderStatus from './Pages/Order/OrderStatus';
 import Login from './Pages/Login/Login';
 import Register from './Pages/Login/Register';
 import Home from './Pages/Home/Home';
 import ScrollToTop from './Hook/ScrollToTop';
-
 import Member from './Pages/Member';
 import Coupons from './Pages/Account/Coupons/Coupons';
 import Messages from './Pages/Account/Messages/Messages';
@@ -33,6 +25,7 @@ import Collect from './Pages/Account/Collect/Collect';
 import CollectItem from './Pages/Account/Collect/Component/CollectItem';
 import CollectShop from './Pages/Account/Collect/Component/CollectShop';
 import ShoppingCart from './Pages/Account/ShoppingCart/ShoppingCart';
+import AuthContextProvider from './Hook/AuthContext';
 
 import AllProviders from './Contexts/AllProviders';
 
@@ -40,10 +33,12 @@ function App() {
   return (
     <>
       <BrowserRouter>
+
         <AllProviders>
           <Navbar />
           {/* <Path /> */}
           {/* <MemberSideBar /> */}
+
           <ScrollToTop>
             <Routes>
               <Route path="home" element={<Home />} />
@@ -69,9 +64,11 @@ function App() {
                 path="/product_detail/:product_id"
                 element={<ProductDetail />}
               />
+
               {/* <Route path="/">
             <Route index element={}
           </Route> */}
+
               <Route path="member" element={<Member />}>
                 <Route index element={<Account />} />
                 <Route path="account" element={<Account />} />
@@ -100,8 +97,10 @@ function App() {
             </Routes>
           </ScrollToTop>
 
+
           <Footer />
         </AllProviders>
+
       </BrowserRouter>
     </>
   );

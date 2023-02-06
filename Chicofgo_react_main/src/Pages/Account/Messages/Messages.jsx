@@ -18,7 +18,12 @@ function Messages() {
         >
           <Col className={`col-3 `}>
             <Form className={`px-4 mx-2 chicofgo_brown_font`}>
-              <Form.Check type="switch" id="custom-switch" label="全部顯示" />
+              <Form.Check
+                className={`text-nowrap `}
+                type="switch"
+                id="custom-switch"
+                label="全部顯示"
+              />
             </Form>
           </Col>
           <Col className={`col-6`}>
