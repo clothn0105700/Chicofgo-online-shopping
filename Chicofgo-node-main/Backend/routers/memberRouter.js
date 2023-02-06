@@ -47,6 +47,15 @@ const registerRules = [
   body('email').isEmail().withMessage('請輸入正確格式的 Email'),
   // body('phone').isLength({ min: 10 }).withMessage('請輸入正確手機號碼格式'),
   body('birthday').isBefore().withMessage('不是未來人吧'),
+
+  body('phone').custom((value, { req }) => {
+    var MobileReg = /^(09)[0-9]{8}$/;
+    if (!value.match(MobileReg)) {
+      throw new Error('手機格式錯誤');
+    } else {
+      return true;
+    }
+  }),
 ];
 
 router.use('/accountChange', checkLogin, registerRules, async (req, res, next) => {
@@ -63,31 +72,42 @@ router.use('/accountChange', checkLogin, registerRules, async (req, res, next) =
   let [oldAccountDatas] = await pool.execute('SELECT * FROM user_member WHERE id = ?', [thisId]);
   let oldAccountData = oldAccountDatas[0];
 
-  let result = await pool.execute('UPDATE user_member SET name=?, account=?, email=?, phone=?, birthday=? WHERE id = ?;', [
+  // 驗證生日
+  let birthdayCheck = req.body.birthday;
+  if (birthdayCheck.length > 10) {
+    birthdayCheck = oldAccountData.birthday;
+  }
+  // 驗證信箱
+  let [membersEmail] = await pool.execute('SELECT * FROM user_member WHERE email = ?', [req.body.email]);
+  if (membersEmail.length > 0 && req.body.email != oldAccountData.email) {
+    return res.status(400).json({
+      errors: [
+        {
+          msg: 'email 已經註冊過',
+          param: 'email',
+        },
+      ],
+    });
+  }
+
+  let result = await pool.execute('UPDATE user_member SET name=?, email=?, phone=?, birthday=?, gender=? WHERE id = ?;', [
     req.body.name,
-    req.body.account,
     req.body.email,
     req.body.phone,
     req.body.birthday,
+    req.body.gender,
     thisId,
   ]);
-
-  console.log('7788999999999999999', result);
+  console.log('更新結果', result);
 
   // 回覆給前端
-  // return res.json({
-  //   name: accountData.name,
-  //   // email: accountData.email,
-  //   // account: accountData.account,
-  //   // gender: accountData.gender,
-  //   // birthday: accountData.birthday,
-  //   // phone": accountData.phone,
-  // });
-  // }
-
-
-  // 能夠通過 checkLogin 中間件，表示一定一定有 req.session.member -> 一定是登入後
-  // 安心地使用 req.session.member.id 去資料庫拿這個 id 的訂單
+  return res.json({
+    name: req.body.name,
+    email: req.body.email,
+    gender: req.body.gender,
+    birthday: req.body.birthday,
+    phone: req.body.phone,
+  });
 });
 
 module.exports = router;

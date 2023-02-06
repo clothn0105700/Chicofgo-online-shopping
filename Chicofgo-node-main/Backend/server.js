@@ -42,6 +42,7 @@ app.use(
   })
 );
 
+
 // middleware => pipeline pattern
 
 // 設定 express 處理靜態檔案
