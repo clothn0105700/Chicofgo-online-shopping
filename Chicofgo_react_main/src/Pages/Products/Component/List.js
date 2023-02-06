@@ -48,7 +48,7 @@ const List = () => {
   const [showMoreOrigin, setShowMoreOrigin] = useState(false);
   const navigate = useNavigate();
   function clickHandler() {
-    setShowMore((pre) => !pre);
+    setShowMore(!showMore);
   }
   function clickHandlerCate() {
     setShowMoreCate((pre) => !pre);
@@ -60,6 +60,7 @@ const List = () => {
     setShowMoreOrigin((pre) => !pre);
   }
   //到商品細節頁
+  //cardID=info.id
   function goToDetail(cardId) {
     navigate(`/products/product_detail/${cardId}`, { replace: false });
   }

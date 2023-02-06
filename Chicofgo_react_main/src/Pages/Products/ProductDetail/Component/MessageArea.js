@@ -8,6 +8,9 @@ const MessageArea = (props) => {
   const numberRating = useMemo(() => {
     return Number.isNaN(parseInt(rating)) ? 1 : parseInt(rating);
   }, [rating]);
+
+  
+
   const {
     message_control,
     message_box,

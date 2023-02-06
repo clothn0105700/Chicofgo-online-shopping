@@ -36,6 +36,7 @@ const ProductDetail = () => {
 
   const [productsCount, setProductsCount] = useState(1);
   const [dataLoaded, setDataLoaded] = useState(false);
+  const haveMessage = message.length;
   const {
     detail_contorl,
     product_detail,
@@ -50,6 +51,8 @@ const ProductDetail = () => {
     specification_box,
     orther_product,
     evaluate_area,
+    path_box,
+    path_over,
   } = styles;
 
   // const [detail, setDetail] = useState({});
@@ -82,10 +85,13 @@ const ProductDetail = () => {
     <div className={`${test}`}>
       <div className="custom-container d-flex justify-content-center">
         <div className={`${detail_contorl}`}>
-          <Path
-            pathObj={{ path: ['．商品列表', `．${detail.products_name}`] }}
-            url={['/products']}
-          />
+          <p className={`${path_box}`}>
+            <Path
+              pathObj={{ path: ['．商品列表', `．${detail.products_name}`] }}
+              url={['/products']}
+            />
+          </p>
+
           <Link to="/products" style={{ textDecoration: 'none' }}>
             <div className={`${btn_contorl} d-flex justify-content-end mb-3`}>
               <button className="btn1 d-flex align-items-center justify-content-center ">
@@ -126,15 +132,20 @@ const ProductDetail = () => {
             <h3 className="my-5">顧客評論區</h3>
             <EvaluateArea />
           </div>
+
           {filteredMessage.map((mes) => {
             return (
               <div key={mes.id}>
                 <br />
-                <MessageArea
-                  rating={mes.message_rating}
-                  time={mes.message_time}
-                  s={mes.speak}
-                />
+                {haveMessage === 0 ? (
+                  <p>目前尚未有留言</p>
+                ) : (
+                  <MessageArea
+                    rating={mes.message_rating}
+                    time={mes.message_time}
+                    s={mes.speak}
+                  />
+                )}
               </div>
             );
           })}
