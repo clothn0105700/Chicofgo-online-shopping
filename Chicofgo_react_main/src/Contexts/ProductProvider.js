@@ -15,8 +15,8 @@ function ProductProvider(props) {
     const output = response.data.map((item) => {
       return {
         ...item,
-        products_info: item.products_info.split('<br>').join('\n'),
-        products_spec: item.products_spec.split('<br>').join('\n'),
+        introduction: item.introduction.split('<br>').join('\n'),
+        detail: item.detail.split('<br>').join('\n'),
       };
     });
     setProducts(output);

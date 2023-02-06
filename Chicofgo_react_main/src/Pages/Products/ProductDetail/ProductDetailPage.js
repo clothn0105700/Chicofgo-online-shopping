@@ -87,7 +87,7 @@ const ProductDetail = () => {
         <div className={`${detail_contorl}`}>
           <p className={`${path_box}`}>
             <Path
-              pathObj={{ path: ['．商品列表', `．${detail.products_name}`] }}
+              pathObj={{ path: ['．商品列表', `．${detail.name}`] }}
               url={['/products']}
             />
           </p>
@@ -109,9 +109,9 @@ const ProductDetail = () => {
                 <ProductInfo
                   productsCount={productsCount}
                   setProductsCount={setProductsCount}
-                  title={detail.products_name}
-                  content={detail.products_info}
-                  price={detail.products_price}
+                  title={detail.name}
+                  content={detail.introduction}
+                  price={detail.price}
                 />
               </div>
             </div>
@@ -119,7 +119,7 @@ const ProductDetail = () => {
           <div className={`${specification_box}`}>
             <br />
             <br />
-            <Specification spec={detail.products_spec} />
+            <Specification spec={detail.detail} />
           </div>
           <div className={`${orther_product}`}>
             <br />

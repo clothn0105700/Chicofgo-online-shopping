@@ -182,9 +182,9 @@ const List = () => {
                     onClick={() => goToDetail(info.id)}
                   >
                     <Card
-                      title={info.products_name}
+                      title={info.name}
                       rating={info.rating}
-                      price={info.products_price}
+                      price={info.price}
                     />
                   </div>
                 );

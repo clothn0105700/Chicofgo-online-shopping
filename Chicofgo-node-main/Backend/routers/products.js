@@ -26,7 +26,7 @@ router.get('/', middlewares, async (req, res, next) => {
   // let results = await connection.query('SELECT * FROM stocks');
   // let data = results[0];
   console.log('這裡是 /api/products');
-  let [data] = await pool.query('SELECT * FROM products_list');
+  let [data] = await pool.query('SELECT * FROM product_list');
   console.log("product data: ", data);
   res.json(data);
 });
