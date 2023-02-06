@@ -1,11 +1,13 @@
 import React from 'react';
+import { useEffect, useMemo } from 'react';
 import styles from './Card.module.scss';
 import testpic from '../../Img/ProductsTest/test.jpg';
 import { v4 } from 'uuid';
-import { FaShoppingCart, FaBookmark } from "react-icons/fa";
+import { FaShoppingCart, FaBookmark } from 'react-icons/fa';
 
 const Card = (props) => {
   const { title, rating, price } = props;
+
   const {
     card_contorl,
     card_body,
@@ -18,6 +20,10 @@ const Card = (props) => {
     mark_contorl,
     cart_contorl,
   } = styles;
+  const numberRating = useMemo(() => {
+    return Number.isNaN(parseInt(rating)) ? 1 : parseInt(rating);
+  }, [rating]);
+
   return (
     <div className={`${card_contorl}`}>
       <div className={`${card_body} card`}>
@@ -32,7 +38,7 @@ const Card = (props) => {
             <p>{title}</p>
           </div>
           <div className={`${evaluate} d-flex justify-content-center mt-2`}>
-            {new Array(rating).fill().map((star) => {
+            {new Array(numberRating).fill().map((star) => {
               return <p key={v4()}>⭐</p>;
             })}
           </div>
@@ -40,7 +46,7 @@ const Card = (props) => {
         <div
           className={`${keepshop} card-img-bottom d-flex align-items-center `}
         >
-          <div className={`${price_contorl} `}>{price}</div>
+          <div className={`${price_contorl} `}>${price}</div>
           <div className={`${mark_contorl} `}>
             <FaBookmark />
           </div>

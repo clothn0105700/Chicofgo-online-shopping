@@ -27,12 +27,18 @@ import CollectShop from './Pages/Account/Collect/Component/CollectShop';
 import ShoppingCart from './Pages/Account/ShoppingCart/ShoppingCart';
 import AuthContextProvider from './Hook/AuthContext';
 
+import AllProviders from './Contexts/AllProviders';
+
 function App() {
   return (
     <>
       <BrowserRouter>
-        <AuthContextProvider>
+
+        <AllProviders>
           <Navbar />
+          {/* <Path /> */}
+          {/* <MemberSideBar /> */}
+
           <ScrollToTop>
             <Routes>
               <Route path="home" element={<Home />} />
@@ -58,6 +64,11 @@ function App() {
                 path="/product_detail/:product_id"
                 element={<ProductDetail />}
               />
+
+              {/* <Route path="/">
+            <Route index element={}
+          </Route> */}
+
               <Route path="member" element={<Member />}>
                 <Route index element={<Account />} />
                 <Route path="account" element={<Account />} />
@@ -85,8 +96,11 @@ function App() {
               </Route>
             </Routes>
           </ScrollToTop>
+
+
           <Footer />
-        </AuthContextProvider>
+        </AllProviders>
+
       </BrowserRouter>
     </>
   );

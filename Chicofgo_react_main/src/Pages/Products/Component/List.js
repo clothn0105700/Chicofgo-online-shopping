@@ -1,15 +1,18 @@
 import React from 'react';
 import { useEffect, useContext, useState } from 'react';
+import { useProduct } from '../../../Contexts/ProductProvider';
 import { Link, useNavigate } from 'react-router-dom';
 import Card from '../../ComponentShare/Card';
 import styles from './List.module.scss';
 import Path from '../../../Layout/Item/Path/Path';
+import axios from 'axios';
+
 import {
   brands,
   cates,
   items,
   origins,
-  cardInfo,
+  // cardInfo,
 } from '../../../Config/ProductConfig';
 
 const List = () => {
@@ -28,6 +31,16 @@ const List = () => {
     card_block,
     list_container,
   } = styles;
+
+  //資料庫取資料
+  // const [products, setProducts] = useState([]);
+  const { products, getProducts } = useProduct();
+  useEffect(() => {
+    // if (products.length === 0) {
+    // }
+    getProducts();
+  }, []);
+
   //列表選項下拉
   const [showMore, setShowMore] = useState(false);
   const [showMoreCate, setShowMoreCate] = useState(false);
@@ -35,7 +48,7 @@ const List = () => {
   const [showMoreOrigin, setShowMoreOrigin] = useState(false);
   const navigate = useNavigate();
   function clickHandler() {
-    setShowMore((pre) => !pre);
+    setShowMore(!showMore);
   }
   function clickHandlerCate() {
     setShowMoreCate((pre) => !pre);
@@ -47,6 +60,7 @@ const List = () => {
     setShowMoreOrigin((pre) => !pre);
   }
   //到商品細節頁
+  //cardID=info.id
   function goToDetail(cardId) {
     navigate(`/products/product_detail/${cardId}`, { replace: false });
   }
@@ -160,7 +174,7 @@ const List = () => {
           </div>
           <div className={`${card_block} col-12 col-md-10 `}>
             <div className={`${card_group} row mx-0`}>
-              {cardInfo.map((info) => {
+              {products.map((info) => {
                 return (
                   <div
                     className={`${card_control} col-6 col-md-3 px-0 mb-3 `}
@@ -168,7 +182,7 @@ const List = () => {
                     onClick={() => goToDetail(info.id)}
                   >
                     <Card
-                      title={info.title}
+                      title={info.name}
                       rating={info.rating}
                       price={info.price}
                     />
