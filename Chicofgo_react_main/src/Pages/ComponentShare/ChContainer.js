@@ -13,7 +13,10 @@ function Layout(props) {
             minHeight: '100vh',
           }}
         >
-          <Path pathObj={{ path: [props.breadCrumb] }} />
+          <Path
+            pathObj={{ path: [props.breadCrumb] }}
+            fontStyle="chicofgo_white_font chicofgo-font-700"
+          />
           <Row
             className={`${props.ChClass} rounded-5 justify-content-center `}
             style={{

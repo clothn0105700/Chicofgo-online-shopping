@@ -1,15 +1,7 @@
-// @import '../../../GlobalStyles/Global.scss';
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,900&display=swap');
-
 footer {
   margin: auto;
-  height: 370px;
+  min-height: 370px;
   background-color: rgb(238, 238, 238);
-}
-
-.sociallink_wrap {
-  padding-left: 17%;
-  padding-right: 17%;
 }
 
 .foot_a {
@@ -17,6 +9,7 @@ footer {
   font-family: 'Roboto', sans-serif;
   font-size: 17px;
   color: black;
+  font-weight: bold;
 }
 
 .sociallink a img {

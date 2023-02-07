@@ -26,7 +26,8 @@ const Productinfo = (props) => {
           <h3>{title}</h3>
         </div>
         <div className={`${content_box}`}>
-          <p className="mt-2">{content}</p>
+          {/* <p className="mt-2">{content}</p> */}
+          <pre>{content}</pre>
         </div>
 
         <h4 className="d-flex mt-2">
@@ -34,7 +35,7 @@ const Productinfo = (props) => {
         </h4>
         <h4 className="mt-3">
           <div className="d-flex align-items-center">
-            規格:
+            類別:
             <button className="btn1 mx-3 ">
               <div className={spe_text}>1箱/10包入</div>
             </button>

@@ -1,31 +1,22 @@
 .background {
-  height: 100vh;
   background-image: url('./Component/LoginBackground.jfif');
   background-position: 0 0 0 0;
 }
 
-.textNoDecoration {
-  text-decoration: none;
-}
-
 .content {
+  margin-top: 70px;
   max-width: 450px;
-  // height: 500px;
   padding: 30px 50px;
   background-color: #fff;
   box-shadow: -30px 20px 20px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
 }
 
-.registerContent {
-  background-color: #f8f5ea;
+@media (max-width: 767px) {
+  .content {
+    padding: 3vh;
+  }
 }
-
-title {
-  color: #a17162;
-  font-weight: 900;
-}
-
 .img {
   width: 100px;
   height: 100px;
@@ -36,19 +27,17 @@ title {
 
 .formControl {
   padding: 30px;
-  border-top: 8px solid #f8f5ea;
+  border-top: 5px solid #f8f5ea;
 }
 
-.registerControl {
-  border-top: 8px solid #fff;
-}
-
-.goRegisterBtn {
-  color: #a17162;
+@media (max-width: 767px) {
+  .formControl {
+    padding: 10px 0 0 0;
+  }
 }
 
 .form {
-  width: 300px;
+  max-width: 300px;
 }
 
 .loginBtn {
@@ -57,15 +46,4 @@ title {
   height: 40px;
   box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
-  background-color: #a17162;
-  color: #a17162;
-}
-
-.doRegisterBtn {
-  width: 200px;
-  height: 40px;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
-  background-color: #a17162;
-  color: #a17162;
 }

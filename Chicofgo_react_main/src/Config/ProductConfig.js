@@ -15,9 +15,7 @@ export const cates = [
   { id: 4, name: '膠囊咖啡' },
   { id: 5, name: '奶精' },
   { id: 6, name: '濾掛' },
-  { id: 7, name: '冰滴壺' },
-  { id: 8, name: '奶泡機' },
-  { id: 9, name: '咖啡機' },
+  { id: 7, name: '咖啡機' },
 ];
 
 export const items = [
@@ -40,12 +38,11 @@ export const origins = [
 ];
 
 export const filterRating = [
-  { id: 1, name: '全部(100)' },
-  { id: 2, name: '五星評價(90)' },
-  { id: 3, name: '四星評價(5)' },
-  { id: 4, name: '三星評價(4)' },
-  { id: 5, name: '二星評價(1)' },
-  { id: 6, name: '一星評價(0)' },
+  { id: 1, name: '五星評價(90)' },
+  { id: 2, name: '四星評價(90)' },
+  { id: 3, name: '三星評價(5)' },
+  { id: 4, name: '二星評價(4)' },
+  { id: 5, name: '一星評價(1)' },
 ];
 
 export const filterYear = [
