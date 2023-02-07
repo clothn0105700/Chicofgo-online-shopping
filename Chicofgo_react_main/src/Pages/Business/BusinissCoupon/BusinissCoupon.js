@@ -10,6 +10,7 @@ import {
   InputGroup,
 } from 'react-bootstrap';
 import BusinessSiderbar from '../Components/BusinessSiderbar';
+import CouponCard5 from '../../Account/Coupons/Component/CouponCard5';
 
 function BusinissCoupon() {
   return (
@@ -19,51 +20,80 @@ function BusinissCoupon() {
           <BusinessSiderbar />
           <Col>
             <Row className="bg-white">
-              <Col sm={12} className="text-center pt-2">
-                <h4>訂單管理</h4>
+              <Col sm={12} className="text-center pt-2 my-2">
+                <h4>優惠券</h4>
               </Col>
-              <Col className="btn" sm={2}>
-                全部
-              </Col>
-              <Col className="btn" sm={2}>
-                待出貨
-              </Col>
-              <Col className="btn" sm={2}>
-                運送中
-              </Col>
-              <Col className="btn" sm={2}>
-                已完成
-              </Col>
-              <Col sm={2}></Col>
-              <Col sm={2}></Col>
+              <Form>
+                {['checkbox'].map((type) => (
+                  <div key={`inline-${type}`} className="mb-3">
+                    <Row className="text-center">
+                      <Col sm={2}></Col>
+                      <Col sm={2}>
+                        <Form.Check
+                          inline
+                          label="全部"
+                          name="group1"
+                          type={type}
+                          id={`inline-${type}-1`}
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <Form.Check
+                          inline
+                          label="有效票券"
+                          name="group1"
+                          type={type}
+                          id={`inline-${type}-2`}
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <Form.Check
+                          inline
+                          label="已過期票券"
+                          name="group1"
+                          type={type}
+                          id={`inline-${type}-3`}
+                        />
+                      </Col>
+                      <Col sm={2}>
+                        <InputGroup className="mb-3">
+                          <Form.Control
+                            size="sm"
+                            aria-label="Example text with button addon"
+                            aria-describedby="basic-addon1"
+                          />
+                        </InputGroup>
+                      </Col>
+                      <Col sm={2}></Col>
+                    </Row>
+                  </div>
+                ))}
+              </Form>
+            </Row>
+            <Row className="justify-content-between mt-4">
+              <Col sm={2}>查詢結果</Col>
 
-              <Col sm={10} className="my-4">
-                <InputGroup className="mb-3">
-                  <DropdownButton
-                    variant="outline-secondary"
-                    title="Dropdown"
-                    id="input-group-dropdown-1"
-                  >
-                    <Dropdown.Item href="#">Action</Dropdown.Item>
-                    <Dropdown.Item href="#">Another action</Dropdown.Item>
-                    <Dropdown.Item href="#">Something else here</Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item href="#">Separated link</Dropdown.Item>
-                  </DropdownButton>
-                  <Form.Control aria-label="Text input with dropdown button" />
-                </InputGroup>
+              <Col sm={2}>
+                <Button className="" variant="chicofgo-brown text-white">
+                  ＋新增優惠券
+                </Button>
               </Col>
-              <Col sm={2} className="my-4">
-                <Button variant="chicofgo-brown">查詢</Button>
+            </Row>
+            <Row className="mt-3">
+              <Col sm={6}>
+                <CouponCard5
+                  title="優惠券名稱"
+                  height="100px"
+                  deadline="2023/8/7"
+                ></CouponCard5>
               </Col>
-              <Col sm={12}>查詢結果</Col>
-              <div className="chicofgo_gray d-flex text-center py-2">
-                <Col>日期</Col>
-                <Col>編號</Col>
-                <Col>購買人</Col>
-                <Col>運送方式</Col>
-                <Col>操作</Col>
-              </div>
+              <Col sm={6}>
+                <CouponCard5
+                  title="優惠券名稱"
+                  height="100px"
+                  deadline="2023/8/7"
+                ></CouponCard5>
+              </Col>
             </Row>
           </Col>
         </Row>

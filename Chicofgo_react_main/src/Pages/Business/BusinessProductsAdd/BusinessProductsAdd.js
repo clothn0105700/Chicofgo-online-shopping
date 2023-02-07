@@ -25,7 +25,9 @@ function BusinessProductsAdd() {
               <Col sm={10} className="my-2">
                 <InputGroup className="align-items-center pb-2">
                   商品圖片：
-                  <Button>上傳圖片</Button>
+                  <Button variant="chicofgo-brown text-white">
+                    ＋上傳圖片
+                  </Button>
                 </InputGroup>
               </Col>
               <Col sm={10} className="my-2">
@@ -106,8 +108,13 @@ function BusinessProductsAdd() {
             </Row>
             <Row className="justify-content-end">
               <Col sm={5}>
-                <Button className="ms-1 me-2">儲存並上架</Button>
-                <Button>儲存不上架</Button>
+                <Button
+                  className="ms-1 me-2"
+                  variant="chicofgo-brown text-white"
+                >
+                  儲存並上架
+                </Button>
+                <Button variant="chicofgo-khaki text-white">儲存不上架</Button>
               </Col>
             </Row>
           </Col>

@@ -24,8 +24,12 @@ function ProductsList(props) {
       <Col className="pb-2">
         <Row className="justify-content-end text-center">
           <Col sm={2} className="text-center">
-            <Button className="px-2 mx-1">詳細</Button>
-            <Button className="px-2 mx-1">下架</Button>
+            <Button className="px-2 mx-1" variant="chicofgo-brown text-white">
+              詳細
+            </Button>
+            <Button className="px-2 mx-1" variant="chicofgo-khaki text-white">
+              下架
+            </Button>
           </Col>
         </Row>
       </Col>

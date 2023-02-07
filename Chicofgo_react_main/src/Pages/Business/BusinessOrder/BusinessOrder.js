@@ -23,7 +23,7 @@ function BusinessOrder() {
               <Col sm={12} className="text-center pt-2">
                 <h4>訂單管理</h4>
               </Col>
-              <Col className="btn" sm={2} >
+              <Col className="btn" sm={2}>
                 全部
               </Col>
               <Col className="btn" sm={2}>
@@ -39,23 +39,31 @@ function BusinessOrder() {
               <Col sm={2}></Col>
 
               <Col sm={10} className="my-4">
-                <InputGroup className="mb-3">
-                  <DropdownButton
-                    variant="outline-secondary"
-                    title="Dropdown"
-                    id="input-group-dropdown-1"
-                  >
-                    <Dropdown.Item href="#">Action</Dropdown.Item>
-                    <Dropdown.Item href="#">Another action</Dropdown.Item>
-                    <Dropdown.Item href="#">Something else here</Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item href="#">Separated link</Dropdown.Item>
-                  </DropdownButton>
-                  <Form.Control aria-label="Text input with dropdown button" />
-                </InputGroup>
+                <div className="input-group">
+                  <Col sm={2}>
+                    <select
+                      className="form-select"
+                      id="inputGroupSelect04"
+                      aria-label="Example select with button addon"
+                    >
+                      <option selected>訂單編號</option>
+                      <option value="1">賣家帳號</option>
+                      <option value="2">商品</option>
+                    </select>
+                  </Col>
+                  <Col>
+                    <input
+                      type="text"
+                      class="form-control"
+                      aria-label="Text input with dropdown button"
+                    />
+                  </Col>
+                </div>
               </Col>
               <Col sm={2} className="my-4">
-                <Button>查詢</Button>
+                <Button className="px-5" variant="chicofgo-brown text-white">
+                  查詢
+                </Button>
               </Col>
               <Col sm={12}>查詢結果</Col>
               <div className="chicofgo_gray d-flex text-center py-2">

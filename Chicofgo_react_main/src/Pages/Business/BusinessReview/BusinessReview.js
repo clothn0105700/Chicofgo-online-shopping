@@ -90,9 +90,18 @@ function BusinessReview() {
                 </InputGroup>
               </Col>
               <Col sm={6}></Col>
-              <Col sm={5} className="mb-3">
-                <Button className="ms-2 me-4 px-4">重設</Button>
-                <Button className="px-4">查詢</Button>
+              <Col sm={2}>
+                <Button
+                  className="px-5 mb-4"
+                  variant="chicofgo-brown text-white"
+                >
+                  搜尋
+                </Button>
+              </Col>
+              <Col sm={2}>
+                <Button className="px-5" variant="chicofgo-khaki text-white">
+                  重設
+                </Button>
               </Col>
             </Row>
             <Row className="bg-white mt-3">

@@ -25,20 +25,25 @@ function BusinessProducts() {
               </Col>
 
               <Col sm={6} className="my-2">
-                <InputGroup className="mb-3">
-                  <DropdownButton
-                    variant="outline-secondary"
-                    title="Dropdown"
-                    id="input-group-dropdown-1"
-                  >
-                    <Dropdown.Item href="#">Action</Dropdown.Item>
-                    <Dropdown.Item href="#">Another action</Dropdown.Item>
-                    <Dropdown.Item href="#">Something else here</Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item href="#">Separated link</Dropdown.Item>
-                  </DropdownButton>
-                  <Form.Control aria-label="Text input with dropdown button" />
-                </InputGroup>
+                <div className="input-group">
+                  <Col sm={4}>
+                    <select
+                      className="form-select"
+                      id="inputGroupSelect04"
+                      aria-label="Example select with button addon"
+                    >
+                      <option selected>商品名稱</option>
+                      <option value="1">商品貨號</option>
+                    </select>
+                  </Col>
+                  <Col>
+                    <input
+                      type="text"
+                      class="form-control"
+                      aria-label="Text input with dropdown button"
+                    />
+                  </Col>
+                </div>
               </Col>
               <Col sm={6} className="my-2">
                 <InputGroup className="mb-3">
@@ -66,10 +71,14 @@ function BusinessProducts() {
               </Col>
               <Col sm={6}></Col>
               <Col sm={2}>
-                <Button className="px-5">搜尋</Button>
+                <Button className="px-5" variant="chicofgo-brown text-white">
+                  搜尋
+                </Button>
               </Col>
               <Col sm={2}>
-                <Button className="px-5">重設</Button>
+                <Button className="px-5" variant="chicofgo-khaki text-white">
+                  重設
+                </Button>
               </Col>
 
               <Col sm={12} className="my-3">
@@ -89,7 +98,6 @@ function BusinessProducts() {
             <ProductsList />
             <ProductsList />
             <ProductsList />
-            
           </Col>
         </Row>
       </Container>

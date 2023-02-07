@@ -8,7 +8,9 @@ function BusinessOrderList(props) {
       <Col className="mb-2">123</Col>
       <Col className="mb-2">123</Col>
       <Col className="text-center">
-        <Button className="mb-2">訂單細節</Button>
+        <Button className="mb-2" variant="chicofgo-khaki text-white">
+          訂單細節
+        </Button>
       </Col>
     </Row>
   );
