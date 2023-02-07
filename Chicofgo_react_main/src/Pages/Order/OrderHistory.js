@@ -12,7 +12,10 @@ function OrderHistory() {
     navigate(`/member/orderStatus/${orderNumber}`, { replace: false });
   }
   return (
-    <ChContainer ChClass={'chicofgo-font'} breadCrumb={'歷史訂單'}>
+    <ChContainer
+      ChClass={'chicofgo-font border border-5'}
+      breadCrumb={'歷史訂單'}
+    >
       {/* 標題 */}
       <Col>
         <Row>

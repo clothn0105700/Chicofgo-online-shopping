@@ -4,7 +4,10 @@ import style from './Coupons.module.scss';
 import CouponCard5 from './Component/CouponCard5';
 function Coupons() {
   return (
-    <ChContainer ChClass={'chicofgo-font-700'} breadCrumb={'我的優惠券'}>
+    <ChContainer
+      ChClass={'chicofgo-font-700 border border-5'}
+      breadCrumb={'我的優惠券'}
+    >
       <Col>
         <Row>
           <Col>
