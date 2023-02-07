@@ -318,10 +318,14 @@ function Account() {
               <Col className={`col-5 `}>
                 <div
                   className={`${style.datePicker} py-2 text-nowrap`}
+
                   // style={{ border: '1px solid red' }}
                 >
                   <DatePicker
-                    className={`w-100`}
+                    className={`w-100  ${
+                      errors.birthday ? 'border-danger rounded' : ''
+                    }`}
+                    // className="red-border"
                     dateFormat="yyyy-MM-dd"
                     // locale="zh-TW"
                     selected={startDate}

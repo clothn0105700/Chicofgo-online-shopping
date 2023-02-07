@@ -13,7 +13,8 @@ import axios from 'axios';
 import { AuthContext } from '../../Contexts/AuthContext';
 
 function Login() {
-  const { isLoggedIn, setUsername, setIsLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, setUsername, setIsLoggedIn, setUserid } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   useEffect(() => {
     if (isLoggedIn) {
@@ -42,12 +43,11 @@ function Login() {
     );
     // console.log(response.data);
     // console.log(response.status);
-
     if (response.status === 200) {
       console.log('登入成功');
       setIsLoggedIn(true);
       setUsername(response.data.member.name);
-      console.log(navigate(-1));
+      setUserid(response.data.member.id);
       navigate(-1);
     }
   }

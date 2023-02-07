@@ -137,7 +137,9 @@ function ShoppingCart(props) {
               <Col
                 className={`${style.totalSum} col-5 chicofgo_gray text-nowrap `}
               >
-                (已選擇3件商品) 商品總計:
+                已選擇
+                {products.filter((product) => product.checked).length}
+                件商品 商品總計:
                 <span>{totalPrice}</span>
               </Col>
             </Row>
