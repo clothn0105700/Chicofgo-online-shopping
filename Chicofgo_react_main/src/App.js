@@ -25,14 +25,14 @@ import Collect from './Pages/Account/Collect/Collect';
 import CollectItem from './Pages/Account/Collect/Component/CollectItem';
 import CollectShop from './Pages/Account/Collect/Component/CollectShop';
 import ShoppingCart from './Pages/Account/ShoppingCart/ShoppingCart';
-
+import Checkout from './Pages/Account/ShoppingCart/Checkout';
 import BusinessOrder from './Pages/Business/BusinessOrder/BusinessOrder';
 import BusinessProducts from './Pages/Business/BusinessProducts/BusinessProducts';
 import BusinessProductsAdd from './Pages/Business/BusinessProductsAdd/BusinessProductsAdd';
 import BusinessReview from './Pages/Business/BusinessReview/BusinessReview';
 import BusinissCoupon from './Pages/Business/BusinissCoupon/BusinissCoupon';
-
 import AllProviders from './Contexts/AllProviders';
+
 
 function App() {
   return (
@@ -85,6 +85,7 @@ function App() {
                 <Route path="coupons" element={<Coupons />} />
                 <Route path="messages" element={<Messages />} />
                 <Route path="shoppingcart" element={<ShoppingCart />} />
+                <Route path="checkout" element={<Checkout />} />
 
                 <Route path="collect" element={<Collect />}>
                   <Route
