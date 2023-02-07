@@ -48,14 +48,19 @@ const registerRules = [
   // body('phone').isLength({ min: 10 }).withMessage('請輸入正確手機號碼格式'),
   body('birthday').isBefore().withMessage('不是未來人吧'),
 
+  // body('phone').custom((value, { req }) => {
+  //   var MobileReg = /^(09)[0-9]{8}$/;
+  //   if (!value.match(MobileReg)) {
+  //     throw new Error('手機格式錯誤');
+  //   } else {
+  //     return true;
+  //   }
+  // }),
   body('phone').custom((value, { req }) => {
     var MobileReg = /^(09)[0-9]{8}$/;
-    if (!value.match(MobileReg)) {
-      throw new Error('手機格式錯誤');
-    } else {
-      return true;
-    }
-  }),
+      return value.match(MobileReg);
+    })
+    .withMessage('手機格式錯誤'),
 ];
 
 router.use('/accountChange', checkLogin, registerRules, async (req, res, next) => {
