@@ -25,8 +25,6 @@ const AuthContextProvider = (props) => {
     getMember();
   }, []);
 
-  useEffect(() => {}, [isLoggedIn]);
-
   return (
     <AuthContext.Provider
       value={{ isLoggedIn, setIsLoggedIn, username, setUsername }}

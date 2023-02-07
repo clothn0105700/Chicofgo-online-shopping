@@ -52,6 +52,7 @@ app.use(
   })
 );
 
+
 // middleware => pipeline pattern
 
 // 設定 express 處理靜態檔案
@@ -65,24 +66,21 @@ app.use(
 
 // 處理使用者註冊時上傳的圖片網址
 // http://localhost:3001/public/uploads/1673160926241.jpg
-app.use('/public', express.static('./public'));
+// app.use('/public', express.static('./public'));
 
-// 中間件
-app.use((req, res, next) => {
-  console.log('這裡是的一個中間件 A');
-  req.mfee31 = '水母班';
+// // 中間件
+// app.use((req, res, next) => {
+//   console.log('這裡是的一個中間件 A');
+//   req.mfee31 = '水母班';
+//   next();
+//   // res.send('這裡是 A 中間件');
+// });
 
-  next();
-  // res.send('這裡是 A 中間件');
-});
-
-app.use((req, res, next) => {
-
-  console.log('這裡是的一個中間件 B');
-
-  req.dt = new Date().toISOString();
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log('這裡是的一個中間件 B');
+//   req.dt = new Date().toISOString();
+//   next();
+// });
 
 // app.[Method]
 // get, post, put, patch, delete, option, head
@@ -99,6 +97,7 @@ app.get('/api', (req, res, next) => {
 
     age: 18,
   });
+  console.log('這裡是API')
 });
 
 
@@ -120,16 +119,15 @@ app.use('/api/auth', authRouter);
 const memberRouter = require('./routers/memberRouter');
 app.use('/api/members', memberRouter);
 
-app.use((req, res, next) => {
-  console.log('這裡是的一個中間件 C');
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log('這裡是的一個中間件 C');
+//   next();
+// });
 
-app.get('/test', (req, res, next) => {
-  console.log('這裡是 test 頁面', req.dt);
-  res.send('Hello Test 1');
-
-});
+// app.get('/test', (req, res, next) => {
+//   console.log('這裡是 test 頁面', req.dt);
+//   res.send('Hello Test 1');
+// });
 
 // 放在所有的路由中間件的後面
 // 前面所有的路由都比不到對的網址時，就會掉到這裡來

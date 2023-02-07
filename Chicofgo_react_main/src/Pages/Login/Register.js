@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Fragment } from 'react';
 import Container from 'react-bootstrap/Container';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -10,6 +10,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 function Login() {
+  const navigate = useNavigate();
   const [member, setMember] = useState({
     email: '7788@gmail.com',
     password: 'test1234',
@@ -17,6 +18,7 @@ function Login() {
     birthday: '1990-10-10',
     address: '火星火星火星',
     name: '阿明',
+    account: 'c8763333',
   });
 
   // email input 的 change
@@ -28,7 +30,7 @@ function Login() {
     let newMember = { ...member };
     newMember[e.target.name] = e.target.value;
     setMember(newMember);
-
+    console.log(member);
     // setMember({ ...member, [e.target.name]: e.target.value });
   }
 
@@ -42,6 +44,10 @@ function Login() {
     );
 
     console.log(response.data);
+    if (response.status === 200) {
+      console.log('註冊成功');
+      navigate('/login');
+    }
   }
   return (
     <Fragment>
@@ -67,7 +73,21 @@ function Login() {
               </div>
               <FloatingLabel
                 controlId="floatingInput"
-                label="email："
+                label="帳號："
+                className={`mb-3`}
+              >
+                <Form.Control
+                  type="text"
+                  placeholder=""
+                  // id="email"
+                  name="account"
+                  value={member.account}
+                  onChange={handleChange}
+                />
+              </FloatingLabel>
+              <FloatingLabel
+                controlId="floatingInput"
+                label="Email："
                 className={`mb-3`}
               >
                 <Form.Control
