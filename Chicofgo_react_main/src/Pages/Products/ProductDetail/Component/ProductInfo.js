@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useAuth } from '../../../../Contexts/AuthContext';
 import styles from './ProductInfo.module.scss';
 import { FaShoppingCart, FaBookmark } from 'react-icons/fa';
+import axios from 'axios';
 
 const Productinfo = (props) => {
-  const { title, content, price, productsCount } = props;
+  const { title, content, price, productsCount, setProductsCount } = props;
   const {
     info_contorl,
     spe_text,
@@ -18,6 +21,35 @@ const Productinfo = (props) => {
     title_box,
     content_box,
   } = styles;
+
+  const location = useLocation();
+  const { userid } = useAuth();
+
+  useEffect(() => {
+    if (productsCount < 1) {
+      setProductsCount(1);
+    }
+  });
+
+  //加入購物車
+  async function sendCart() {
+    const urlArray = location.pathname.split('/');
+    const id = parseInt(urlArray[urlArray.length - 1]);
+    try {
+      let response = await axios.post(
+        'http://localhost:3001/api/products/sendCart',
+        {
+          cartProductId: id,
+          cartUserId: userid,
+          cartPrice: price,
+          cartQuantity: productsCount,
+        }
+      );
+      console.log(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <div>
@@ -48,24 +80,31 @@ const Productinfo = (props) => {
           </div>
         </h4>
         <div className="mt-5">
-          <h4>總計:{price} 元</h4>
+          <h4>總計:{price * productsCount} 元</h4>
           <div className={`${products_count} mt-3`}>
             <h4>數量</h4>
             <div className={`${button_wrap} d-flex align-items-center`}>
               <button
                 className={`${minus_style}`}
                 value={productsCount}
-                onClick={(e) => {}}
+                onClick={(e) => {
+                  setProductsCount(productsCount - 1);
+                }}
               ></button>
               <input
                 type="text"
                 className={`${input_style}`}
                 value={productsCount}
-                onChange={(e) => {}}
+                onChange={(e) => {
+                  setProductsCount(e.target.value);
+                }}
               />
               <button
                 className={`${plus_style}`}
                 value={productsCount}
+                onClick={(e) => {
+                  setProductsCount(productsCount + 1);
+                }}
               ></button>
             </div>
           </div>
@@ -81,6 +120,7 @@ const Productinfo = (props) => {
           </button>
           <button
             className={`${btn_cart} d-flex align-items-center justify-content-center`}
+            onClick={sendCart}
           >
             <FaShoppingCart className="mx-2" />
             加入購物車

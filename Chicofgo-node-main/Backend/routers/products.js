@@ -27,7 +27,7 @@ router.get('/', middlewares, async (req, res, next) => {
   // let data = results[0];
   console.log('這裡是 /api/products');
   let [data] = await pool.query('SELECT * FROM product_list');
-  console.log("product data: ", data);
+  console.log('product data: ', data);
   res.json(data);
 });
 router.get('/message', middlewares, async (req, res, next) => {
@@ -35,12 +35,31 @@ router.get('/message', middlewares, async (req, res, next) => {
   // let data = results[0];
   console.log('這裡是 /api/message');
   let [data] = await pool.query('SELECT * FROM member_message');
-  console.log("product data: ", data);
+  console.log('product data: ', data);
   res.json(data);
 });
 
-
-
-
+router.post('/sendCart', async (req, res) => {
+  console.log('body: ', req.body);
+  const { cartProductId, cartPrice, cartQuantity, cartUserId } = req.body;
+  const sql = `
+  INSERT INTO shopping_cart(
+    product_id, price, quantity, member, order_id
+  ) VALUES (
+    '?','?','?','?','0'
+  )
+  `;
+  try {
+    const [results] = await pool.query(sql, [cartProductId, cartPrice, cartQuantity, cartUserId]);
+    if (affectedRows >= 1) {
+      res.json({ result: 'ok' });
+    } else {
+      res.json({ result: 'fail' });
+    }
+  } catch (e) {
+    console.log(e); //對
+    res.json({ result: 'fail' });
+  }
+});
 
 module.exports = router;
