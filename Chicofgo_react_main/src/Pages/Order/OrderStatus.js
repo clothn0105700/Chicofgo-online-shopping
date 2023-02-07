@@ -16,7 +16,10 @@ let totalPrice = SumPriceMapReduce(orderStatusInfo);
 
 function OrderStatus() {
   return (
-    <ChContainer ChClass={'chicofgo-font-700'} breadCrumb={'訂單狀態'}>
+    <ChContainer
+      ChClass={'chicofgo-font-700 border border-5'}
+      breadCrumb={'訂單狀態'}
+    >
       {/* 標題 */}
       <Col>
         <Row>

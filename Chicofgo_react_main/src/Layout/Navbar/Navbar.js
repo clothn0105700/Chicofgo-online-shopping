@@ -10,7 +10,7 @@ import {
   BsFillCartFill,
 } from 'react-icons/bs';
 import style from './Navbar.module.scss';
-import { AuthContext } from '../../Hook/AuthContext';
+import { AuthContext } from '../../Contexts/AuthContext';
 import React, { useContext, useEffect } from 'react';
 import axios from 'axios';
 
@@ -27,7 +27,11 @@ function ChicofgoNavBar() {
   }
 
   return (
-    <Navbar expand="md" sticky="top" className={`p-0 chicofgo-font-700`}>
+    <Navbar
+      expand="md"
+      sticky="top"
+      className={`p-0 chicofgo-font-700 border-bottom`}
+    >
       <Container fluid className={`${style.navbarBody} py-2`}>
         <Navbar.Brand as={NavLink} to="/home">
           <Image

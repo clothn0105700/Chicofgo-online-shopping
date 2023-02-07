@@ -23,6 +23,7 @@
     height: 100px;
     padding: 4px;
     background-color: rgb(238, 238, 238);
+    cursor: pointer;
 
     .group_pic {
         width: 80px;
@@ -35,5 +36,8 @@
             height: 100%;
             object-fit: contain;
         }
+    }
+    li{
+        list-style: none;
     }
 }

@@ -58,6 +58,8 @@ const registerRules = [
 
   body('address').isLength({ min: 6 }).withMessage('填寫正確格式'),
 
+  body('account').isLength({ min: 4 }).withMessage('帳號長度至少為 4'),
+
   // 客製自己想要的檢查條件
   body('confirmPassword')
     .custom((value, { req }) => {
@@ -81,8 +83,8 @@ router.post('/register', registerRules, async (req, res, next) => {
 
   // 驗證通過
   // 檢查 email 是否已經註冊過
-  let [members] = await pool.execute('SELECT * FROM user_member WHERE email = ?', [req.body.email]);
-  if (members.length > 0) {
+  let [membersEmail] = await pool.execute('SELECT * FROM user_member WHERE email = ?', [req.body.email]);
+  if (membersEmail.length > 0) {
     // 表示這個 email 有存在資料庫中
     // 如果已經註冊過，就回覆 400
     return res.status(400).json({
@@ -95,19 +97,36 @@ router.post('/register', registerRules, async (req, res, next) => {
     });
   }
 
+  let [membersAccount] = await pool.execute('SELECT * FROM user_member WHERE account = ?', [req.body.account]);
+  if (membersAccount.length > 0) {
+    // 表示這個 email 有存在資料庫中
+    // 如果已經註冊過，就回覆 400
+    return res.status(400).json({
+      errors: [
+        {
+          msg: 'Account 已經註冊過',
+          param: 'account',
+        },
+      ],
+    });
+  }
+
+  
   // --> 這個 email 不存在於資料庫中
 
   // 雜湊 hash 密碼
   const hashedPassword = await argon2.hash(req.body.password);
   // 存到資料庫
-  let result = await pool.execute('INSERT INTO user_member (name , password, email, address, birthday) VALUES (?, ?, ?, ?, ?);', [
+  let result = await pool.execute('INSERT INTO user_member (account,name , password, email, address, birthday) VALUES (?, ?, ?, ?, ?, ?);', [
+    req.body.account,
     req.body.name,
     hashedPassword,
     req.body.email,
     req.body.address,
     req.body.birthday,
   ]);
-  console.log('register: insert to db', result);
+  // console.log('register: insert to db', result);
+  console.log('註冊成功');
 
   // 回覆給前端
   res.json({
@@ -124,6 +143,8 @@ router.post('/login', async (req, res, next) => {
   if (members.length === 0) {
     // 表示這個 email 不存在資料庫中 -> 沒註冊過
     // 不存在，就回覆 401
+    console.log('email 不存在');
+
     return res.status(401).json({
       errors: [
         {

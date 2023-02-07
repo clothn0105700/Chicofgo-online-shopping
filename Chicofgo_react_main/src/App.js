@@ -26,14 +26,23 @@ import CollectItem from './Pages/Account/Collect/Component/CollectItem';
 import CollectShop from './Pages/Account/Collect/Component/CollectShop';
 import ShoppingCart from './Pages/Account/ShoppingCart/ShoppingCart';
 import Checkout from './Pages/Account/ShoppingCart/Checkout';
-import AuthContextProvider from './Hook/AuthContext';
+import BusinessOrder from './Pages/Business/BusinessOrder/BusinessOrder';
+import BusinessProducts from './Pages/Business/BusinessProducts/BusinessProducts';
+import BusinessProductsAdd from './Pages/Business/BusinessProductsAdd/BusinessProductsAdd';
+import BusinessReview from './Pages/Business/BusinessReview/BusinessReview';
+import BusinissCoupon from './Pages/Business/BusinissCoupon/BusinissCoupon';
+import AllProviders from './Contexts/AllProviders';
+
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <AuthContextProvider>
+        <AllProviders>
           <Navbar />
+          {/* <Path /> */}
+          {/* <MemberSideBar /> */}
+
           <ScrollToTop>
             <Routes>
               <Route path="home" element={<Home />} />
@@ -59,6 +68,10 @@ function App() {
                 path="/product_detail/:product_id"
                 element={<ProductDetail />}
               />
+
+              {/* <Route path="/">
+            <Route index element={}
+          </Route> */}
               <Route path="member" element={<Member />}>
                 <Route index element={<Account />} />
                 <Route path="account" element={<Account />} />
@@ -85,10 +98,19 @@ function App() {
                   <Route path="items" element={<CollectItem />} />
                 </Route>
               </Route>
+              <Route path="businessOrder" element={<BusinessOrder />} />
+              <Route path="businessProducts" element={<BusinessProducts />} />
+              <Route
+                path="businessProductsAdd"
+                element={<BusinessProductsAdd />}
+              />
+              <Route path="businessReview" element={<BusinessReview />} />
+              <Route path="businissCoupon" element={<BusinissCoupon />} />
             </Routes>
           </ScrollToTop>
+
           <Footer />
-        </AuthContextProvider>
+        </AllProviders>
       </BrowserRouter>
     </>
   );

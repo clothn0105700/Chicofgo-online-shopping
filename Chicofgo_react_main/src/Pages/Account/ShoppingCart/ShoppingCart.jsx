@@ -84,7 +84,10 @@ function ShoppingCart(props) {
     .filter((product) => product.checked)
     .reduce((sum, product) => sum + product.price * product.quantity, 0);
   return (
-    <ChContainer ChClass={'chicofgo-font'} breadCrumb={'我的購物車'}>
+    <ChContainer
+      ChClass={'chicofgo-font border border-5'}
+      breadCrumb={'我的購物車'}
+    >
       {/* 標題 */}
       <Col>
         <Row>
@@ -134,10 +137,10 @@ function ShoppingCart(props) {
               </Col>
               <Col
                 className={`${style.totalSum} col-5 chicofgo_gray text-nowrap `}
-              >
-                已選擇{products.filter((product) => product.checked).length}
-                件商品商品總計:
-                <span>{totalPrice}</span>
+              > 
+              已選擇
+                {products.filter((product) => product.checked).length}
+              件商品商品總計:<span>{totalPrice}</span>
               </Col>
             </Row>
             <Row className={`mt-5`}>

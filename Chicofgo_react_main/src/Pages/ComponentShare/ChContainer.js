@@ -18,7 +18,7 @@ function Layout(props) {
             fontStyle="chicofgo_white_font chicofgo-font-700"
           />
           <Row
-            className={`${props.ChClass} rounded-5 justify-content-center`}
+            className={`${props.ChClass} rounded-5 justify-content-center `}
             style={{
               backgroundColor: 'rgb(250, 250, 250)',
               border: props.ChBorder,
