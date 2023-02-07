@@ -7,7 +7,10 @@ import ChContainer from '../../ComponentShare/ChContainer';
 import style from './Collect.module.scss';
 function Collect() {
   return (
-    <ChContainer ChClass={'chicofgo-font-700'} breadCrumb={'我的收藏'}>
+    <ChContainer
+      ChClass={'chicofgo-font-700 border border-5'}
+      breadCrumb={'我的收藏'}
+    >
       <Col>
         <Row>
           <Col>

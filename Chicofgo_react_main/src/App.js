@@ -26,7 +26,15 @@ import CollectItem from './Pages/Account/Collect/Component/CollectItem';
 import CollectShop from './Pages/Account/Collect/Component/CollectShop';
 import ShoppingCart from './Pages/Account/ShoppingCart/ShoppingCart';
 
+
+import BusinessOrder from './Pages/Business/BusinessOrder/BusinessOrder';
+import BusinessProducts from './Pages/Business/BusinessProducts/BusinessProducts';
+import BusinessProductsAdd from './Pages/Business/BusinessProductsAdd/BusinessProductsAdd';
+import BusinessReview from './Pages/Business/BusinessReview/BusinessReview';
+import BusinissCoupon from './Pages/Business/BusinissCoupon/BusinissCoupon';
+
 import AllProviders from './Contexts/AllProviders';
+
 
 function App() {
   return (
@@ -68,6 +76,24 @@ function App() {
             <Route index element={}
           </Route> */}
 
+
+            <Route path="collect" element={<Collect />}>
+              <Route
+                index
+                element={<Navigate to="/member/collect/shop" replace={true} />}
+              />
+              <Route path="shop" element={<CollectShop />} />
+              <Route path="items" element={<CollectItem />} />
+            </Route>
+          </Route>
+          <Route path="businessOrder" element={<BusinessOrder />} />
+          <Route path="businessProducts" element={<BusinessProducts />} />
+          <Route path="businessProductsAdd" element={<BusinessProductsAdd />} />
+          <Route path="businessReview" element={<BusinessReview />} />
+          <Route path="businissCoupon" element={<BusinissCoupon />} />
+        </Routes>
+         </ScrollToTop>
+=======
               <Route path="member" element={<Member />}>
                 <Route index element={<Account />} />
                 <Route path="account" element={<Account />} />
@@ -99,6 +125,7 @@ function App() {
 
           <Footer />
         </AllProviders>
+
 
       </BrowserRouter>
     </>

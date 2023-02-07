@@ -4,7 +4,10 @@ import style from './Messages.module.scss';
 import MessagesCard from './Component/MessagesCard';
 function Messages() {
   return (
-    <ChContainer ChClass={'chicofgo-font-700'} breadCrumb={'全部通知'}>
+    <ChContainer
+      ChClass={'chicofgo-font-700 border border-5'}
+      breadCrumb={'全部通知'}
+    >
       <Col>
         <Row>
           <Col>
