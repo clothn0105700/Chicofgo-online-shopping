@@ -1,7 +1,93 @@
 import { Row, Col, Form, Button } from 'react-bootstrap';
 import MemberBar from '../Components/MemberBar';
 import ChContainer from '../../ComponentShare/ChContainer';
+import { useState, useLayoutEffect } from 'react';
+import axios from 'axios';
+
 function ChangePassword() {
+  const [passwordData, setPasswordData] = useState({});
+  const [passwordErrors, setPasswordErrors] = useState({
+    oldPasswordError: '',
+    oldPassword: false,
+    passwordError: '',
+    password: false,
+    confirmPasswordError: '',
+    confirmPassword: false,
+  });
+  useLayoutEffect(() => {
+    async function getAccountData() {
+      let response = await axios.get(
+        'http://localhost:3001/api/members/account',
+        {
+          withCredentials: true,
+        }
+      );
+      setPasswordData({ account: response.data.account });
+    }
+    getAccountData();
+  }, []);
+
+  function handleChange(e) {
+    setPasswordData({ ...passwordData, [e.target.name]: e.target.value });
+  }
+  async function handleSubmit(e) {
+    // 送出
+    console.log('handleSubmit');
+    console.log(passwordData);
+
+    // 關閉表單的預設行為
+    e.preventDefault();
+    try {
+      let response = await axios.post(
+        'http://localhost:3001/api/members/passwordChange',
+        passwordData,
+        {
+          // 為了跨源存取 cookie
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+      if (response.status === 200) {
+        console.log('更新成功');
+        setPasswordErrors({
+          oldPasswordError: '',
+          oldPassword: false,
+          passwordError: '',
+          password: false,
+          confirmPasswordError: '',
+          confirmPassword: false,
+        });
+      }
+    } catch (e) {
+      if (e.response.status === 400) {
+        let allPsErrors = e.response.data.errors;
+        console.log('更新失敗');
+        console.log(allPsErrors);
+
+        let newErrors = {
+          oldPasswordError: '',
+          oldPassword: false,
+          passwordError: '',
+          password: false,
+          confirmPasswordError: '',
+          confirmPassword: false,
+        };
+        allPsErrors.map(
+          (thisError) => (
+            (newErrors[thisError.param] = true),
+            (newErrors[thisError.param + 'Error'] = thisError.msg)
+          )
+        );
+        setPasswordErrors(newErrors);
+        console.log(passwordErrors);
+      }
+    }
+  }
+  // ---顯示密碼---
+  const [passwordIsOpen, setPasswordIsOpen] = useState(false);
+  const passwordOpen = () => {
+    setPasswordIsOpen(!passwordIsOpen);
+  };
   return (
     <ChContainer
       ChClass={'chicofgo-font-700 border border-5'}
@@ -15,55 +101,76 @@ function ChangePassword() {
           </h2>
           <Form.Floating className="mb-3 chicofgo_brown_font">
             <Form.Control
-              id="floatingInputCustom"
+              // id="floatingInputCustom"
               placeholder="帳號"
               type="email"
+              name="account"
               disabled
             />
             <label htmlFor="floatingInputCustom">
               帳號:
-              <span className="chicofgo-font-700 chicofgo_dark_font ">
-                87878787@suck.com
+              <span className="chicofgo-font-700 chicofgo_dark_font ms-2 fs-6">
+                {passwordData.account}
               </span>
             </label>
           </Form.Floating>
-          <Form.Floating className="mb-3 chicofgo_brown_font">
+          <Form.Floating className="my-3 chicofgo_brown_font">
             <Form.Control
-              id="floatingPasswordCustom"
+              // id="floatingPasswordCustom"
+              // className="fs-6"
               type="password"
+              name="oldPassword"
               placeholder="請輸入舊密碼"
+              onChange={handleChange}
+              isInvalid={passwordErrors.oldPassword}
             />
+            <Form.Control.Feedback type="invalid" className="ms-2">
+              {passwordErrors.oldPasswordError}
+            </Form.Control.Feedback>
             <label htmlFor="floatingPasswordCustom">舊密碼:</label>
           </Form.Floating>
-          <Form.Floating className="mb-3 chicofgo_brown_font">
+          <Form.Floating className="my-3 chicofgo_brown_font">
             <Form.Control
-              id="floatingPasswordCustom"
-              type="password"
+              // id="floatingPasswordCustom"
+              type={passwordIsOpen ? 'text' : 'password'}
+              name="password"
               placeholder="請輸入新密碼"
+              onChange={handleChange}
+              isInvalid={passwordErrors.password}
             />
+            <Form.Control.Feedback type="invalid" className="ms-2">
+              {passwordErrors.passwordError}
+            </Form.Control.Feedback>
             <label htmlFor="floatingPasswordCustom">新密碼:</label>
           </Form.Floating>
-          <Form.Floating className="mb-3 chicofgo_brown_font">
+          <Form.Floating className="my-3 chicofgo_brown_font">
             <Form.Control
-              id="floatingPasswordCustom"
-              type="password"
+              // id="floatingPasswordCustom"
+              type={passwordIsOpen ? 'text' : 'password'}
               placeholder="請確認新密碼"
+              name="confirmPassword"
+              onChange={handleChange}
+              isInvalid={passwordErrors.confirmPassword}
             />
+            <Form.Control.Feedback type="invalid" className="ms-2">
+              {passwordErrors.confirmPasswordError}
+            </Form.Control.Feedback>
             <label htmlFor="floatingPasswordCustom">確認新密碼:</label>
           </Form.Floating>
-          {['Checkbox'].map((type) => (
-            <div key={`inline-${type}`} className="">
-              <Form.Check
-                inline
-                label="顯示密碼"
-                name="group1"
-                type={type}
-                id={`inline-${type}-3`}
-              />
-            </div>
-          ))}
+          <Form.Check
+            inline
+            label="顯示密碼"
+            name="group1"
+            type="checkbox"
+            onClick={passwordOpen}
+            // id={`inline-${type}-3`}
+          />
           <div className="text-center my-3">
-            <Button variant="chicofgo-brown chicofgo_white_font" size="lg">
+            <Button
+              variant="chicofgo-brown"
+              className={` px-5 py-1 shadow chicofgo_white_font`}
+              onClick={handleSubmit}
+            >
               確定修改
             </Button>
           </div>
