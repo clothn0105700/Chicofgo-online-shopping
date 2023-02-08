@@ -7,12 +7,12 @@ import {
   BsFillCartFill,
 } from 'react-icons/bs';
 import style from './Navbar.module.scss';
-import { AuthContext } from '../../Contexts/AuthContext';
-import React, { useContext } from 'react';
+import { useAuth } from '../../Contexts/AuthContext';
+import React from 'react';
 import axios from 'axios';
 
 function ChicofgoNavBar() {
-  const { isLoggedIn, username, setIsLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, username, setIsLoggedIn } = useAuth();
 
   async function handleLogout() {
     await axios.get('http://localhost:3001/api/auth/logout', {

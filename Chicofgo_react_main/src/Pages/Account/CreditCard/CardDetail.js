@@ -18,6 +18,7 @@ import {
 import { IconContext } from 'react-icons';
 import MemberBar from '../Components/MemberBar';
 import ChContainer from '../../ComponentShare/ChContainer';
+import CardForm from './Components/CardForm';
 
 function CardDetail() {
   return (
@@ -26,7 +27,7 @@ function CardDetail() {
       breadCrumb={'編輯信用卡'}
     >
       <MemberBar />
-      <div className="d-flex justify-content-center ">
+      {/* <div className="d-flex justify-content-center ">
         <Col sm={7} className="border m-5 p-5">
           <h2 className="">編輯信用卡</h2>
           <InputGroup className="mb-3">
@@ -65,7 +66,11 @@ function CardDetail() {
             />
           </InputGroup>
         </Col>
-      </div>
+      </div> */}
+      <Col>
+        {' '}
+        <CardForm />
+      </Col>
     </ChContainer>
   );
 }

@@ -1,6 +1,10 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-export const AuthContext = createContext();
+const AuthContext = createContext();
+
+export function useAuth() {
+  return useContext(AuthContext);
+}
 
 const AuthContextProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
