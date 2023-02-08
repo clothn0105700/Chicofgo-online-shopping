@@ -1,7 +1,16 @@
 import React from 'react';
 import styles from './MessageArea.module.scss';
+import { useEffect, useMemo } from 'react';
+import { v4 } from 'uuid';
 
-const MessageArea = () => {
+const MessageArea = (props) => {
+  const { rating, time, s } = props;
+  const numberRating = useMemo(() => {
+    return Number.isNaN(parseInt(rating)) ? 1 : parseInt(rating);
+  }, [rating]);
+
+  
+
   const {
     message_control,
     message_box,
@@ -22,19 +31,15 @@ const MessageArea = () => {
         </div>
         <div className={`${message_info} d-flex  flex-column`}>
           <div className={`${message_rating} d-flex `}>
-            <p>⭐</p>
-            <p>⭐</p>
-            <p>⭐</p>
-            <p>⭐</p>
-            <p>⭐</p>
+            {new Array(numberRating).fill().map((star) => {
+              return <p key={v4()}>⭐</p>;
+            })}
           </div>
           <div className={`${message_time}`}>
-            <p>2023-1-31</p>
+            <p>{time}</p>
           </div>
           <div className={`${speak}`}>
-            <p>
-              「鰻魚三吃名古屋備長」將名古屋的美食——鰻魚三吃原封不動帶來東京！不同於東京江戶前鰻魚的料理方式，名古屋流的鰻魚不經蒸烤程序，而是直接以大火烘烤，將香味牢牢鎖住。想在東京品嚐到正宗的鰻魚三吃料理嗎？務必前來「鰻魚三吃名古屋備長」滿足您的味蕾。
-            </p>
+            <p>{s}</p>
           </div>
         </div>
       </div>

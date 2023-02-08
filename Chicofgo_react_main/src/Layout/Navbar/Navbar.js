@@ -1,23 +1,31 @@
 import { Link, NavLink } from 'react-router-dom';
-
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Image from 'react-bootstrap/Image';
-import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import InputGroup from 'react-bootstrap/InputGroup';
+import { Container, Button, Image, Nav, Navbar } from 'react-bootstrap';
+// import Form from 'react-bootstrap/Form';
+// import InputGroup from 'react-bootstrap/InputGroup';
 import {
-  BsSearch,
+  // BsSearch,
   BsFillBellFill,
   BsSuitHeartFill,
   BsFillPersonFill,
   BsFillCartFill,
 } from 'react-icons/bs';
-// import '../../GlobalStyles/Global.scss';
 import style from './Navbar.module.scss';
+import { AuthContext } from '../../Contexts/AuthContext';
+import React, { useContext, useEffect } from 'react';
+import axios from 'axios';
 
 function ChicofgoNavBar() {
+  const { isLoggedIn, username, setIsLoggedIn } = useContext(AuthContext);
+  // const storedIsLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
+  // const storedUsername = JSON.parse(localStorage.getItem('username'));
+
+  async function handleLogout() {
+    await axios.get('http://localhost:3001/api/auth/logout', {
+      withCredentials: true,
+    });
+    setIsLoggedIn(false);
+  }
+
   return (
     <Navbar
       expand="md"
@@ -67,8 +75,7 @@ function ChicofgoNavBar() {
               </Nav.Link>
             </Nav.Item>
           </Nav>
-          {/* className={`${style.oneAreaTitle} `} */}
-          <InputGroup className={`${style.navBarSearch} mx-0 mx-xl-2`}>
+          {/* <InputGroup className={`${style.navBarSearch} mx-0 mx-xl-2`}>
             <Form.Control
               type="search"
               placeholder="Search"
@@ -83,18 +90,45 @@ function ChicofgoNavBar() {
             >
               <BsSearch />
             </Button>
-          </InputGroup>
+          </InputGroup> */}
 
-          <Button as={Link} to="/" variant="" className={`mx-1`}>
+          {isLoggedIn && (
+            <>
+              <Nav.Item>
+                <Navbar.Text
+                  className={`px-3 py-1 me-1 chicofgo-font-700 d-block d-md-none d-lg-block`}
+                >
+                  Hi!~ {username}
+                  {/* {username ? username : storedUsername} */}
+                </Navbar.Text>
+              </Nav.Item>
+              <Nav.Item>
+                <Button
+                  variant="outline-chicofgo-green"
+                  onClick={handleLogout}
+                  className={`px-3 py-1 me-0 ms-3 ms-md-0 chicofgo-font-70`}
+                >
+                  登出
+                </Button>
+              </Nav.Item>
+            </>
+          )}
+
+          <Button as={Link} to="/" variant="" className={`mx-1 mb-1`}>
             <BsFillBellFill />
           </Button>
-          <Button as={Link} to="/login " variant="" className={`me-1`}>
+          <Button as={Link} to="/" variant="" className={`me-1 mb-1`}>
             <BsSuitHeartFill />
           </Button>
-          <Button as={Link} to="/member" variant="" className={`me-1`}>
+          <Button as={Link} to="/member" variant="" className={`me-1 mb-1`}>
             <BsFillPersonFill />
           </Button>
-          <Button as={Link} to="/" variant="" className={`me-1`}>
+          <Button
+            as={Link}
+            to="/member/shoppingcart"
+            variant=""
+            className={`me-1 align-center mb-1`}
+          >
             <BsFillCartFill />
           </Button>
         </Navbar.Collapse>

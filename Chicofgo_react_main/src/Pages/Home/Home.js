@@ -96,7 +96,9 @@ function Home() {
           <Row className={`${style.pageOne} justify-content-center`}>
             <Col>
               <Row>
-                <Col className={`${style.pageTitle} text-center mt-5 mb-3`}>
+                <Col
+                  className={`${style.pageTitle} text-center mt-5 mb-3 chicofgo_brown_font`}
+                >
                   <p>本日精選商品!第二件6折</p>
                 </Col>
               </Row>

@@ -13,6 +13,7 @@ import BusinessSiderbar from '../Components/BusinessSiderbar';
 import ProductsList from './Components/ProductsList';
 
 function BusinessProducts() {
+
   return (
     <div className="chicofgo_white">
       <Container className="pt-5">

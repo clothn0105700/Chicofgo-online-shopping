@@ -1,49 +1,39 @@
 import { Row, Col, Button, Form, Image, Table } from 'react-bootstrap';
 import { FaWindowClose } from 'react-icons/fa';
-// import { Link } from 'react-router-dom';
-// import Path from '../../Layout/Item/Path/Path';
-// import { orderInfo } from '../../Config/orderConfig';
-// import { useNavigate } from 'react-router-dom';
 import { BsCaretRightSquareFill, BsCaretLeftSquareFill } from 'react-icons/bs';
-// import ChContainer from '../../ComponentShare/ChContainer';
 import style from './ShoppingItem.module.scss';
-import React, { useState } from 'react';
 
 const ShoppingItem = ({
-  key,
+  id,
   brandname,
   title,
   desc,
-  // quantity,
+  quantity,
   price,
   productImg,
-  onCalculate,
+  checked,
+  onCheckboxChange,
+  onQuantityChange,
 }) => {
-  // 用{大括號}接受prop
-  const [quantity, setQuantity] = useState(0);
-  const increment = () => {
-    setQuantity(quantity + 1);
-    onCalculate(price); //每次點擊時執行 onCalculate(price) = totalCash + price
-  };
-  const decrement = () => {
-    if (quantity > 0) {
-      setQuantity(quantity - 1);
-      onCalculate(-price); // 減少時為-price
-    }
-  };
-
   return (
-    <Row className={`px-4 `}>
+    <Row className={`px-4 `} key={id}>
       <Col className={`col-1 d-flex justify-content-center align-items-center`}>
-        <Form className={``}>
-          <Form.Check type="checkbox" id="custom-switch" label="" />
-        </Form>
+        <Form.Group className={``}>
+          <Form.Check
+            type="checkbox"
+            // id={id}
+            // label=""
+            onChange={onCheckboxChange}
+            checked={checked}
+            controlId="formBasicCheckbox"
+          />
+        </Form.Group>
       </Col>
       <Col className={`col-11 chicofgo_gray pb-4 mb-4 rounded-3 shadow`}>
         <Row>
           <Col className={`text-end p-0 `}>
             <Button variant="" className={` chicofgo_brown_font m-0 pb-0`}>
-              <h3 className={`p-0`}>
+              <h3 className={`p-0 chicofgo_brown_font`}>
                 <FaWindowClose />
               </h3>
             </Button>
@@ -105,9 +95,9 @@ const ShoppingItem = ({
                     <Button
                       variant=""
                       className={` chicofgo_brown_font m-0 py-0`}
-                      onClick={decrement}
+                      onClick={() => onQuantityChange(-1)}
                     >
-                      <h3 className={`p-0`}>
+                      <h3 className={`p-0 chicofgo_brown_font`}>
                         <BsCaretLeftSquareFill />
                       </h3>
                     </Button>
@@ -115,16 +105,14 @@ const ShoppingItem = ({
                     <Button
                       variant=""
                       className={` chicofgo_brown_font m-0 py-0`}
-                      onClick={increment}
+                      onClick={() => onQuantityChange(1)}
                     >
-                      <h3 className={`p-0`}>
+                      <h3 className={`p-0 chicofgo_brown_font`}>
                         <BsCaretRightSquareFill />
                       </h3>
                     </Button>
                     件
                   </td>
-                  {/* <th>評價:</th>
-                            <td>{props.review}</td> */}
                 </tr>
                 <tr>
                   <th>單價:</th>

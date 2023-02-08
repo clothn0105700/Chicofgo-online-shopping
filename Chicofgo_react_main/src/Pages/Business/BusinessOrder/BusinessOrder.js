@@ -70,14 +70,11 @@ function BusinessOrder() {
                 <Col>日期</Col>
                 <Col>編號</Col>
                 <Col>購買人</Col>
-                <Col>運送方式</Col>
+                <Col>狀態</Col>
                 <Col>操作</Col>
               </div>
             </Row>
             <Col>
-              <BusinessOrderList />
-              <BusinessOrderList />
-              <BusinessOrderList />
               <BusinessOrderList />
             </Col>
           </Col>
