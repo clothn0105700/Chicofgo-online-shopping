@@ -34,7 +34,6 @@ const ProductDetail = () => {
     }
   }, []);
 
-  const [productsCount, setProductsCount] = useState(1);
   const [dataLoaded, setDataLoaded] = useState(false);
   const haveMessage = message.length;
   const {
@@ -54,6 +53,9 @@ const ProductDetail = () => {
     path_box,
     path_over,
   } = styles;
+
+  //商品數量
+  const [productsCount, setProductsCount] = useState(1);
 
   // const [detail, setDetail] = useState({});
   const location = useLocation();
