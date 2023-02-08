@@ -1,6 +1,15 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect, useRef } from 'react';
 import axios from 'axios';
-import { Row, Col, Form, Button, Image, InputGroup } from 'react-bootstrap';
+import {
+  Row,
+  Col,
+  Form,
+  Button,
+  Image,
+  InputGroup,
+  Overlay,
+  Tooltip,
+} from 'react-bootstrap';
 import { BsFillPencilFill } from 'react-icons/bs';
 import { FaEdit } from 'react-icons/fa';
 import MemberBar from './Components/MemberBar';
@@ -28,6 +37,9 @@ function Account() {
     birthdayError: '',
     birthday: false,
   });
+  const [showit, setShowit] = useState(false);
+  const target = useRef(null);
+  const [serverResponse, setServerResponse] = useState('');
 
   function handleDateChange(date) {
     setStartDate(date);
@@ -61,7 +73,7 @@ function Account() {
     console.log('handleSubmit');
     // console.log(backendData);
     setInputDisable(false);
-
+    setShowit(true);
     // 關閉表單的預設行為
     e.preventDefault();
     try {
@@ -103,12 +115,16 @@ function Account() {
           birthdayError: '',
           birthday: false,
         };
-        allErrors.map(
-          (thisError) => (
-            (newErrors[thisError.param] = true),
-            (newErrors[thisError.param + 'Error'] = thisError.msg)
-          )
-        );
+        // allErrors.map(
+        //   (thisError) => (
+        //     (newErrors[thisError.param] = true),
+        //     (newErrors[thisError.param + 'Error'] = thisError.msg)
+        //   )
+        // );
+        allErrors.forEach((thisError) => {
+          newErrors[thisError.param] = true;
+          newErrors[thisError.param + 'Error'] = thisError.msg;
+        });
         setErrors(newErrors);
         console.log(errors);
       }
@@ -125,6 +141,7 @@ function Account() {
       );
       setbackendData(response.data);
       setSelectedOption(String(response.data.gender));
+      setStartDate(new Date(response.data.birthday));
     }
     getAccountData();
   }, []);
@@ -325,16 +342,9 @@ function Account() {
                     className={`w-100  ${
                       errors.birthday ? 'border-danger rounded' : ''
                     }`}
-                    // className="red-border"
                     dateFormat="yyyy-MM-dd"
-                    // locale="zh-TW"
                     selected={startDate}
                     onChange={(date) => handleDateChange(date)}
-                    isClearable
-                    placeholderText={String(backendData.birthday).substring(
-                      0,
-                      10
-                    )}
                   />
                 </div>
               </Col>
@@ -353,12 +363,26 @@ function Account() {
         <Row>
           <Col className={`d-flex justify-content-center mt-2`}>
             <Button
+              ref={target}
               variant="chicofgo-brown"
               className={` px-5 py-1 shadow chicofgo_white_font`}
               onClick={handleSubmit}
             >
               儲存
             </Button>
+            <Overlay target={target.current} show={showit} placement="right">
+              <Tooltip>
+                {serverResponse === '' ? (
+                  <>
+                    <div class="spinner-border text-success" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </>
+                ) : (
+                  ''
+                )}
+              </Tooltip>
+            </Overlay>
           </Col>
         </Row>
       </Col>

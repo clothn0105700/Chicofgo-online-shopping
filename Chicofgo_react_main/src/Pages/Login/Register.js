@@ -92,12 +92,10 @@ function Login() {
           confirmPasswordError: '',
           confirmPassword: false,
         };
-        allErrors.map(
-          (thisError) => (
-            (newErrors[thisError.param] = true),
-            (newErrors[thisError.param + 'Error'] = thisError.msg)
-          )
-        );
+        allErrors.forEach((thisError) => {
+          newErrors[thisError.param] = true;
+          newErrors[thisError.param + 'Error'] = thisError.msg;
+        });
         setregErrors(newErrors);
         console.log(regErrors);
       }

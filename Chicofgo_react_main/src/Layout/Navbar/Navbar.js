@@ -1,9 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
 import { Container, Button, Image, Nav, Navbar } from 'react-bootstrap';
-// import Form from 'react-bootstrap/Form';
-// import InputGroup from 'react-bootstrap/InputGroup';
 import {
-  // BsSearch,
   BsFillBellFill,
   BsSuitHeartFill,
   BsFillPersonFill,
@@ -11,13 +8,11 @@ import {
 } from 'react-icons/bs';
 import style from './Navbar.module.scss';
 import { AuthContext } from '../../Contexts/AuthContext';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import axios from 'axios';
 
 function ChicofgoNavBar() {
   const { isLoggedIn, username, setIsLoggedIn } = useContext(AuthContext);
-  // const storedIsLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
-  // const storedUsername = JSON.parse(localStorage.getItem('username'));
 
   async function handleLogout() {
     await axios.get('http://localhost:3001/api/auth/logout', {
@@ -30,7 +25,7 @@ function ChicofgoNavBar() {
     <Navbar
       expand="md"
       sticky="top"
-      className={`p-0 chicofgo-font-700 border-bottom`}
+      className={`p-0 chicofgo-font-700 border-bottom shadow-sm`}
     >
       <Container fluid className={`${style.navbarBody} py-2`}>
         <Navbar.Brand as={NavLink} to="/home">
@@ -75,22 +70,6 @@ function ChicofgoNavBar() {
               </Nav.Link>
             </Nav.Item>
           </Nav>
-          {/* <InputGroup className={`${style.navBarSearch} mx-0 mx-xl-2`}>
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-              aria-describedby="basic-addon2"
-            />
-            <Button
-              as={Link}
-              to="/"
-              variant="outline-chicofgo-brown"
-              id="button-addon2"
-            >
-              <BsSearch />
-            </Button>
-          </InputGroup> */}
 
           {isLoggedIn && (
             <>
