@@ -34,7 +34,6 @@ const ProductDetail = () => {
     }
   }, []);
 
-  
   const [dataLoaded, setDataLoaded] = useState(false);
   const haveMessage = message.length;
   const {
@@ -56,7 +55,7 @@ const ProductDetail = () => {
   } = styles;
 
   //商品數量
-  const [productsCount, setProductsCount]= useState(1)
+  const [productsCount, setProductsCount] = useState(1);
 
   // const [detail, setDetail] = useState({});
   const location = useLocation();
