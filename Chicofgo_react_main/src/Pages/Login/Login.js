@@ -15,7 +15,11 @@ import { AuthContext } from '../../Contexts/AuthContext';
 function Login() {
   const { isLoggedIn, setUsername, setIsLoggedIn, setUserid } =
     useContext(AuthContext);
+  const [loginErrors, setLoginErrors] = useState(false);
+  const [loginCheckbox, setLoginCheckbox] = useState(false);
+
   const navigate = useNavigate();
+
   useEffect(() => {
     if (isLoggedIn) {
       navigate(-1);
@@ -23,32 +27,54 @@ function Login() {
   }, [isLoggedIn]);
 
   const [member, setMember] = useState({
-    email: '7788@gmail.com',
+    account: 'c8763',
     password: 'test1234',
   });
+
+  //-----------記住帳號功能-------------
+  // const [member, setMember] = useState({
+  //   account: localStorage.getItem('accountRememberMe') || '',
+  // });
+  //-----------記住帳號功能-------------
 
   function handleChange(e) {
     setMember({ ...member, [e.target.name]: e.target.value });
   }
-
   async function handleSubmit(e) {
+    console.log(loginCheckbox);
+    if (loginCheckbox) {
+      console.log('記住帳號');
+      localStorage.setItem('accountRememberMe', member.account);
+      // localStorage.removeItem('accountRememberMe')
+    } else {
+      console.log('不記住帳號');
+      localStorage.removeItem('accountRememberMe');
+    }
+
     e.preventDefault();
-    let response = await axios.post(
-      'http://localhost:3001/api/auth/login',
-      member,
-      {
-        // 為了跨源存取 cookie
-        withCredentials: true,
+    try {
+      let response = await axios.post(
+        'http://localhost:3001/api/auth/login',
+        member,
+        {
+          // 為了跨源存取 cookie
+          withCredentials: true,
+        }
+      );
+      // console.log(response.data);
+      // console.log(response.status);
+      if (response.status === 200) {
+        console.log('登入成功');
+        setIsLoggedIn(true);
+        setUsername(response.data.member.name);
+        setUserid(response.data.member.id);
+        navigate(-1);
       }
-    );
-    // console.log(response.data);
-    // console.log(response.status);
-    if (response.status === 200) {
-      console.log('登入成功');
-      setIsLoggedIn(true);
-      setUsername(response.data.member.name);
-      setUserid(response.data.member.id);
-      navigate(-1);
+    } catch (e) {
+      if (e.response.status === 401) {
+        console.log('登入失敗');
+        setLoginErrors(true);
+      }
     }
   }
 
@@ -82,16 +108,22 @@ function Login() {
               </div>
               <FloatingLabel
                 controlId="floatingInput"
-                label="信箱："
+                label="帳號："
                 className={`mb-3`}
               >
                 <Form.Control
-                  type="email"
+                  type="text"
                   placeholder=" "
-                  name="email"
-                  value={member.email}
+                  name="account"
+                  value={member.account}
                   onChange={handleChange}
+                  isInvalid={loginErrors}
+                  list="datalistOptions"
                 />
+
+                <Form.Control.Feedback type="invalid">
+                  帳號或密碼錯誤
+                </Form.Control.Feedback>
               </FloatingLabel>
 
               <FloatingLabel
@@ -105,7 +137,11 @@ function Login() {
                   name="password"
                   value={member.password}
                   onChange={handleChange}
+                  isInvalid={loginErrors}
                 />
+                <Form.Control.Feedback type="invalid">
+                  帳號或密碼錯誤
+                </Form.Control.Feedback>
               </FloatingLabel>
               <Row className={`mb-3 justify-content-bewteen`}>
                 <Col md="auto">
@@ -119,7 +155,13 @@ function Login() {
                 </Col>
                 <Col className={`col-auto`}>
                   <Form.Group controlId="remeberMe">
-                    <Form.Check type="checkbox" label="記住我的帳號" />
+                    <Form.Check
+                      type="checkbox"
+                      label="記住我的帳號"
+                      onChange={() => {
+                        setLoginCheckbox(!loginCheckbox);
+                      }}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
