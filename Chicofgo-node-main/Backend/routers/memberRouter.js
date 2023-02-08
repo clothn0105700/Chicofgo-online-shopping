@@ -49,15 +49,6 @@ const accountChangeRules = [
   body('account').isLength({ min: 4 }).withMessage('帳號長度至少為 4'),
   body('email').isEmail().withMessage('請輸入正確格式的 Email'),
   body('birthday').isBefore().withMessage('不是未來人吧'),
-
-  // body('phone').custom((value, { req }) => {
-  //   var MobileReg = /^(09)[0-9]{8}$/;
-  //   if (!value.match(MobileReg)) {
-  //     throw new Error('手機格式錯誤');
-  //   } else {
-  //     return true;
-  //   }
-  // }),
   body('phone')
     .custom((value, { req }) => {
       var MobileReg = /^(09)[0-9]{8}$/;
@@ -73,7 +64,7 @@ router.use('/accountChange', checkLogin, accountChangeRules, async (req, res, ne
   console.log(validateResult);
   if (!validateResult.isEmpty()) {
     // validateResult 不是空的 -> 表示有錯誤
-    return res.status(400).json({ errors: validateResult.array() });
+    return res.status(401).json({ errors: validateResult.array() });
     // early return
   }
   let thisId = req.session.member.id;
@@ -88,7 +79,7 @@ router.use('/accountChange', checkLogin, accountChangeRules, async (req, res, ne
   // 驗證信箱
   let [membersEmail] = await pool.execute('SELECT * FROM user_member WHERE email = ?', [req.body.email]);
   if (membersEmail.length > 0 && req.body.email != oldAccountData.email) {
-    return res.status(400).json({
+    return res.status(401).json({
       errors: [
         {
           msg: 'email 已經註冊過',
@@ -119,9 +110,10 @@ router.use('/accountChange', checkLogin, accountChangeRules, async (req, res, ne
 });
 
 const passwordChangeRules = [
-  body('oldPassword').isLength({ min: 8 }).withMessage('密碼長度至少為 8'),
-  body('password').isLength({ min: 8 }).withMessage('密碼長度至少為 8'),
+  body('oldPassword').isLength({ min: 8 }).withMessage('密碼長度至少為 8').notEmpty().withMessage('不得為空'),
   body('password')
+    .isLength({ min: 8 })
+    .withMessage('密碼長度至少為 8')
     .custom((value, { req }) => {
       // return value === req.body.oldPassword;
       if (value === req.body.oldPassword) {
@@ -145,7 +137,7 @@ router.use('/passwordChange', checkLogin, passwordChangeRules, async (req, res, 
   console.log(validateResult2);
   if (!validateResult2.isEmpty()) {
     // validateResult 不是空的 -> 表示有錯誤
-    return res.status(400).json({ errors: validateResult2.array() });
+    return res.status(401).json({ errors: validateResult2.array() });
     // early return
   }
 
@@ -154,7 +146,7 @@ router.use('/passwordChange', checkLogin, passwordChangeRules, async (req, res, 
     // 表示這個 email 不存在資料庫中 -> 沒註冊過
     // 不存在，就回覆 401
     console.log('使用者不存在');
-    return res.status(400).json({
+    return res.status(401).json({
       errors: [
         {
           // msg: 'email 尚未註冊',
@@ -169,7 +161,7 @@ router.use('/passwordChange', checkLogin, passwordChangeRules, async (req, res, 
   if (passwordResult === false) {
     // 密碼比對失敗
     // 密碼錯誤，回覆前端 401
-    return res.status(400).json({
+    return res.status(401).json({
       errors: [
         {
           param: 'oldPassword',

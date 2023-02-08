@@ -44,28 +44,34 @@ router.use((req, res, next) => {
 //   },
 // });
 
-// 驗證資料 validation -> 因為後端不可以相信來自前端的資料
-
 const registerRules = [
-  // 中間件: 負責檢查 email 是否合法
-  body('email').isEmail().withMessage('請輸入正確格式的 Email'),
-  // 中間件: 檢查密碼的長度
-  body('password').isLength({ min: 8 }).withMessage('密碼長度至少為 8'),
-  // 中間件: 檢查 password 跟 confirmPassword 是否一致
-  body('name').isLength({ min: 1 }).withMessage('姓名長度至少為 1'),
-
-  body('birthday').isBefore().withMessage('不是未來人吧'),
-
-  body('address').isLength({ min: 6 }).withMessage('填寫正確格式'),
-
   body('account').isLength({ min: 4 }).withMessage('帳號長度至少為 4'),
+  body('email')
+    .isEmail()
+    .withMessage('請輸入正確格式的 Email')
+    .custom(async (value, { req }) => {
+      let [membersEmail] = await pool.execute('SELECT * FROM user_member WHERE email = ?', [value]);
+      if (membersEmail.length > 0) {
+        throw new Error('email 已經註冊過');
+      }
+      return true;
+    }),
 
-  // 客製自己想要的檢查條件
+  body('phone')
+    .custom((value, { req }) => {
+      var MobileReg = /^(09)[0-9]{8}$/;
+      return value.match(MobileReg);
+    })
+    .withMessage('請輸入正確手機號碼格式'),
+  body('name').isLength({ min: 2 }).withMessage('姓名長度至少為 2'),
+  body('password').isLength({ min: 8 }).withMessage('密碼長度至少為 8'),
   body('confirmPassword')
     .custom((value, { req }) => {
       return value === req.body.password;
     })
-    .withMessage('驗證密碼不符合'),
+    .withMessage('驗證密碼不符合')
+    .notEmpty()
+    .withMessage('不得為空'),
 ];
 
 // /api/auth/register
@@ -77,31 +83,34 @@ router.post('/register', registerRules, async (req, res, next) => {
   console.log(validateResult);
   if (!validateResult.isEmpty()) {
     // validateResult 不是空的 -> 表示有錯誤
-    return res.status(400).json({ errors: validateResult.array() });
+    return res.status(401).json({ errors: validateResult.array() });
     // early return
   }
 
   // 驗證通過
   // 檢查 email 是否已經註冊過
-  let [membersEmail] = await pool.execute('SELECT * FROM user_member WHERE email = ?', [req.body.email]);
-  if (membersEmail.length > 0) {
-    // 表示這個 email 有存在資料庫中
-    // 如果已經註冊過，就回覆 400
-    return res.status(400).json({
-      errors: [
-        {
-          msg: 'email 已經註冊過',
-          param: 'email',
-        },
-      ],
-    });
-  }
+  // let [membersEmail] = await pool.execute('SELECT * FROM user_member WHERE email = ?', [req.body.email]);
+  // if (membersEmail.length > 0) {
+  //   console.log('membersEmail');
+
+  //   console.log(membersEmail);
+  //   console.log(membersEmail.length);
+
+  // return res.status(401).json({
+  //   errors: [
+  //     {
+  //       msg: 'email 已經註冊過',
+  //       param: 'email',
+  //     },
+  //   ],
+  // });
+  // }
 
   let [membersAccount] = await pool.execute('SELECT * FROM user_member WHERE account = ?', [req.body.account]);
   if (membersAccount.length > 0) {
     // 表示這個 email 有存在資料庫中
     // 如果已經註冊過，就回覆 400
-    return res.status(400).json({
+    return res.status(401).json({
       errors: [
         {
           msg: 'Account 已經註冊過',
@@ -110,20 +119,14 @@ router.post('/register', registerRules, async (req, res, next) => {
       ],
     });
   }
-
-  
-  // --> 這個 email 不存在於資料庫中
-
-  // 雜湊 hash 密碼
   const hashedPassword = await argon2.hash(req.body.password);
   // 存到資料庫
-  let result = await pool.execute('INSERT INTO user_member (account,name , password, email, address, birthday) VALUES (?, ?, ?, ?, ?, ?);', [
+  let result = await pool.execute('INSERT INTO user_member (account, email, phone, name, password) VALUES (?, ?, ?, ?, ?);', [
     req.body.account,
+    req.body.email,
+    req.body.phone,
     req.body.name,
     hashedPassword,
-    req.body.email,
-    req.body.address,
-    req.body.birthday,
   ]);
   // console.log('register: insert to db', result);
   console.log('註冊成功');
@@ -139,11 +142,11 @@ router.post('/register', registerRules, async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
   // 資料驗證？？
   // 確認 email 是否存在
-  let [members] = await pool.execute('SELECT * FROM user_member WHERE email = ?', [req.body.email]);
+  let [members] = await pool.execute('SELECT * FROM user_member WHERE account = ?', [req.body.account]);
   if (members.length === 0) {
     // 表示這個 email 不存在資料庫中 -> 沒註冊過
     // 不存在，就回覆 401
-    console.log('email 不存在');
+    console.log('account 不存在');
 
     return res.status(401).json({
       errors: [
@@ -162,13 +165,10 @@ router.post('/login', async (req, res, next) => {
   // 如果存在，比對密碼
   let result = await argon2.verify(member.password, req.body.password);
   if (result === false) {
-    // 密碼比對失敗
     // 密碼錯誤，回覆前端 401
     return res.status(401).json({
       errors: [
         {
-          // msg: '密碼錯誤',
-          // param: 'password',
           msg: '帳號或密碼錯誤',
         },
       ],
@@ -182,7 +182,7 @@ router.post('/login', async (req, res, next) => {
   let retMember = {
     id: member.id,
     name: member.name,
-    email: member.email,
+    account: member.account,
     // photo: member.photo,
   };
   // 寫入 session

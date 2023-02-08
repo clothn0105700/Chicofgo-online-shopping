@@ -59,7 +59,7 @@ function ChangePassword() {
         });
       }
     } catch (e) {
-      if (e.response.status === 400) {
+      if (e.response.status === 401) {
         let allPsErrors = e.response.data.errors;
         console.log('更新失敗');
         console.log(allPsErrors);
