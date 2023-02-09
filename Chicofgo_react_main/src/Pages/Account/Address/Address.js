@@ -11,7 +11,6 @@ import {
 
 import { IconContext } from 'react-icons';
 import MemberBar from '../Components/MemberBar';
-import './Address.scss';
 import ChContainer from '../../ComponentShare/ChContainer';
 import AddressDetail from './AddressDetail';
 
