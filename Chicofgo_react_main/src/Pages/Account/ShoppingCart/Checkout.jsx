@@ -1,34 +1,69 @@
-import { Row, Col, Button, Form, InputGroup } from 'react-bootstrap';
+import {
+  Row,
+  Col,
+  Button,
+  Form,
+  InputGroup,
+  FormControl,
+} from 'react-bootstrap';
 import ChContainer from '../../ComponentShare/ChContainer';
 import style from './ShoppingCart.module.scss';
 import React, { useState, useEffect } from 'react';
 import CheckoutItem from './Components/CheckoutItem';
 import { useShoppingCart } from '../../../Contexts/ShoppingCartProvider';
+import axios from 'axios';
 
 function Checkout(props) {
+  // ---勾選商品---
   const [products, setProducts] = useState([]);
   const { selectProducts, setSelectProducts } = useShoppingCart();
-  const [memberInfo, setMemberInfo] = useState({
-    id: 1,
-    name: '小明',
-    phone: '0999888777',
-    address: '桃園市中壢區',
-  });
-
-  // function hh(e) {
-  //   let newMemberInfo = { ...memberInfo };
-  //   // newMemberInfo
-  //   console.log(newMemberInfo[e]);
-  // }
-
   useEffect(() => {
     setProducts(selectProducts);
   }, []);
 
-  const totalPrice = products.reduce(
-    (sum, product) => sum + product.price * product.quantity,
-    0
-  );
+  // ---會員資料---
+  const [memberInfo, setMemberInfo] = useState({
+    id: 1,
+    name: '小明',
+    phone: '0912345678',
+    pay: '',
+    address: '桃園市XXX',
+    send_information: '',
+    bill_id: '',
+    totalPrice: '',
+    status: '1',
+  });
+
+  function handleChange(e) {
+    let newMemberInfo = { ...memberInfo };
+    newMemberInfo[e.target.name] = e.target.value;
+    setMemberInfo(newMemberInfo);
+    // console.log(memberInfo);
+  }
+
+  //---優惠券---
+  const [coupon, setCoupon] = useState(0);
+  function couponChange(e) {
+    setCoupon(e.target.value);
+  }
+
+  // ---訂單加總---
+  const totalPrice =
+    products.reduce(
+      (sum, product) => sum + product.price * product.quantity,
+      0
+    ) - coupon;
+
+  // ---下單---(後端還沒接)
+  async function handleSubmit(e) {
+    e.preventDefault();
+    memberInfo.totalPrice = totalPrice;
+    // let response = await axios.post(
+    //   'http://localhost:3001/api/checkoutOrder',
+    //   memberInfo
+    // );
+    console.log(memberInfo);
+  }
   return (
     <ChContainer
       ChClass={'chicofgo-font'}
@@ -73,9 +108,9 @@ function Checkout(props) {
                       <Form.Control
                         size="sm"
                         type="text"
-                        id="name"
+                        // id="name"
                         name="name"
-                        // onChange={hh}
+                        onChange={handleChange}
                         value={memberInfo.name}
                         className={'chicofgo_yello'}
                       />
@@ -85,8 +120,9 @@ function Checkout(props) {
                       <Form.Control
                         size="sm"
                         type="text"
-                        id="phone"
+                        // id="phone"
                         name="phone"
+                        onChange={handleChange}
                         value={memberInfo.phone}
                         className={'chicofgo_yello'}
                       />
@@ -96,11 +132,13 @@ function Checkout(props) {
                       <Form.Select
                         aria-label="Default select example"
                         size="sm"
+                        name="coupon_id"
+                        onChange={(handleChange, couponChange)}
                         className={'chicofgo_yello'}
                       >
-                        <option>選擇票券</option>
-                        <option value="1">$200折價券</option>
-                        <option value="2">$60免運券</option>
+                        <option value="0">選擇票券</option>
+                        <option value="60">$60免運券</option>
+                        <option value="200">$200折價券</option>
                       </Form.Select>
                     </InputGroup>
                     <InputGroup className="align-items-center mb-2">
@@ -108,6 +146,8 @@ function Checkout(props) {
                       <Form.Select
                         aria-label="Default select example"
                         size="sm"
+                        name="pay"
+                        onChange={handleChange}
                         className={'chicofgo_yello'}
                       >
                         <option>選擇付款方式</option>
@@ -123,8 +163,9 @@ function Checkout(props) {
                       <Form.Control
                         size="sm"
                         type="text"
-                        id="address"
+                        // id="address"
                         name="address"
+                        onChange={handleChange}
                         value={memberInfo.address}
                         className={'chicofgo_yello'}
                       />
@@ -134,6 +175,8 @@ function Checkout(props) {
                       <Form.Select
                         aria-label="Default select example"
                         size="sm"
+                        name="send_information"
+                        onChange={handleChange}
                         className={'chicofgo_yello'}
                       >
                         <option>選擇門市</option>
@@ -148,6 +191,8 @@ function Checkout(props) {
                       <Form.Select
                         aria-label="Default select example"
                         size="sm"
+                        name="bill_id"
+                        onChange={handleChange}
                         className={'chicofgo_yello'}
                       >
                         <option>選擇發票</option>
@@ -158,24 +203,24 @@ function Checkout(props) {
                     </InputGroup>
                   </Col>
                 </Row>
-                <h5 className="pt-5 chicofgo-font-900">折扣計算</h5>
-                <Row>
-                  <Col>運費：{'$60'}</Col>
-                  <Col>優惠券：{'$200'}</Col>
+                <h5 className={'pt-5 chicofgo-font-900'}>折扣計算</h5>
+                <Row className={`${style.totalSum}`}>
+                  <Col>
+                    折抵：$
+                    {coupon}
+                  </Col>
+                  <Col className="text-end">
+                    訂單加總:<span>{totalPrice}</span>
+                  </Col>
                 </Row>
               </Form>
-            </div>
-            <div className={`p-3 text-end chicofgo_gray ${style.totalSum}`}>
-              訂單加總:<span>{totalPrice}</span>
             </div>
             <Row className={`mt-5`}>
               <Col className={`text-center`}>
                 <Button
                   variant="chicofgo-brown"
                   className={` px-5 py-1 shadow chicofgo_white_font`}
-                  onClick={() => {
-                    console.log(products);
-                  }}
+                  onClick={handleSubmit}
                 >
                   確認下單
                 </Button>
