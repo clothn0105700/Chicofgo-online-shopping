@@ -1,9 +1,14 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../../../Contexts/AuthContext';
 import styles from './ProductInfo.module.scss';
 import { FaShoppingCart, FaBookmark } from 'react-icons/fa';
 import axios from 'axios';
+import { useContext } from 'react';
+
+import { useNavigate } from 'react-router-dom';
+import Modal from '../../../ComponentShare/Modal';
+import Btn from '../../../../Layout/Item/Btn/Btn';
 
 const Productinfo = (props) => {
   const { title, content, price, productsCount, setProductsCount } = props;
@@ -24,6 +29,18 @@ const Productinfo = (props) => {
 
   const location = useLocation();
   const { userid } = useAuth();
+  const { isLoggedIn } = useAuth();
+
+  const navigate = useNavigate();
+
+  //設置彈跳訊息
+  const [infoLoaded, setInfoLoaded] = useState(false);
+  const [modalContent, setModalContent] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [userLike, setUserLike] = useState([]);
+  const [checkLike, setCheckLike] = useState(false);
+  const [btnContext, setBtnContext] = useState('未加入收藏');
+  const [modalCase, setModalCase] = useState(false);
 
   useEffect(() => {
     if (productsCount < 1) {
@@ -36,15 +53,18 @@ const Productinfo = (props) => {
     const urlArray = location.pathname.split('/');
     const id = parseInt(urlArray[urlArray.length - 1]);
     try {
-      let response = await axios.post(
-        'http://localhost:3001/api/products/sendCart',
-        {
-          cartProductId: id,
+      let response = await axios
+        .post('http://localhost:3001/api/products/sendCart', {
+          cartProductId: id ? id : '此商品已加入購物車',
           cartUserId: userid,
           cartPrice: price,
           cartQuantity: productsCount,
-        }
-      );
+        })
+        .then((res) => {
+          setModalCase(true);
+          setModalContent('成功加入購物車');
+          setIsOpen(true);
+        });
       console.log(response.data);
     } catch (e) {
       console.log(e);
@@ -120,13 +140,54 @@ const Productinfo = (props) => {
           </button>
           <button
             className={`${btn_cart} d-flex align-items-center justify-content-center`}
-            onClick={sendCart}
+            onClick={() => {
+              if (isLoggedIn) {
+                sendCart();
+              } else {
+                setModalContent('請先登入');
+                setIsOpen(true);
+              }
+            }}
           >
             <FaShoppingCart className="mx-2" />
             加入購物車
           </button>
         </div>
       </div>
+      {modalCase ? (
+        <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+          <h4 style={{ color: 'rgb(73, 67, 61)', padding: '24px 36px' }}>
+            {modalContent}
+          </h4>
+        </Modal>
+      ) : (
+        <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
+          <Link
+            to="/login"
+            style={{
+              textDecoration: 'none',
+              color: 'rgb(73, 67, 61)',
+
+              padding: '24px 36px',
+              textAlign: 'center',
+            }}
+          >
+            <h4>{modalContent}</h4>
+            <Btn
+              style={{
+                width: '75px',
+                fontSize: '14px',
+                marginTop: '12px',
+              }}
+              onClick={() => {
+                navigate('/login');
+              }}
+            >
+              確定
+            </Btn>
+          </Link>
+        </Modal>
+      )}
     </div>
   );
 };
