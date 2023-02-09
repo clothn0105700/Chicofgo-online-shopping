@@ -61,7 +61,6 @@ function Account() {
   async function handleSubmit(e) {
     // 送出
     console.log('handleSubmit');
-
     // console.log(backendData);
     setInputDisable(false);
     // 關閉表單的預設行為
