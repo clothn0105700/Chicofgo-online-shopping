@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { React, Fragment, useState, useEffect, useContext } from 'react';
+import { React, Fragment, useState, useEffect } from 'react';
 import {
   Container,
   Row,
@@ -10,11 +10,10 @@ import {
 } from 'react-bootstrap';
 import style from './Login.module.scss';
 import axios from 'axios';
-import { AuthContext } from '../../Contexts/AuthContext';
+import { useAuth } from '../../Contexts/AuthContext';
 
 function Login() {
-  const { isLoggedIn, setUsername, setIsLoggedIn, setUserid } =
-    useContext(AuthContext);
+  const { isLoggedIn, setUsername, setIsLoggedIn, setUserid } = useAuth();
   const [loginErrors, setLoginErrors] = useState(false);
   const [loginCheckbox, setLoginCheckbox] = useState(false);
 

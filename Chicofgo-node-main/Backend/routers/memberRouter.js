@@ -192,5 +192,74 @@ router.use('/passwordChange', checkLogin, passwordChangeRules, async (req, res, 
     // ok
   });
 });
+router.use('/mycreditcard', checkLogin, async (req, res, next) => {
+  // console.log('I am account', req.body);
+  // console.log('I am session', req.session.member.id);
+  let [mycreditcardDatas] = await pool.execute('SELECT * FROM user_payment_credit_card WHERE member_id = ?', [req.session.member.id]);
+  if (mycreditcardDatas.length > 0) {
+    let mycreditcardData = mycreditcardDatas[0];
+    let hideCardNumber = mycreditcardData.card_number;
+    // 表示這個 accountData 有存在資料庫中
+    // console.log('accountData', accountData);
+    // 回覆給前端
+    return res.json({
+      name: mycreditcardData.cardholder_name,
+      cardNumber: mycreditcardData.card_number.slice(0, 4) + '********' + mycreditcardData.card_number.slice(-4),
+      expiry: '****',
+      cvc: '***',
+    });
+  } else {
+    return res.status(401).json({
+      msg: '沒有舊資料喔',
+    });
+  }
+});
+
+const creditcardChangeRules = [
+  body('name').notEmpty().withMessage('不得為空').isLength({ min: 2 }).withMessage('名字長度至少為 2').isLength({ max: 25 }).withMessage('名字長度最多為 25'),
+  body('cardNumber').notEmpty().withMessage('不得為空').isLength({ min: 16 }).withMessage('請輸入正確格式'),
+  body('expiry').notEmpty().withMessage('不得為空').isLength({ min: 4 }).withMessage('請輸入正確格式'),
+  body('cvc').notEmpty().withMessage('不得為空').isLength({ min: 3 }).withMessage('請輸入正確格式'),
+];
+router.post('/creditcardchange', checkLogin, creditcardChangeRules, async (req, res, next) => {
+  console.log('creditcardChange', req.body);
+  const validateResult3 = validationResult(req);
+  console.log(validateResult3);
+  if (!validateResult3.isEmpty()) {
+    // validateResult 不是空的 -> 表示有錯誤
+    return res.status(401).json({ errors: validateResult3.array() });
+    // early return
+  }
+
+  let [oldcreditcardDatas] = await pool.execute('SELECT * FROM user_payment_credit_card WHERE member_id = ?', [req.session.member.id]);
+  let resultMsg;
+  if (oldcreditcardDatas.length > 0) {
+    console.log('有舊資料');
+    let result = await pool.execute('UPDATE user_payment_credit_card SET cardholder_name=?,card_number=?,mmyy=?,cvc=? WHERE member_id = ?;', [
+      req.body.name,
+      req.body.cardNumber,
+      req.body.expiry,
+      req.body.cvc,
+      req.session.member.id,
+    ]);
+    console.log('更新結果', result);
+    console.log('修改成功');
+    resultMsg = '修改成功';
+  } else {
+    console.log('沒有舊資料');
+    let result2 = await pool.execute('INSERT INTO user_payment_credit_card (cardholder_name, card_number, mmyy, cvc ,member_id) VALUES (?, ?, ?, ?, ?);', [
+      req.body.name,
+      req.body.cardNumber,
+      req.body.expiry,
+      req.body.cvc,
+      req.session.member.id,
+    ]);
+    console.log('新增成功');
+    resultMsg = '新增成功';
+  }
+  return res.json({
+    msg: resultMsg,
+  });
+});
 
 module.exports = router;

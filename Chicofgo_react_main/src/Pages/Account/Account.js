@@ -1,15 +1,6 @@
 import { useState, useLayoutEffect, useRef } from 'react';
 import axios from 'axios';
-import {
-  Row,
-  Col,
-  Form,
-  Button,
-  Image,
-  InputGroup,
-  Overlay,
-  Tooltip,
-} from 'react-bootstrap';
+import { Row, Col, Form, Button, Image, InputGroup } from 'react-bootstrap';
 import { BsFillPencilFill } from 'react-icons/bs';
 import { FaEdit } from 'react-icons/fa';
 import MemberBar from './Components/MemberBar';
@@ -20,6 +11,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { registerLocale } from 'react-datepicker';
 import ZhTW from 'date-fns/locale/zh-TW';
+import PopupWindow from '../ComponentShare/PopupWindow';
 registerLocale('zh-TW', ZhTW);
 
 function Account() {
@@ -37,9 +29,7 @@ function Account() {
     birthdayError: '',
     birthday: false,
   });
-  const [showit, setShowit] = useState(false);
-  const target = useRef(null);
-  const [serverResponse, setServerResponse] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   function handleDateChange(date) {
     setStartDate(date);
@@ -73,7 +63,6 @@ function Account() {
     console.log('handleSubmit');
     // console.log(backendData);
     setInputDisable(false);
-    setShowit(true);
     // 關閉表單的預設行為
     e.preventDefault();
     try {
@@ -88,6 +77,7 @@ function Account() {
       console.log(response.data);
       if (response.status === 200) {
         console.log('更新成功');
+        setShowModal(true);
         setErrors({
           nameError: '',
           name: false,
@@ -115,12 +105,6 @@ function Account() {
           birthdayError: '',
           birthday: false,
         };
-        // allErrors.map(
-        //   (thisError) => (
-        //     (newErrors[thisError.param] = true),
-        //     (newErrors[thisError.param + 'Error'] = thisError.msg)
-        //   )
-        // );
         allErrors.forEach((thisError) => {
           newErrors[thisError.param] = true;
           newErrors[thisError.param + 'Error'] = thisError.msg;
@@ -363,26 +347,19 @@ function Account() {
         <Row>
           <Col className={`d-flex justify-content-center mt-2`}>
             <Button
-              ref={target}
               variant="chicofgo-brown"
               className={` px-5 py-1 shadow chicofgo_white_font`}
               onClick={handleSubmit}
             >
               儲存
             </Button>
-            <Overlay target={target.current} show={showit} placement="right">
-              <Tooltip>
-                {serverResponse === '' ? (
-                  <>
-                    <div class="spinner-border text-success" role="status">
-                      <span class="visually-hidden">Loading...</span>
-                    </div>
-                  </>
-                ) : (
-                  ''
-                )}
-              </Tooltip>
-            </Overlay>
+            <PopupWindow
+              show={showModal}
+              onclose={() => setShowModal(false)}
+              title="修改結果"
+              content="成功修改!"
+              btnContent="關閉"
+            />
           </Col>
         </Row>
       </Col>
