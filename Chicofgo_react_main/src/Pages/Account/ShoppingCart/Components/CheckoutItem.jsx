@@ -1,4 +1,4 @@
-import { Row, Col, Button, Form, Image, Table } from 'react-bootstrap';
+import { Row, Col, Button, Image, Table } from 'react-bootstrap';
 import style from './ShoppingItem.module.scss';
 
 const CheckoutItem = ({
@@ -9,9 +9,6 @@ const CheckoutItem = ({
   quantity,
   price,
   productImg,
-  checked,
-  onCheckboxChange,
-  onQuantityChange,
 }) => {
   return (
     <Row className={`px-4 justify-content-center`} key={id}>

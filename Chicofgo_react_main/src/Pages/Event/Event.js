@@ -8,25 +8,25 @@ function Event() {
     <Container fluid>
       <Carousels
         className={`${style.event}`}
-        showImg={['Carousels-1.png', 'Carousels-2.png', 'Carousels-3.png']}
+        showImg={['Event1-1.png', 'Event1-2.png', 'Event1-3.png']}
         srcollTo={0}
         changeDelay={2000}
         fade={true}
       />
       <Carousels
-        showImg={['Carousels-2.png', 'Carousels-3.png', 'Carousels-1.png']}
+        showImg={['Event2-1.png', 'Event2-2.png', 'Event2-3.png']}
         srcollTo={window.innerHeight}
         changeDelay={2000}
         fade={true}
       />
       <Carousels
-        showImg={['Carousels-3.png', 'Carousels-1.png', 'Carousels-2.png']}
+        showImg={['Event3-1.png', 'Event3-2.png', 'Event3-3.png']}
         srcollTo={2 * window.innerHeight}
         changeDelay={2000}
         fade={true}
       />
       <Carousels
-        showImg={['Carousels-1.png', 'Carousels-2.png', 'Carousels-3.png']}
+        showImg={['Event4-1.png', 'Event4-2.png']}
         srcollTo={3 * window.innerHeight}
         changeDelay={2000}
         fade={true}
