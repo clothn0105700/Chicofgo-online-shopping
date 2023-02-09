@@ -4,12 +4,16 @@ import axios from 'axios';
 import './CardForm.scss';
 import 'react-credit-cards-2/es/styles-compiled.css';
 import { Button, Collapse, Col, Form, InputGroup, Row } from 'react-bootstrap';
+import PopupWindow from '../../../ComponentShare/PopupWindow';
+import { useNavigate } from 'react-router-dom';
+
 function CardForm() {
-  // const [name, setName] = useState('');
-  // const [cardNumber, setCardNumber] = useState('');
-  // const [expiry, setExpiry] = useState('');
-  // const [cvc, setCvc] = useState('');
+
+  const navigate = useNavigate();
   const [submittedData, setSubmittedData] = useState({});
+  const [backendData, setBackendData] = useState({});
+  const [showModal, setShowModal] = useState(false);
+
   const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState({
     cvcError: '',
@@ -29,7 +33,7 @@ function CardForm() {
           withCredentials: true,
         }
       );
-      setSubmittedData(response.data);
+      setBackendData(response.data);
     }
     getAccountData();
   }, []);
@@ -59,6 +63,7 @@ function CardForm() {
       console.log(response.data);
       if (response.status === 200) {
         console.log('更新成功');
+        setShowModal(true);
         setErrors({
           cvcError: '',
           cvc: false,
@@ -101,7 +106,13 @@ function CardForm() {
         信用卡修改
       </h2>
       {/* <hr /> */}
-      <Results data={submittedData} />
+      <div className={` ${open ? 'd-none' : 'd-inline'}`}>
+        <Results data={backendData} />
+      </div>
+      <div className={` ${open ? 'd-inline' : 'd-none'}`}>
+        <Results data={submittedData} />
+      </div>
+
       <hr />
       <Button
         onClick={() => setOpen(!open)}
@@ -113,47 +124,6 @@ function CardForm() {
       </Button>
       <Collapse in={open}>
         <div id="example-collapse-text">
-          {/* <div className={`form-group mt-4`}>
-            <input
-              type="text"
-              className={`form-control mt-3`}
-              placeholder="持卡人姓名"
-              maxLength={25}
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <input
-              type="text"
-              className={`form-control mt-3`}
-              placeholder="卡號"
-              value={cardNumber}
-              name="cardnumber"
-              maxLength={16}
-              onChange={(e) => setCardNumber(e.target.value)}
-            />
-            <div className={`d-flex mt-3`}>
-              <input
-                type="text"
-                className={`form-control expirationDateField`}
-                placeholder="MM/YY"
-                value={expiry}
-                name="expiry"
-                maxLength={4}
-                onChange={(e) => setExpiry(e.target.value)}
-              />
-              <input
-                type="text"
-                className={`form-control cvcField ml-3`}
-                placeholder="CVC"
-                value={cvc}
-                name="cvc"
-                maxLength={3}
-                onChange={(e) => setCvc(e.target.value)}
-              />
-            </div>
-          </div> */}
-
           <Row className="my-2">
             <Form.Group as={Col} md="12" controlId="validationCustom01">
               {/* <Form.Label>First name</Form.Label> */}
@@ -197,7 +167,7 @@ function CardForm() {
                 type="text"
                 placeholder="MM/YY"
                 required
-                value={submittedData.expiryError}
+                value={submittedData.expiry}
                 name="expiry"
                 maxLength={4}
                 // onChange={(e) => setExpiry(e.target.value)}
@@ -212,7 +182,7 @@ function CardForm() {
               <Form.Control
                 type="text"
                 placeholder="CVC"
-                value={submittedData.cvcError}
+                value={submittedData.cvc}
                 name="cvc"
                 maxLength={3}
                 // onChange={(e) => setCvc(e.target.value)}
@@ -234,6 +204,14 @@ function CardForm() {
           >
             送出
           </Button>
+          <PopupWindow
+            show={showModal}
+            // onclose={() => setShowModal(false)}
+            onclose={() => navigate('/member')}
+            title="修改結果"
+            content="成功修改!"
+            btnContent="回到會員中心"
+          />
 
           {/* <button
             type="submit"

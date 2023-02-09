@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { React, Fragment, useState, useEffect } from 'react';
 import {
   Container,
@@ -106,7 +106,7 @@ function Login() {
                 </Link>
               </div>
               <FloatingLabel
-                controlId="floatingInput"
+                // controlId="floatingInput"
                 label="帳號："
                 className={`mb-3`}
               >
@@ -126,7 +126,7 @@ function Login() {
               </FloatingLabel>
 
               <FloatingLabel
-                controlId="floatingInput"
+                // controlId="floatingInput"
                 label="密碼："
                 className={`mb-3`}
               >
