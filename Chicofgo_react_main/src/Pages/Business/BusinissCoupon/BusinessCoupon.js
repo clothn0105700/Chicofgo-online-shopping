@@ -12,7 +12,7 @@ import {
 import BusinessSiderbar from '../Components/BusinessSiderbar';
 import CouponCard5 from '../../Account/Coupons/Component/CouponCard5';
 
-function BusinissCoupon() {
+function BusinessCoupon() {
   return (
     <div className="chicofgo_white">
       <Container className="pt-5">
@@ -102,4 +102,4 @@ function BusinissCoupon() {
   );
 }
 
-export default BusinissCoupon;
+export default BusinessCoupon;

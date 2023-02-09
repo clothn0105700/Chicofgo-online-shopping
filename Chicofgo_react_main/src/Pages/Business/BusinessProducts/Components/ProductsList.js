@@ -36,7 +36,7 @@ function ProductsList(props) {
               {product.price}
             </Col>
             <Col sm={2} className="my-1">
-              
+              123
             </Col>
             <Col sm={2} className="my-1">
               123
