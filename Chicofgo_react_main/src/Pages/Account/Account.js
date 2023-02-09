@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect, useRef } from 'react';
 import axios from 'axios';
 import { Row, Col, Form, Button, Image, InputGroup } from 'react-bootstrap';
 import { BsFillPencilFill } from 'react-icons/bs';
@@ -11,6 +11,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { registerLocale } from 'react-datepicker';
 import ZhTW from 'date-fns/locale/zh-TW';
+import PopupWindow from '../ComponentShare/PopupWindow';
 registerLocale('zh-TW', ZhTW);
 
 function Account() {
@@ -28,6 +29,7 @@ function Account() {
     birthdayError: '',
     birthday: false,
   });
+  const [showModal, setShowModal] = useState(false);
 
   function handleDateChange(date) {
     setStartDate(date);
@@ -61,7 +63,6 @@ function Account() {
     console.log('handleSubmit');
     // console.log(backendData);
     setInputDisable(false);
-
     // 關閉表單的預設行為
     e.preventDefault();
     try {
@@ -76,6 +77,7 @@ function Account() {
       console.log(response.data);
       if (response.status === 200) {
         console.log('更新成功');
+        setShowModal(true);
         setErrors({
           nameError: '',
           name: false,
@@ -88,7 +90,7 @@ function Account() {
         });
       }
     } catch (e) {
-      if (e.response.status === 400) {
+      if (e.response.status === 401) {
         let allErrors = e.response.data.errors;
         console.log('更新失敗');
         console.log(allErrors);
@@ -103,12 +105,10 @@ function Account() {
           birthdayError: '',
           birthday: false,
         };
-        allErrors.map(
-          (thisError) => (
-            (newErrors[thisError.param] = true),
-            (newErrors[thisError.param + 'Error'] = thisError.msg)
-          )
-        );
+        allErrors.forEach((thisError) => {
+          newErrors[thisError.param] = true;
+          newErrors[thisError.param + 'Error'] = thisError.msg;
+        });
         setErrors(newErrors);
         console.log(errors);
       }
@@ -125,6 +125,7 @@ function Account() {
       );
       setbackendData(response.data);
       setSelectedOption(String(response.data.gender));
+      setStartDate(new Date(response.data.birthday));
     }
     getAccountData();
   }, []);
@@ -325,16 +326,9 @@ function Account() {
                     className={`w-100  ${
                       errors.birthday ? 'border-danger rounded' : ''
                     }`}
-                    // className="red-border"
                     dateFormat="yyyy-MM-dd"
-                    // locale="zh-TW"
                     selected={startDate}
                     onChange={(date) => handleDateChange(date)}
-                    isClearable
-                    placeholderText={String(backendData.birthday).substring(
-                      0,
-                      10
-                    )}
                   />
                 </div>
               </Col>
@@ -359,6 +353,13 @@ function Account() {
             >
               儲存
             </Button>
+            <PopupWindow
+              show={showModal}
+              onclose={() => setShowModal(false)}
+              title="修改結果"
+              content="成功修改!"
+              btnContent="關閉"
+            />
           </Col>
         </Row>
       </Col>

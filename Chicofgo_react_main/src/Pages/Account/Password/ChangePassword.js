@@ -3,8 +3,11 @@ import MemberBar from '../Components/MemberBar';
 import ChContainer from '../../ComponentShare/ChContainer';
 import { useState, useLayoutEffect } from 'react';
 import axios from 'axios';
+import PopupWindow from '../../ComponentShare/PopupWindow';
+import { useNavigate } from 'react-router-dom';
 
 function ChangePassword() {
+  const navigate = useNavigate();
   const [passwordData, setPasswordData] = useState({});
   const [passwordErrors, setPasswordErrors] = useState({
     oldPasswordError: '',
@@ -14,6 +17,7 @@ function ChangePassword() {
     confirmPasswordError: '',
     confirmPassword: false,
   });
+  const [showModal, setShowModal] = useState(false);
   useLayoutEffect(() => {
     async function getAccountData() {
       let response = await axios.get(
@@ -49,6 +53,7 @@ function ChangePassword() {
       console.log(response.data);
       if (response.status === 200) {
         console.log('更新成功');
+        setShowModal(true);
         setPasswordErrors({
           oldPasswordError: '',
           oldPassword: false,
@@ -57,9 +62,12 @@ function ChangePassword() {
           confirmPasswordError: '',
           confirmPassword: false,
         });
+        // 島葉
+        // setPasswordData({ ...passwordData, [e.target.name]: '' });
+        // e.target.reset();
       }
     } catch (e) {
-      if (e.response.status === 400) {
+      if (e.response.status === 401) {
         let allPsErrors = e.response.data.errors;
         console.log('更新失敗');
         console.log(allPsErrors);
@@ -72,12 +80,10 @@ function ChangePassword() {
           confirmPasswordError: '',
           confirmPassword: false,
         };
-        allPsErrors.map(
-          (thisError) => (
-            (newErrors[thisError.param] = true),
-            (newErrors[thisError.param + 'Error'] = thisError.msg)
-          )
-        );
+        allPsErrors.forEach((thisError) => {
+          newErrors[thisError.param] = true;
+          newErrors[thisError.param + 'Error'] = thisError.msg;
+        });
         setPasswordErrors(newErrors);
         console.log(passwordErrors);
       }
@@ -173,6 +179,14 @@ function ChangePassword() {
             >
               確定修改
             </Button>
+            <PopupWindow
+              show={showModal}
+              // onclose={() => setShowModal(false)}
+              onclose={() => navigate('/member')}
+              title="修改結果"
+              content="成功修改!"
+              btnContent="回到會員中心"
+            />
           </div>
         </Col>
       </Row>

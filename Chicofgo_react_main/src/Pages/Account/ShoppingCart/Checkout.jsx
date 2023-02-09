@@ -1,97 +1,69 @@
-import { Row, Col, Button, Form, Container, Table } from 'react-bootstrap';
+import {
+  Row,
+  Col,
+  Button,
+  Form,
+  InputGroup,
+  FormControl,
+} from 'react-bootstrap';
 import ChContainer from '../../ComponentShare/ChContainer';
 import style from './ShoppingCart.module.scss';
 import React, { useState, useEffect } from 'react';
 import CheckoutItem from './Components/CheckoutItem';
-
-const productsData = [
-  {
-    id: 1,
-    brandname: '西雅圖咖啡',
-    title: `西雅圖咖啡即品拿鐵二合一咖啡(無加糖) 21g*100包原盒．好市多COSTCO熱銷【里德Coffee】`,
-    desc: '即品拿鐵無加糖二合一×101包',
-    quantity: 5,
-    price: 100,
-    productImg: 'test.jpg',
-    checked: false,
-  },
-  {
-    id: 2,
-    brandname: '西雅圖咖啡',
-    title: `西雅圖咖啡即品拿鐵二合一咖啡(無加糖) 21g*100包原盒．好市多COSTCO熱銷【里德Coffee】`,
-    desc: '即品拿鐵無加糖二合一×102包',
-    quantity: 8,
-    price: 500,
-    productImg: 'test.jpg',
-    checked: false,
-  },
-  {
-    id: 3,
-    brandname: '西雅圖咖啡',
-    title: `西雅圖咖啡即品拿鐵二合一咖啡(無加糖) 21g*100包原盒．好市多COSTCO熱銷【里德Coffee】`,
-    desc: '即品拿鐵無加糖二合一×103包',
-    quantity: 10,
-    price: 3000,
-    productImg: 'test.jpg',
-    checked: false,
-  },
-];
-
-const MemberInfo = [
-  {
-    id: 1,
-    name: '小明',
-    phone: '0999888777',
-    address: '桃園市中壢區',
-  },
-];
+import { useShoppingCart } from '../../../Contexts/ShoppingCartProvider';
+import axios from 'axios';
 
 function Checkout(props) {
-  const [products, setProducts] = useState(productsData);
-  const [isCheckAll, setIsCheckAll] = useState(false);
-
+  // ---勾選商品---
+  const [products, setProducts] = useState([]);
+  const { selectProducts, setSelectProducts } = useShoppingCart();
   useEffect(() => {
-    setIsCheckAll((prevIsCheckAll) =>
-      products.every((product) => product.checked)
-    );
-  }, [products]);
+    setProducts(selectProducts);
+  }, []);
 
-  const handleCheckboxChange = (id) => {
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product.id === id ? { ...product, checked: !product.checked } : product
-      )
-    );
-  };
+  // ---會員資料---
+  const [memberInfo, setMemberInfo] = useState({
+    id: 1,
+    name: '小明',
+    phone: '0912345678',
+    pay: '',
+    address: '桃園市XXX',
+    send_information: '',
+    bill_id: '',
+    totalPrice: '',
+    status: '1',
+  });
 
-  const handleCheckAllChange = () => {
-    setIsCheckAll((prevIsCheckAll) => !prevIsCheckAll);
-    setProducts((prevProducts) =>
-      prevProducts.map((product) => ({
-        ...product,
-        checked: !isCheckAll,
-      }))
-    );
-  };
+  function handleChange(e) {
+    let newMemberInfo = { ...memberInfo };
+    newMemberInfo[e.target.name] = e.target.value;
+    setMemberInfo(newMemberInfo);
+    // console.log(memberInfo);
+  }
 
-  const handleQuantityChange = (id, delta) => {
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product.id === id
-          ? {
-              ...product,
-              quantity:
-                product.quantity + delta >= 0 ? product.quantity + delta : 0,
-            }
-          : product
-      )
-    );
-  };
+  //---優惠券---
+  const [coupon, setCoupon] = useState(0);
+  function couponChange(e) {
+    setCoupon(e.target.value);
+  }
 
-  const totalPrice = products.reduce(
-    (sum, product) => sum + product.price * product.quantity,
-    0
-  );
+  // ---訂單加總---
+  const totalPrice =
+    products.reduce(
+      (sum, product) => sum + product.price * product.quantity,
+      0
+    ) - coupon;
+
+  // ---下單---(後端還沒接)
+  async function handleSubmit(e) {
+    e.preventDefault();
+    memberInfo.totalPrice = totalPrice;
+    // let response = await axios.post(
+    //   'http://localhost:3001/api/checkoutOrder',
+    //   memberInfo
+    // );
+    console.log(memberInfo);
+  }
   return (
     <ChContainer
       ChClass={'chicofgo-font'}
@@ -99,6 +71,7 @@ function Checkout(props) {
       ChBorder={'0px'}
     >
       {/* 標題 */}
+
       <Col>
         <Row>
           <Col>
@@ -121,69 +94,133 @@ function Checkout(props) {
                 checked={p.checked}
                 price={p.price}
                 productImg={p.productImg}
-                onCheckboxChange={() => handleCheckboxChange(p.id)}
-                onQuantityChange={(delta) => handleQuantityChange(p.id, delta)}
-                // isChecked2={true}
               />
             ))}
 
             {/* ----------------------------------- */}
-            <div className="p-5 chicofgo_yello">
-              <Table borderless size="sm">
-                <tbody className={`${style.checkoutTable}`}>
-                  <h5 className="chicofgo-font-900">編輯買家資訊</h5>
-                  <tr>
-                    <th>收件人姓名</th>
-                    <td>{MemberInfo[0].name}</td>
-                    <th>地址</th>
-                    <td>{MemberInfo[0].address}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">行動電話</th>
-                    <td>{MemberInfo[0].phone}</td>
-                    <th>寄送資訊</th>
-                    <td>{'7-ELEVEN(速達門市)'}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">使用票券</th>
-                    <td>{MemberInfo[0].coupon}</td>
-                    <th>{MemberInfo[0].ExpressInfoMethod}</th>
-                    <td>{MemberInfo[0].ExpressInfoMethodAddress}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">付款方式</th>
-                    <td>{MemberInfo[0].payMethod}</td>
-                    <th>電子發票</th>
-                    <td>{MemberInfo[0].bill}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">訂單備註</th>
-                    <td colspan="3">{MemberInfo[0].other}</td>
-                  </tr>
-                  <h5 className="pt-5 chicofgo-font-900">折扣計算</h5>
-                  <tr>
-                    <th scope="row">運費</th>
-                    <td>{`$60`}</td>
-                    <th>運費折扣</th>
-                    <td>{`- $60`}</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">優惠券</th>
-                    <td>{`- $100`}</td>
-                    <th></th>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </Table>
-            </div>
-            <div className={`p-3 text-end chicofgo_gray ${style.totalSum}`}>
-              訂單加總:<span>{totalPrice}</span>
+            <div className="chicofgo_yello">
+              <Form className="p-5 chicofgo_yello">
+                <h5 className="chicofgo-font-700">編輯買家資訊</h5>
+                <Row>
+                  <Col>
+                    <InputGroup className="align-items-center mb-2">
+                      收件人姓名：
+                      <Form.Control
+                        size="sm"
+                        type="text"
+                        // id="name"
+                        name="name"
+                        onChange={handleChange}
+                        value={memberInfo.name}
+                        className={'chicofgo_yello'}
+                      />
+                    </InputGroup>
+                    <InputGroup className="align-items-center mb-2">
+                      行動電話：
+                      <Form.Control
+                        size="sm"
+                        type="text"
+                        // id="phone"
+                        name="phone"
+                        onChange={handleChange}
+                        value={memberInfo.phone}
+                        className={'chicofgo_yello'}
+                      />
+                    </InputGroup>
+                    <InputGroup className="align-items-center mb-2">
+                      使用票券：
+                      <Form.Select
+                        aria-label="Default select example"
+                        size="sm"
+                        name="coupon_id"
+                        onChange={(handleChange, couponChange)}
+                        className={'chicofgo_yello'}
+                      >
+                        <option value="0">選擇票券</option>
+                        <option value="60">$60免運券</option>
+                        <option value="200">$200折價券</option>
+                      </Form.Select>
+                    </InputGroup>
+                    <InputGroup className="align-items-center mb-2">
+                      付款方式：
+                      <Form.Select
+                        aria-label="Default select example"
+                        size="sm"
+                        name="pay"
+                        onChange={handleChange}
+                        className={'chicofgo_yello'}
+                      >
+                        <option>選擇付款方式</option>
+                        <option value="1">貨到付款</option>
+                        <option value="2">信用卡/金融卡</option>
+                        <option value="3">銀行轉帳</option>
+                      </Form.Select>
+                    </InputGroup>
+                  </Col>
+                  <Col>
+                    <InputGroup className="align-items-center mb-2">
+                      地址：
+                      <Form.Control
+                        size="sm"
+                        type="text"
+                        // id="address"
+                        name="address"
+                        onChange={handleChange}
+                        value={memberInfo.address}
+                        className={'chicofgo_yello'}
+                      />
+                    </InputGroup>
+                    <InputGroup className="align-items-center mb-2">
+                      寄送門市：
+                      <Form.Select
+                        aria-label="Default select example"
+                        size="sm"
+                        name="send_information"
+                        onChange={handleChange}
+                        className={'chicofgo_yello'}
+                      >
+                        <option>選擇門市</option>
+                        <option value="1">7-ELEVEN</option>
+                        <option value="2">全家</option>
+                        <option value="3">萊爾富</option>
+                        <option value="4">OK</option>
+                      </Form.Select>
+                    </InputGroup>
+                    <InputGroup className="align-items-center mb-2">
+                      電子發票：
+                      <Form.Select
+                        aria-label="Default select example"
+                        size="sm"
+                        name="bill_id"
+                        onChange={handleChange}
+                        className={'chicofgo_yello'}
+                      >
+                        <option>選擇發票</option>
+                        <option value="1">二聯式發票</option>
+                        <option value="2">三聯式發票</option>
+                        <option value="3">捐贈發票</option>
+                      </Form.Select>
+                    </InputGroup>
+                  </Col>
+                </Row>
+                <h5 className={'pt-5 chicofgo-font-900'}>折扣計算</h5>
+                <Row className={`${style.totalSum}`}>
+                  <Col>
+                    折抵：$
+                    {coupon}
+                  </Col>
+                  <Col className="text-end">
+                    訂單加總:<span>{totalPrice}</span>
+                  </Col>
+                </Row>
+              </Form>
             </div>
             <Row className={`mt-5`}>
               <Col className={`text-center`}>
                 <Button
                   variant="chicofgo-brown"
                   className={` px-5 py-1 shadow chicofgo_white_font`}
+                  onClick={handleSubmit}
                 >
                   確認下單
                 </Button>

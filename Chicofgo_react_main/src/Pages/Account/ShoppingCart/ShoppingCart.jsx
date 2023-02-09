@@ -4,6 +4,7 @@ import style from './ShoppingCart.module.scss';
 import React, { useState, useEffect } from 'react';
 import ShoppingItem from './Components/ShoppingItem';
 import { Link } from 'react-router-dom';
+import { useShoppingCart } from '../../../Contexts/ShoppingCartProvider';
 
 const productsData = [
   {
@@ -41,6 +42,7 @@ const productsData = [
 function ShoppingCart(props) {
   const [products, setProducts] = useState(productsData);
   const [isCheckAll, setIsCheckAll] = useState(false);
+  const { selectProducts, setSelectProducts } = useShoppingCart();
 
   useEffect(() => {
     setIsCheckAll((prevIsCheckAll) =>
@@ -78,6 +80,11 @@ function ShoppingCart(props) {
           : product
       )
     );
+  };
+
+  const handleSelectProducts = () => {
+    setSelectProducts(products.filter((product) => product.checked));
+    // console.log(products.filter((product) => product.checked));
   };
 
   const totalPrice = products
@@ -137,10 +144,10 @@ function ShoppingCart(props) {
               </Col>
               <Col
                 className={`${style.totalSum} col-5 chicofgo_gray text-nowrap `}
-              > 
-              已選擇
+              >
+                已選擇
                 {products.filter((product) => product.checked).length}
-              件商品商品總計:<span>{totalPrice}</span>
+                件商品商品總計:<span>{totalPrice}</span>
               </Col>
             </Row>
             <Row className={`mt-5`}>
@@ -149,6 +156,7 @@ function ShoppingCart(props) {
                   <Button
                     variant="chicofgo-brown"
                     className={` px-5 py-1 shadow chicofgo_white_font`}
+                    onClick={handleSelectProducts}
                   >
                     前往結帳
                   </Button>
