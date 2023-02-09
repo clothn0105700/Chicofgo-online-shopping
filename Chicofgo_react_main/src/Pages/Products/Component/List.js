@@ -69,7 +69,7 @@ const List = () => {
 
   //分頁
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(4);
+  const [postsPerPage, setPostsPerPage] = useState(20);
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
   console.log(firstPostIndex, lastPostIndex);
@@ -93,7 +93,7 @@ const List = () => {
   return (
     <div className="custom-container d-flex justify-content-center">
       <div className={list_container}>
-        <Path pathObj={{ path: ['．商品列表'] }} />
+        <Path pathObj={{ path: ['商品列表'] }} />
         <div className={`${list_control} row mx-2`}>
           <div className={`${sidebar} col-md-2 d-flex flex-column `}>
             <div className={`${block_brand} d-flex flex-column px-2`}>

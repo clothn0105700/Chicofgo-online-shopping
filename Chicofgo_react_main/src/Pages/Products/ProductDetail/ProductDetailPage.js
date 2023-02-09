@@ -89,7 +89,7 @@ const ProductDetail = () => {
         <div className={`${detail_contorl}`}>
           <p className={`${path_box}`}>
             <Path
-              pathObj={{ path: ['．商品列表', `．${detail.name}`] }}
+              pathObj={{ path: ['商品列表', `${detail.name}`] }}
               url={['/products']}
             />
           </p>
