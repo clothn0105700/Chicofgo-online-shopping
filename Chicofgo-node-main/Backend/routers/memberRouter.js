@@ -198,15 +198,15 @@ router.use('/mycreditcard', checkLogin, async (req, res, next) => {
   let [mycreditcardDatas] = await pool.execute('SELECT * FROM user_payment_credit_card WHERE member_id = ?', [req.session.member.id]);
   if (mycreditcardDatas.length > 0) {
     let mycreditcardData = mycreditcardDatas[0];
+    let hideCardNumber = mycreditcardData.card_number;
     // 表示這個 accountData 有存在資料庫中
     // console.log('accountData', accountData);
     // 回覆給前端
     return res.json({
-      // name: mycreditcardData.cardholder_name,
-      // cardNumber: mycreditcardData.card_number.slice(0, 4) + '********' + mycreditcardData.card_number.slice(-4),
-      // expiry: mycreditcardData.mmyy.slice(0, 2) + '**',
-      // cvc: '***',
-      card_number:(mycreditcardData.card_number),
+      name: mycreditcardData.cardholder_name,
+      cardNumber: mycreditcardData.card_number.slice(0, 4) + '********' + mycreditcardData.card_number.slice(-4),
+      expiry: '****',
+      cvc: '***',
     });
   } else {
     return res.status(401).json({
