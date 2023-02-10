@@ -5,6 +5,43 @@ const { body, validationResult } = require('express-validator');
 const pool = require('../utils/db');
 const argon2 = require('argon2');
 const { emit } = require('../utils/db');
+// ---------------圖片上傳用--------------------
+const multer = require('multer');
+const path = require('path');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '..', 'public', 'uploads'));
+  }, // 圖片名稱
+  filename: function (req, file, cb) {
+    console.log('multer storage', file);
+    // {
+    //   fieldname: 'photo',
+    //   originalname: 'AI-replace.jpg',
+    //   encoding: '7bit',
+    //   mimetype: 'image/jpeg'
+    // }
+    const ext = file.originalname.split('.').pop();
+    cb(null, `${Date.now()}.${ext}`);
+  },
+});
+// 處理上傳
+const uploader = multer({
+  storage: storage,
+  // 圖片格式的 validation
+  fileFilter: function (req, file, cb) {
+    if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/jpg' && file.mimetype !== 'image/png') {
+      cb(new Error('上傳圖片格式不合法'), false);
+    } else {
+      cb(null, true);
+    }
+  },
+  // 限制檔案的大小
+  limits: {
+    //200k 200x1024
+    fileSize: 200 * 1024, // 204800
+  },
+});
+// ---------------圖片上傳用--------------------
 
 // GET /api/members
 router.get('/', checkLogin, (req, res, next) => {
@@ -35,6 +72,7 @@ router.use('/account', checkLogin, async (req, res, next) => {
       gender: accountData.gender,
       birthday: accountData.birthday,
       phone: accountData.phone,
+      imageUrl: accountData.img,
     });
   }
 });
@@ -64,42 +102,24 @@ const accountChangeRules = [
     .withMessage('請輸入正確手機號碼格式'),
 ];
 
-router.use('/accountChange', checkLogin, accountChangeRules, async (req, res, next) => {
-  console.log('I am changedata', req.body);
+router.use('/accountChange', checkLogin, uploader.single('photo'), accountChangeRules, async (req, res, next) => {
+  console.log('I am changedata', req.body, req.file);
   const validateResult = validationResult(req);
   console.log(validateResult);
   if (!validateResult.isEmpty()) {
     return res.status(401).json({ errors: validateResult.array() });
   }
-  let thisId = req.session.member.id;
-  let [oldAccountDatas] = await pool.execute('SELECT * FROM user_member WHERE id = ?', [thisId]);
-  let oldAccountData = oldAccountDatas[0];
-
-  // 驗證生日
-  // let birthdayCheck = req.body.birthday;
-  // if (birthdayCheck.length > 10) {
-  //   birthdayCheck = oldAccountData.birthday;
-  // }
-  // 驗證信箱
-  // let [membersEmail] = await pool.execute('SELECT * FROM user_member WHERE email = ?', [req.body.email]);
-  // if (membersEmail.length > 0 && req.body.email != oldAccountData.email) {
-  //   return res.status(401).json({
-  //     errors: [
-  //       {
-  //         msg: 'email 已經註冊過',
-  //         param: 'email',
-  //       },
-  //     ],
-  //   });
-  // }
-
-  let result = await pool.execute('UPDATE user_member SET name=?, email=?, phone=?, birthday=?, gender=? WHERE id = ?;', [
+  // let [oldAccountDatas] = await pool.execute('SELECT * FROM user_member WHERE id = ?', [req.session.member.id]);
+  // let oldAccountData = oldAccountDatas[0];
+  const filename = req.file ? path.join('uploads', req.file.filename) : '';
+  let result = await pool.execute('UPDATE user_member SET name=?, email=?, phone=?, birthday=?, gender=?, img=? WHERE id = ?;', [
     req.body.name,
     req.body.email,
     req.body.phone,
     req.body.birthday,
     req.body.gender,
-    thisId,
+    filename,
+    req.session.member.id,
   ]);
   console.log('更新結果', result);
 
@@ -155,8 +175,6 @@ router.use('/passwordChange', checkLogin, passwordChangeRules, async (req, res, 
     return res.status(401).json({
       errors: [
         {
-          // msg: 'email 尚未註冊',
-          // param: 'email',
           msg: '使用者不存在',
         },
       ],
@@ -178,30 +196,19 @@ router.use('/passwordChange', checkLogin, passwordChangeRules, async (req, res, 
   }
   const hashedPassword = await argon2.hash(req.body.password);
   let result = await pool.execute('UPDATE user_member SET password=? WHERE id = ?;', [hashedPassword, req.session.member.id]);
-  console.log('更新結果', result);
-  console.log('修改成功');
+  // console.log('更新結果', result);
+  // console.log('修改成功');
 
   // 回覆給前端
   return res.json({
     msg: 'passwordChange~ok!',
-    // name: req.body.name,
-    // email: req.body.email,
-    // gender: req.body.gender,
-    // birthday: req.body.birthday,
-    // phone: req.body.phone,
-    // ok
   });
 });
 router.use('/mycreditcard', checkLogin, async (req, res, next) => {
-  // console.log('I am account', req.body);
-  // console.log('I am session', req.session.member.id);
   let [mycreditcardDatas] = await pool.execute('SELECT * FROM user_payment_credit_card WHERE member_id = ?', [req.session.member.id]);
   if (mycreditcardDatas.length > 0) {
     let mycreditcardData = mycreditcardDatas[0];
     let hideCardNumber = mycreditcardData.card_number;
-    // 表示這個 accountData 有存在資料庫中
-    // console.log('accountData', accountData);
-    // 回覆給前端
     return res.json({
       name: mycreditcardData.cardholder_name,
       cardNumber: mycreditcardData.card_number.slice(0, 4) + '********' + mycreditcardData.card_number.slice(-4),
@@ -259,6 +266,50 @@ router.post('/creditcardchange', checkLogin, creditcardChangeRules, async (req, 
   }
   return res.json({
     msg: resultMsg,
+  });
+});
+
+router.use('/myaddress', checkLogin, async (req, res, next) => {
+  // console.log('I am account', req.body);
+  // console.log('I am session', req.session.member.id);
+  let [myaddressDatas] = await pool.execute('SELECT * FROM user_address_county');
+  let [myaddressDatas2] = await pool.execute('SELECT * FROM user_address_district');
+  let [oldAddressDatas] = await pool.execute('SELECT * FROM user_member WHERE id = ?', [req.session.member.id]);
+  let oldAddressData = oldAddressDatas[0];
+  if (myaddressDatas.length > 0) {
+    return res.json({
+      county: myaddressDatas,
+      district: myaddressDatas2,
+      address: oldAddressData.address,
+      name: oldAddressData.name,
+      phone: oldAddressData.phone,
+    });
+  } else {
+    return res.status(401).json({
+      msg: '沒有資料喔',
+    });
+  }
+});
+const addresschangeRules = [
+  body('other').notEmpty().withMessage('不得為空').isLength({ min: 5 }).withMessage('請輸入正確格式'),
+  body('county').notEmpty().isLength({ min: 3 }).withMessage('請輸入正確格式'),
+  body('district').notEmpty().isLength({ min: 2 }).withMessage('請輸入正確格式'),
+];
+router.post('/addresschange', checkLogin, addresschangeRules, async (req, res, next) => {
+  // console.log('addresschange', req.body);
+  const validateResult4 = validationResult(req);
+  // console.log(validateResult4);
+  if (!validateResult4.isEmpty()) {
+    // validateResult 不是空的 -> 表示有錯誤
+    return res.status(401).json({ errors: validateResult4.array() });
+  }
+  let newAddress = req.body.county + req.body.district + req.body.other;
+  let result = await pool.execute('UPDATE user_member SET address=? WHERE id = ?;', [newAddress, req.session.member.id]);
+  console.log('更新結果', result);
+
+  // 回覆給前端
+  return res.json({
+    msg: '修改成功',
   });
 });
 

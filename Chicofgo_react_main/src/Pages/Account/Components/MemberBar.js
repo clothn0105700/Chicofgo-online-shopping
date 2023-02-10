@@ -1,20 +1,11 @@
 import React from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Button,
-  Image,
-  InputGroup,
-} from 'react-bootstrap';
-import { Link, NavLink } from 'react-router-dom';
+import { Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import {
   BsPerson,
   BsPencil,
   BsCreditCard2Back,
   BsGeoAlt,
-  BsFillPencilFill,
 } from 'react-icons/bs';
 import { IconContext } from 'react-icons';
 
@@ -53,7 +44,7 @@ function MemberBar() {
           className="px-2 mx-2 my-2  text-decoration-none  chicofgo_brown_font chicofgo-font-700"
         >
           <BsGeoAlt />
-          &ensp;地址
+          &ensp;配送資訊
         </Link>
       </IconContext.Provider>
     </Col>
