@@ -132,14 +132,16 @@ const ProductDetail = () => {
             className={`${evaluate_area} d-flex flex-column align-items-center `}
           >
             <h3 className="my-5">顧客評論區</h3>
-            <EvaluateArea />
+            {/* <EvaluateArea /> */}
           </div>
 
-          {filteredMessage.map((mes) => {
-            return (
-              <div key={mes.id}>
-                <br />
-                {haveMessage === 0 ? (
+          {filteredMessage.length === 0 ? (
+            <h1>暫無評論</h1>
+          ) : (
+            filteredMessage.map((mes) => {
+              return (
+                <div key={mes.id}>
+                  {/* {haveMessage === 0 ? (
                   <p>目前尚未有留言</p>
                 ) : (
                   <MessageArea
@@ -147,10 +149,16 @@ const ProductDetail = () => {
                     time={mes.message_time}
                     s={mes.speak}
                   />
-                )}
-              </div>
-            );
-          })}
+                )} */}
+                  <MessageArea
+                    rating={mes.message_rating}
+                    time={mes.message_time}
+                    s={mes.speak}
+                  />
+                </div>
+              );
+            })
+          )}
         </div>
       </div>
     </div>

@@ -19,12 +19,13 @@ export const cates = [
 ];
 
 export const items = [
-  { id: 1, name: '三合一' },
-  { id: 2, name: '二合一' },
-  { id: 3, name: '黑咖啡' },
-  { id: 4, name: '拿鐵' },
-  { id: 5, name: '美式咖啡' },
-  { id: 6, name: '義式咖啡' },
+  { id: 1, name: '罐裝' },
+  { id: 2, name: '袋裝' },
+  { id: 3, name: '盒裝' },
+  { id: 4, name: '箱裝' },
+  { id: 5, name: '瓶裝' },
+  { id: 6, name: '禮盒' },
+  { id: 7, name: '隨手包' },
 ];
 
 export const origins = [
