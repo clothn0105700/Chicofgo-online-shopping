@@ -122,8 +122,9 @@ app.use('/api/members', memberRouter);
 const imagesRouter = require('./routers/imagesRouter');
 app.use('/api/images', imagesRouter);
 
-// const shoppingCartRouter = require('./routers/shoppingCartRouter');
-// app.use('./api/shoppingCart', shoppingCartRouter);
+const shoppingCartRouter = require('./routers/shoppingCartRouter');
+app.use('/api/shoppingCarts', shoppingCartRouter);
+
 
 
 // app.use((req, res, next) => {

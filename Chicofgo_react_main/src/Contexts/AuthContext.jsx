@@ -6,10 +6,6 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
-
 const AuthContextProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');

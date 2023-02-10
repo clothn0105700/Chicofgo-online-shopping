@@ -1,10 +1,11 @@
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import ChContainer from '../../ComponentShare/ChContainer';
 import style from './ShoppingCart.module.scss';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import ShoppingItem from './Components/ShoppingItem';
 import { Link } from 'react-router-dom';
 import { useShoppingCart } from '../../../Contexts/ShoppingCartProvider';
+import axios from 'axios';
 
 const productsData = [
   {
@@ -40,9 +41,23 @@ const productsData = [
 ];
 
 function ShoppingCart(props) {
-  const [products, setProducts] = useState(productsData);
+  const [products, setProducts] = useState([]);
   const [isCheckAll, setIsCheckAll] = useState(false);
   const { selectProducts, setSelectProducts } = useShoppingCart();
+
+  useEffect(() => {
+    async function getShoppingCartData() {
+      let response = await axios.get(
+        'http://localhost:3001/api/shoppingCarts/shoppingCart',
+        {
+          withCredentials: true,
+        }
+      );
+      // console.log(response.data);
+      setProducts(response.data);
+    }
+    getShoppingCartData();
+  }, []);
 
   useEffect(() => {
     setIsCheckAll((prevIsCheckAll) =>
