@@ -151,19 +151,14 @@ function Account() {
           withCredentials: true,
         }
       );
-
-      let responseImg = await axios.get(
-        `http://localhost:3001/api/images/member/${response.data.imageUrl}`,
-        {
-          withCredentials: true,
-        }
-      );
-      console.log(responseImg);
-
       setbackendData(response.data);
+
+      console.log(backendData);
       setSelectedOption(String(response.data.gender));
       setStartDate(new Date(response.data.birthday));
-      setBackendImg(responseImg.data);
+      setBackendImg(
+        `http://localhost:3001/api/images/member/${response.data.imageUrl}`
+      );
     }
     getAccountData();
   }, []);
@@ -190,15 +185,12 @@ function Account() {
           alt=""
           width={150}
           height={150}
-          // src={imageUrl ? imageUrl : require('../../Layout/Navbar/logo.png')}
-          // src={
-          //   imageUrl
-          //     ? imageUrl
-          //     : backendImg
-          //     ? backendImg
-          //     : require('../../Layout/Navbar/logo.png')
           src={
-            'http://localhost:3001/api/images/member/uploads/1675993459943.png'
+            imageUrl
+              ? imageUrl
+              : backendData.imageUrl
+              ? backendImg
+              : require('../../Layout/Navbar/logo.png')
           }
           className={`border border-3 rounded-circle  ${style.pic}`}
         />
