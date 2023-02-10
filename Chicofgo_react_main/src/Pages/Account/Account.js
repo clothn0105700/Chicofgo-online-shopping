@@ -33,6 +33,8 @@ function Account() {
     phone: false,
     birthdayError: '',
     birthday: false,
+    photoError: '',
+    photo: false,
   });
   const [showModal, setShowModal] = useState(false);
 
@@ -50,21 +52,13 @@ function Account() {
   function handleDateChange(date) {
     setStartDate(date);
     // 改生日
-    // let newMember = { ...backendData };
-    // newMember.birthday = date.toLocaleDateString();
-    // setbackendData(newMember);
-    // console.log(newMember);
     setbackendData({ ...backendData, birthday: date.toLocaleDateString() });
     console.log(backendData);
   }
 
   function handleOptionChange(event) {
     // 改性別
-    // setSelectedOption(event.target.value);
-    // let newMember = { ...backendData };
-    // newMember.gender = event.target.value;
-    // setbackendData(newMember);
-    // console.log(newMember);
+    setSelectedOption(event.target.value);
     setbackendData({ ...backendData, gender: event.target.value });
     console.log(backendData);
   }
@@ -115,6 +109,8 @@ function Account() {
           phone: false,
           birthdayError: '',
           birthday: false,
+          photoError: '',
+          photo: false,
         });
       }
     } catch (e) {
@@ -132,6 +128,8 @@ function Account() {
           phone: false,
           birthdayError: '',
           birthday: false,
+          photoError: '',
+          photo: false,
         };
         allErrors.forEach((thisError) => {
           newErrors[thisError.param] = true;
@@ -194,6 +192,13 @@ function Account() {
           }
           className={`border border-3 rounded-circle  ${style.pic}`}
         />
+        <div
+          className={`${style.photoError} ${
+            errors.photo ? 'd-inline' : 'd-none'
+          } mt-3`}
+        >
+          <span className={`chicofgo-font-700`}>照片格式錯誤</span>
+        </div>
         <p className={`pt-3 mb-0 ${fileName ? 'd-inline' : 'd-none'}`}>
           {fileName}
         </p>
@@ -325,43 +330,43 @@ function Account() {
           </h5>
 
           {/* 性別 radio */}
-          {['radio'].map((type) => (
-            <div key={`inline-${type}`} className=" h5-border-bottom  pt-1">
-              <h5 className="pt-3 pb-1">
-                性別：
-                <Form.Check
-                  inline
-                  label="男性"
-                  name="gender"
-                  type={type}
-                  id={`inline-${type}-1`}
-                  onChange={handleOptionChange}
-                  checked={selectedOption === '1'}
-                  value="1"
-                />
-                <Form.Check
-                  inline
-                  label="女性"
-                  name="gender"
-                  type={type}
-                  id={`inline-${type}-2`}
-                  onChange={handleOptionChange}
-                  checked={selectedOption === '2'}
-                  value="2"
-                />
-                <Form.Check
-                  inline
-                  label="不透露"
-                  name="gender"
-                  type={type}
-                  id={`inline-${type}-3`}
-                  onChange={handleOptionChange}
-                  checked={selectedOption === '0'}
-                  value="0"
-                />
-              </h5>
-            </div>
-          ))}
+          {/* {['radio'].map((type) => ( */}
+          <div className=" h5-border-bottom  pt-1">
+            <h5 className="pt-3 pb-1">
+              性別：
+              <Form.Check
+                inline
+                label="男性"
+                name="gender"
+                type="radio"
+                // id={`inline-${type}-1`}
+                onChange={handleOptionChange}
+                checked={selectedOption === '1'}
+                value="1"
+              />
+              <Form.Check
+                inline
+                label="女性"
+                name="gender"
+                type="radio"
+                // id={`inline-${type}-2`}
+                onChange={handleOptionChange}
+                checked={selectedOption === '2'}
+                value="2"
+              />
+              <Form.Check
+                inline
+                label="不透露"
+                name="gender"
+                type="radio"
+                // id={`inline-${type}-3`}
+                onChange={handleOptionChange}
+                checked={selectedOption === '0'}
+                value="0"
+              />
+            </h5>
+          </div>
+          {/* ))} */}
           <h5 className={`${style.setBorder}`}>
             <Row className="py-2 align-items-center">
               <Col className="col-2 text-nowrap ">生日：</Col>

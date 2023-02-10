@@ -102,36 +102,47 @@ const accountChangeRules = [
     .withMessage('請輸入正確手機號碼格式'),
 ];
 
-router.use('/accountChange', checkLogin, uploader.single('photo'), accountChangeRules, async (req, res, next) => {
-  console.log('I am changedata', req.body, req.file);
-  const validateResult = validationResult(req);
-  console.log(validateResult);
-  if (!validateResult.isEmpty()) {
-    return res.status(401).json({ errors: validateResult.array() });
-  }
-  // let [oldAccountDatas] = await pool.execute('SELECT * FROM user_member WHERE id = ?', [req.session.member.id]);
-  // let oldAccountData = oldAccountDatas[0];
-  const filename = req.file ? path.join('uploads', req.file.filename) : '';
-  let result = await pool.execute('UPDATE user_member SET name=?, email=?, phone=?, birthday=?, gender=?, img=? WHERE id = ?;', [
-    req.body.name,
-    req.body.email,
-    req.body.phone,
-    req.body.birthday,
-    req.body.gender,
-    filename,
-    req.session.member.id,
-  ]);
-  console.log('更新結果', result);
+router.use(
+  '/accountChange',
+  checkLogin,
+  uploader.single('photo'),
+  accountChangeRules,
+  async (req, res, next) => {
+    console.log('I am changedata', req.body, req.file);
+    const validateResult = validationResult(req);
+    console.log(validateResult);
+    if (!validateResult.isEmpty()) {
+      return res.status(401).json({ errors: validateResult.array() });
+    }
+    // let [oldAccountDatas] = await pool.execute('SELECT * FROM user_member WHERE id = ?', [req.session.member.id]);
+    // let oldAccountData = oldAccountDatas[0];
+    const filename = req.file ? path.join('uploads', req.file.filename) : '';
+    let result = await pool.execute('UPDATE user_member SET name=?, email=?, phone=?, birthday=?, gender=?, img=? WHERE id = ?;', [
+      req.body.name,
+      req.body.email,
+      req.body.phone,
+      req.body.birthday,
+      req.body.gender,
+      filename,
+      req.session.member.id,
+    ]);
+    console.log('更新結果', result);
 
-  // 回覆給前端
-  return res.json({
-    name: req.body.name,
-    email: req.body.email,
-    gender: req.body.gender,
-    birthday: req.body.birthday,
-    phone: req.body.phone,
-  });
-});
+    // 回覆給前端
+    return res.json({
+      name: req.body.name,
+      email: req.body.email,
+      gender: req.body.gender,
+      birthday: req.body.birthday,
+      phone: req.body.phone,
+    });
+  },
+  (error, req, res, next) => {
+    // 上傳失敗，丟出錯誤訊息時執行
+    let imgError = [{ msg: error.message, param: 'photo' }];
+    res.status(401).send({ errors: imgError });
+  }
+);
 
 const passwordChangeRules = [
   body('oldPassword').notEmpty().withMessage('不得為空'),
