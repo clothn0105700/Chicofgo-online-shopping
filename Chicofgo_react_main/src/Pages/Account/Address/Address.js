@@ -13,6 +13,7 @@ import { IconContext } from 'react-icons';
 import MemberBar from '../Components/MemberBar';
 import './Address.scss';
 import ChContainer from '../../ComponentShare/ChContainer';
+import AddressDetail from './AddressDetail';
 
 function Address() {
   return (
@@ -21,15 +22,11 @@ function Address() {
       breadCrumb={'地址'}
     >
       <MemberBar />
-      <div className="d-flex justify-content-center ">
-        <Col sm={7} className="border m-5 p-5 ">
-          <h2 className="">我的地址</h2>
-          <p>桃園市中壢區新生路二段421號</p>
-          <Link to="/member/addressDatail" className="btn border">
-            編輯
-          </Link>
+      <Row className="d-flex justify-content-center">
+        <Col sm={9} className="pt-3 pb-4 px-5 mb-5 mt-3 ">
+          <AddressDetail />
         </Col>
-      </div>
+      </Row>
     </ChContainer>
   );
 }

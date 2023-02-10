@@ -1,24 +1,18 @@
 import React, { useState, useLayoutEffect } from 'react';
+import Results from './Results';
 import axios from 'axios';
+import './CardForm.scss';
 import 'react-credit-cards-2/es/styles-compiled.css';
-import {
-  Button,
-  Collapse,
-  Col,
-  Form,
-  Table,
-  Row,
-  InputGroup,
-} from 'react-bootstrap';
-import PopupWindow from '../../ComponentShare/PopupWindow';
+import { Button, Collapse, Col, Form, InputGroup, Row } from 'react-bootstrap';
+import PopupWindow from '../../../ComponentShare/PopupWindow';
 import { useNavigate } from 'react-router-dom';
-function AddressDetail() {
+
+function CardForm() {
+
   const navigate = useNavigate();
   const [submittedData, setSubmittedData] = useState({});
   const [backendData, setBackendData] = useState({});
   const [showModal, setShowModal] = useState(false);
-  const [countyData, setCountyData] = useState();
-  const [districtData, setDistrictData] = useState();
 
   const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState({
@@ -34,7 +28,7 @@ function AddressDetail() {
   useLayoutEffect(() => {
     async function getAccountData() {
       let response = await axios.get(
-        'http://localhost:3001/api/members/myaddress',
+        'http://localhost:3001/api/members/mycreditcard',
         {
           withCredentials: true,
         }
@@ -44,13 +38,13 @@ function AddressDetail() {
     getAccountData();
   }, []);
 
-  function handleChange(event) {
+  function handleChange(e) {
     // 輸入框偵測
-    setCountyData(event.target.value);
-  }
-  function handleChange2(event) {
-    // 輸入框偵測
-    setDistrictData(event.target.value);
+    let newData = { ...submittedData };
+    newData[e.target.name] = e.target.value;
+    setSubmittedData(newData);
+    console.log(newData);
+    // console.log(errors);
   }
 
   async function handleSubmit(e) {
@@ -106,39 +100,19 @@ function AddressDetail() {
     }
   }
   return (
-    <Form className={`shadow p-5 rounded-5 chicofgo-font`} Validate>
+    <Form className={`cardForm chicofgo-font`} Validate>
       {/* // <form className={`cardForm chicofgo-font`}> */}
       <h2 className={`text-center chicofgo-font-700 chicofgo_brown_font pb-3`}>
-        地址修改
+        信用卡修改
       </h2>
-      <Row className="my-2">
-        <Col>
-          <Table borderless hover className="chicofgo-font py-2">
-            <thead>
-              <tr>
-                <th>
-                  <h3 className="chicofgo-font-700 fs-4">我的地址</h3>
-                </th>
-                <th className="text-end">
-                  <Button variant="outline-chicofgo-brown" className={`mt-2`}>
-                    預設地址
-                  </Button>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>pekorchu</td>
-                <td>(+886)0937373373</td>
-              </tr>
-              <tr>
-                <td colSpan={2}>桃園市中壢區新生路二段421號</td>
-              </tr>
-            </tbody>
-          </Table>
-        </Col>
-        {/* <Col>預設</Col> */}
-      </Row>
+      {/* <hr /> */}
+      <div className={` ${open ? 'd-none' : 'd-inline'}`}>
+        <Results data={backendData} />
+      </div>
+      <div className={` ${open ? 'd-inline' : 'd-none'}`}>
+        <Results data={submittedData} />
+      </div>
+
       <hr />
       <Button
         onClick={() => setOpen(!open)}
@@ -146,43 +120,80 @@ function AddressDetail() {
         aria-expanded={open}
         variant="outline-chicofgo-green"
       >
-        編輯地址
+        編輯信用卡
       </Button>
       <Collapse in={open}>
         <div id="example-collapse-text">
           <Row className="my-2">
-            <Col className="my-2 py-3">
-              <Row className="mb-3">
-                <Form.Group as={Col} md="3">
-                  <Form.Label>縣市</Form.Label>
-                  <Form.Select onChange={handleChange}>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </Form.Select>
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="3">
-                  <Form.Label>鄉鎮市區</Form.Label>
-                  <Form.Select onChange={handleChange2}>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </Form.Select>
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="6">
-                  <Form.Label>詳細地址</Form.Label>
-                  <Form.Control
-                    required
-                    type="text"
-                    // placeholder="Last name"
-                    // defaultValue="Otto"
-                  />
-                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-              </Row>
-            </Col>
+            <Form.Group as={Col} md="12" controlId="validationCustom01">
+              {/* <Form.Label>First name</Form.Label> */}
+              <Form.Control
+                required
+                type="text"
+                placeholder="持卡人姓名"
+                maxLength={25}
+                name="name"
+                value={submittedData.name}
+                onChange={handleChange}
+                isInvalid={errors.nameError}
+                // onChange={(e) => setName(e.target.value)}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.nameError}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+          <Row className="my-2">
+            <Form.Group as={Col} md="12" controlId="validationCustom02">
+              <Form.Control
+                required
+                type="text"
+                placeholder="卡號"
+                value={submittedData.cardNumber}
+                name="cardNumber"
+                maxLength={16}
+                // onChange={(e) => setCardNumber(e.target.value)}
+                onChange={handleChange}
+                isInvalid={errors.cardNumberError}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.cardNumberError}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
+          <Row className="my-2">
+            <Form.Group as={Col} md="8" controlId="validationCustom03">
+              <Form.Control
+                type="text"
+                placeholder="MM/YY"
+                required
+                value={submittedData.expiry}
+                name="expiry"
+                maxLength={4}
+                // onChange={(e) => setExpiry(e.target.value)}
+                onChange={handleChange}
+                isInvalid={errors.expiry}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.expiryError}
+              </Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group as={Col} md="4" controlId="validationCustom04">
+              <Form.Control
+                type="text"
+                placeholder="CVC"
+                value={submittedData.cvc}
+                name="cvc"
+                maxLength={3}
+                // onChange={(e) => setCvc(e.target.value)}
+                onChange={handleChange}
+                required
+                isInvalid={errors.cvc}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.cvcError}
+              </Form.Control.Feedback>
+            </Form.Group>
           </Row>
 
           <Button
@@ -216,4 +227,4 @@ function AddressDetail() {
   );
 }
 
-export default AddressDetail;
+export default CardForm;
