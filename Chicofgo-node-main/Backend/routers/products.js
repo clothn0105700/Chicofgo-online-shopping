@@ -42,7 +42,27 @@ router.get('/message', middlewares, async (req, res, next) => {
 router.post('/sendCart', async (req, res) => {
   console.log('body: ', req.body);
   const { cartProductId, cartPrice, cartQuantity, cartUserId } = req.body;
-  const sql = `
+  // 檢查是否已在購物車
+  const checkSql = `
+    SELECT COUNT(1) as count
+    FROM shopping_cart
+    WHERE member = '?' AND product_id = '?' AND order_id = '0'
+  `;
+  // const result = await pool.query(checkSql, [cartUserId, cartProductId]);
+  // const my_count = result[0][0].count;
+  // const [apple, banana] = ['a', 1, 2, 3];
+  // const result = [[{ count: 1 }], ['sdfjnklsjdflksjadfkl']];
+  // const result = await pool.query(checkSql, [cartUserId, cartProductId]);
+  // console.log("result: ", result);
+  const [[{ count }]] = await pool.query(checkSql, [cartUserId, cartProductId]);
+  // console.log("count: ", count);
+  if (count >= 1) {
+    res.json({ result: 'been added' });
+    return;
+  }
+
+  // insert
+  const insertSql = `
   INSERT INTO shopping_cart(
     product_id, price, quantity, member, order_id
   ) VALUES (
@@ -50,8 +70,8 @@ router.post('/sendCart', async (req, res) => {
   )
   `;
   try {
-    const [results] = await pool.query(sql, [cartProductId, cartPrice, cartQuantity, cartUserId]);
-    if (affectedRows >= 1) {
+    const [results] = await pool.query(insertSql, [cartProductId, cartPrice, cartQuantity, cartUserId]);
+    if (results.affectedRows >= 1) {
       res.json({ result: 'ok' });
     } else {
       res.json({ result: 'fail' });

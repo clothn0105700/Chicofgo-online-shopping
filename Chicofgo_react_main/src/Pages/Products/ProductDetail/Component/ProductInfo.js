@@ -53,18 +53,30 @@ const Productinfo = (props) => {
     const urlArray = location.pathname.split('/');
     const id = parseInt(urlArray[urlArray.length - 1]);
     try {
-      let response = await axios
-        .post('http://localhost:3001/api/products/sendCart', {
-          cartProductId: id ? id : '此商品已加入購物車',
+      let response = await axios.post(
+        'http://localhost:3001/api/products/sendCart',
+        {
+          cartProductId: id,
           cartUserId: userid,
           cartPrice: price,
           cartQuantity: productsCount,
-        })
-        .then((res) => {
-          setModalCase(true);
-          setModalContent('成功加入購物車');
-          setIsOpen(true);
-        });
+        }
+      );
+      if (response.data.result === 'ok') {
+        setModalCase(true);
+        setModalContent('成功加入購物車');
+        setIsOpen(true);
+      } else if (response.data.result === 'been added') {
+        setModalCase(true);
+        setModalContent('已加過');
+        setIsOpen(true);
+      } else {
+        setModalCase(true);
+        setModalContent('加入失敗');
+        setIsOpen(true);
+      }
+      // .then((res) => {
+      // });
       console.log(response.data);
     } catch (e) {
       console.log(e);
@@ -99,45 +111,38 @@ const Productinfo = (props) => {
             </button>
           </div>
         </h4>
-        <div className="mt-5">
-          <h4>總計:{price * productsCount} 元</h4>
-          <div className={`${products_count} mt-3`}>
-            <h4>數量</h4>
-            <div className={`${button_wrap} d-flex align-items-center`}>
-              <button
-                className={`${minus_style}`}
-                value={productsCount}
-                onClick={(e) => {
-                  setProductsCount(productsCount - 1);
-                }}
-              ></button>
-              <input
-                type="text"
-                className={`${input_style}`}
-                value={productsCount}
-                onChange={(e) => {
-                  setProductsCount(e.target.value);
-                }}
-              />
-              <button
-                className={`${plus_style}`}
-                value={productsCount}
-                onClick={(e) => {
-                  setProductsCount(productsCount + 1);
-                }}
-              ></button>
+        <div className="mt-5 d-flex">
+          <div>
+            <h4>總計:{price * productsCount} 元</h4>
+            <div className={`${products_count} mt-3`}>
+              <h4>數量</h4>
+              <div className={`${button_wrap} d-flex align-items-center`}>
+                <button
+                  className={`${minus_style}`}
+                  value={productsCount}
+                  onClick={(e) => {
+                    setProductsCount(productsCount - 1);
+                  }}
+                ></button>
+                <input
+                  type="text"
+                  className={`${input_style}`}
+                  value={productsCount}
+                  onChange={(e) => {
+                    setProductsCount(e.target.value);
+                  }}
+                />
+                <button
+                  className={`${plus_style}`}
+                  value={productsCount}
+                  onClick={(e) => {
+                    setProductsCount(productsCount + 1);
+                  }}
+                ></button>
+              </div>
             </div>
           </div>
-        </div>
-        <div
-          className={`${collect_cart} d-flex align-items-center justify-content-between mt-3`}
-        >
-          <button
-            className={`${btn_collect} d-flex align-items-center justify-content-center`}
-          >
-            <FaBookmark className="mx-2" />
-            加入收藏
-          </button>
+
           <button
             className={`${btn_cart} d-flex align-items-center justify-content-center`}
             onClick={() => {
@@ -152,6 +157,16 @@ const Productinfo = (props) => {
             <FaShoppingCart className="mx-2" />
             加入購物車
           </button>
+        </div>
+        <div
+          className={`${collect_cart} d-flex align-items-center justify-content-between mt-3`}
+        >
+          {/* <button
+            className={`${btn_collect} d-flex align-items-center justify-content-center`}
+          >
+            <FaBookmark className="mx-2" />
+            加入收藏
+          </button> */}
         </div>
       </div>
       {modalCase ? (
