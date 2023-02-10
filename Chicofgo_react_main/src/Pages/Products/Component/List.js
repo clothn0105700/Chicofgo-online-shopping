@@ -1,11 +1,13 @@
 import React from 'react';
-import { useEffect, useContext, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useProduct } from '../../../Contexts/ProductProvider';
 import { Link, useNavigate } from 'react-router-dom';
 import Card from '../../ComponentShare/Card';
 import styles from './List.module.scss';
 import Path from '../../../Layout/Item/Path/Path';
 import axios from 'axios';
+import Pagination from '../../ComponentShare/Pagination';
+import { Fragment } from 'react';
 
 import {
   brands,
@@ -65,10 +67,33 @@ const List = () => {
     navigate(`/products/product_detail/${cardId}`, { replace: false });
   }
 
+  //分頁
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(20);
+  const lastPostIndex = currentPage * postsPerPage;
+  const firstPostIndex = lastPostIndex - postsPerPage;
+  console.log(firstPostIndex, lastPostIndex);
+  const currentPosts = products.slice(firstPostIndex, lastPostIndex);
+  useEffect(() => {
+    console.log('products: ', products);
+  }, [products]);
+  const filteredProducts = useMemo(() => {
+    return products.filter((_, index) => {
+      if (
+        index >= postsPerPage * (currentPage - 1) &&
+        index < postsPerPage * currentPage
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }, [products, postsPerPage, currentPage]);
+
   return (
     <div className="custom-container d-flex justify-content-center">
       <div className={list_container}>
-        <Path pathObj={{ path: ['．商品列表'] }} />
+        <Path pathObj={{ path: ['商品列表'] }} />
         <div className={`${list_control} row mx-2`}>
           <div className={`${sidebar} col-md-2 d-flex flex-column `}>
             <div className={`${block_brand} d-flex flex-column px-2`}>
@@ -174,21 +199,45 @@ const List = () => {
           </div>
           <div className={`${card_block} col-12 col-md-10 `}>
             <div className={`${card_group} row mx-0`}>
-              {products.map((info) => {
+              {/* {currentPosts.map((v, i) => {
+                return (
+                  <Fragment key={(v, i)}>
+                    {currentPosts.map((info) => {
+                      return (
+                        <div
+                          className={`${card_control} col-6 col-md-3 px-0 mb-3 `}
+                          key={info.id}
+                          onClick={() => goToDetail(info.id)}
+                        >
+                          <Card
+                            title={info.name}
+                            rating={info.rating}
+                            price={info.price}
+                          />
+                        </div>
+                      );
+                    })}
+                  </Fragment>
+                 
+                );
+              })} */}
+              {filteredProducts.map((v, i) => {
                 return (
                   <div
                     className={`${card_control} col-6 col-md-3 px-0 mb-3 `}
-                    key={info.id}
-                    onClick={() => goToDetail(info.id)}
+                    key={v.id}
+                    onClick={() => goToDetail(v.id)}
                   >
-                    <Card
-                      title={info.name}
-                      rating={info.rating}
-                      price={info.price}
-                    />
+                    <Card title={v.name} rating={v.rating} price={v.price} />
                   </div>
                 );
               })}
+              <Pagination
+                totalPosts={products.length}
+                postsPerPage={postsPerPage}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+              />
             </div>
           </div>
         </div>

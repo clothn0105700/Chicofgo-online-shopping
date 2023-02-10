@@ -47,9 +47,9 @@ const Card = (props) => {
           className={`${keepshop} card-img-bottom d-flex align-items-center `}
         >
           <div className={`${price_contorl} `}>${price}</div>
-          <div className={`${mark_contorl} `}>
+          {/* <div className={`${mark_contorl} `}>
             <FaBookmark />
-          </div>
+          </div> */}
           <div className={`${cart_contorl} `}>
             <FaShoppingCart />
           </div>
