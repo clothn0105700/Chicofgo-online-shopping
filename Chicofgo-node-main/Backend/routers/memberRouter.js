@@ -175,8 +175,6 @@ router.use('/passwordChange', checkLogin, passwordChangeRules, async (req, res, 
     return res.status(401).json({
       errors: [
         {
-          // msg: 'email 尚未註冊',
-          // param: 'email',
           msg: '使用者不存在',
         },
       ],
@@ -198,30 +196,19 @@ router.use('/passwordChange', checkLogin, passwordChangeRules, async (req, res, 
   }
   const hashedPassword = await argon2.hash(req.body.password);
   let result = await pool.execute('UPDATE user_member SET password=? WHERE id = ?;', [hashedPassword, req.session.member.id]);
-  console.log('更新結果', result);
-  console.log('修改成功');
+  // console.log('更新結果', result);
+  // console.log('修改成功');
 
   // 回覆給前端
   return res.json({
     msg: 'passwordChange~ok!',
-    // name: req.body.name,
-    // email: req.body.email,
-    // gender: req.body.gender,
-    // birthday: req.body.birthday,
-    // phone: req.body.phone,
-    // ok
   });
 });
 router.use('/mycreditcard', checkLogin, async (req, res, next) => {
-  // console.log('I am account', req.body);
-  // console.log('I am session', req.session.member.id);
   let [mycreditcardDatas] = await pool.execute('SELECT * FROM user_payment_credit_card WHERE member_id = ?', [req.session.member.id]);
   if (mycreditcardDatas.length > 0) {
     let mycreditcardData = mycreditcardDatas[0];
     let hideCardNumber = mycreditcardData.card_number;
-    // 表示這個 accountData 有存在資料庫中
-    // console.log('accountData', accountData);
-    // 回覆給前端
     return res.json({
       name: mycreditcardData.cardholder_name,
       cardNumber: mycreditcardData.card_number.slice(0, 4) + '********' + mycreditcardData.card_number.slice(-4),
@@ -318,8 +305,7 @@ router.post('/addresschange', checkLogin, addresschangeRules, async (req, res, n
   }
   let newAddress = req.body.county + req.body.district + req.body.other;
   let result = await pool.execute('UPDATE user_member SET address=? WHERE id = ?;', [newAddress, req.session.member.id]);
-  // console.log('修改成功');
-  // console.log(newAddress);
+  console.log('更新結果', result);
 
   // 回覆給前端
   return res.json({

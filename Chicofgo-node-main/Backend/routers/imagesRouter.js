@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { checkLogin } = require('../middlewares/authMiddleware');
-const { body, validationResult } = require('express-validator');
-const pool = require('../utils/db');
-const argon2 = require('argon2');
-const { emit } = require('../utils/db');
+const path = require('path');
+// const { body, validationResult } = require('express-validator');
+// const pool = require('../utils/db');
+// const argon2 = require('argon2');
+// const { emit } = require('../utils/db');
 // ---------------圖片上傳用--------------------
 // const multer = require('multer');
-const path = require('path');
 // const storage = multer.diskStorage({
 //   destination: function (req, file, cb) {
 //     cb(null, path.join(__dirname, '..', 'public', 'uploads'));
@@ -44,7 +44,7 @@ const path = require('path');
 // ---------------圖片上傳用--------------------
 
 // GET /api/members
-router.get('/member/uploads/:imageName', checkLogin, (req, res, next) => {
+router.get('/member/uploads/:imageName', (req, res, next) => {
   // 能夠通過 checkLogin 中間件，表示一定一定有 req.session.member -> 一定是登入後
   const imageName = req.params.imageName;
   const imagePath = path.join(__dirname, '..', 'public', 'uploads', imageName);
