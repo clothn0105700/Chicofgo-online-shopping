@@ -1,17 +1,6 @@
-import { Link } from 'react-router-dom';
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Button,
-  Image,
-  InputGroup,
-} from 'react-bootstrap';
-
-import { IconContext } from 'react-icons';
+// import { Link } from 'react-router-dom';
+import { Row, Col } from 'react-bootstrap';
 import MemberBar from '../Components/MemberBar';
-import './Address.scss';
 import ChContainer from '../../ComponentShare/ChContainer';
 import AddressDetail from './AddressDetail';
 

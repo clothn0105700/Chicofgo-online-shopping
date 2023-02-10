@@ -119,8 +119,12 @@ app.use('/api/auth', authRouter);
 const memberRouter = require('./routers/memberRouter');
 app.use('/api/members', memberRouter);
 
+const imagesRouter = require('./routers/imagesRouter');
+app.use('/api/images', imagesRouter);
+
 // const shoppingCartRouter = require('./routers/shoppingCartRouter');
 // app.use('./api/shoppingCart', shoppingCartRouter);
+
 
 // app.use((req, res, next) => {
 //   console.log('這裡是的一個中間件 C');
