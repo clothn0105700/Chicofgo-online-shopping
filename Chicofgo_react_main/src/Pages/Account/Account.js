@@ -15,8 +15,13 @@ import PopupWindow from '../ComponentShare/PopupWindow';
 registerLocale('zh-TW', ZhTW);
 
 function Account() {
+  const [fileName, setFileName] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const fileInput = useRef(null);
   const [inputDisable, setInputDisable] = useState('true');
   const [backendData, setbackendData] = useState({});
+  const [backendImg, setBackendImg] = useState(null);
+
   const [startDate, setStartDate] = useState();
   const [selectedOption, setSelectedOption] = useState();
   const [errors, setErrors] = useState({
@@ -31,22 +36,37 @@ function Account() {
   });
   const [showModal, setShowModal] = useState(false);
 
+  function handleUpload(e) {
+    // 改圖片
+    setFileName(e.target.files[0].name);
+    setImageUrl(URL.createObjectURL(e.target.files[0]));
+    setbackendData({ ...backendData, photo: e.target.files[0] });
+  }
+
+  function handleFileInputClick() {
+    fileInput.current.click();
+  }
+
   function handleDateChange(date) {
     setStartDate(date);
     // 改生日
-    let newMember = { ...backendData };
-    newMember.birthday = date.toLocaleDateString();
-    setbackendData(newMember);
-    console.log(newMember);
+    // let newMember = { ...backendData };
+    // newMember.birthday = date.toLocaleDateString();
+    // setbackendData(newMember);
+    // console.log(newMember);
+    setbackendData({ ...backendData, birthday: date.toLocaleDateString() });
+    console.log(backendData);
   }
 
   function handleOptionChange(event) {
     // 改性別
-    setSelectedOption(event.target.value);
-    let newMember = { ...backendData };
-    newMember.gender = event.target.value;
-    setbackendData(newMember);
-    console.log(newMember);
+    // setSelectedOption(event.target.value);
+    // let newMember = { ...backendData };
+    // newMember.gender = event.target.value;
+    // setbackendData(newMember);
+    // console.log(newMember);
+    setbackendData({ ...backendData, gender: event.target.value });
+    console.log(backendData);
   }
 
   //
@@ -61,14 +81,21 @@ function Account() {
   async function handleSubmit(e) {
     // 送出
     console.log('handleSubmit');
-    // console.log(backendData);
+    console.log(backendData);
     setInputDisable(false);
     // 關閉表單的預設行為
     e.preventDefault();
+    let formData = new FormData();
+    formData.append('name', backendData.name || '');
+    formData.append('email', backendData.email || '');
+    formData.append('phone', backendData.phone || '');
+    formData.append('birthday', backendData.birthday || '');
+    formData.append('gender', backendData.gender || '');
+    formData.append('photo', backendData.photo || '');
     try {
       let response = await axios.post(
         'http://localhost:3001/api/members/accountChange',
-        backendData,
+        formData,
         {
           // 為了跨源存取 cookie
           withCredentials: true,
@@ -77,6 +104,7 @@ function Account() {
       console.log(response.data);
       if (response.status === 200) {
         console.log('更新成功');
+        setFileName('');
         setShowModal(true);
         setErrors({
           nameError: '',
@@ -123,9 +151,19 @@ function Account() {
           withCredentials: true,
         }
       );
+
+      let responseImg = await axios.get(
+        `http://localhost:3001/api/images/member/${response.data.imageUrl}`,
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(responseImg);
+
       setbackendData(response.data);
       setSelectedOption(String(response.data.gender));
       setStartDate(new Date(response.data.birthday));
+      setBackendImg(responseImg.data);
     }
     getAccountData();
   }, []);
@@ -152,11 +190,30 @@ function Account() {
           alt=""
           width={150}
           height={150}
-          src={require('../../Layout/Navbar/logo.png')}
+          // src={imageUrl ? imageUrl : require('../../Layout/Navbar/logo.png')}
+          // src={
+          //   imageUrl
+          //     ? imageUrl
+          //     : backendImg
+          //     ? backendImg
+          //     : require('../../Layout/Navbar/logo.png')
+          src={
+            'http://localhost:3001/api/images/member/uploads/1675993459943.png'
+          }
           className={`border border-3 rounded-circle  ${style.pic}`}
         />
+        <p className={`pt-3 mb-0 ${fileName ? 'd-inline' : 'd-none'}`}>
+          {fileName}
+        </p>
         <h5 className={`${style.imgLimitIcon}`}>
-          <Button variant="">
+          <input
+            type="file"
+            ref={fileInput}
+            style={{ display: 'none' }}
+            name="photo"
+            onChange={handleUpload}
+          />
+          <Button variant="chicofgo-white" onClick={handleFileInputClick}>
             <FaEdit />
           </Button>
         </h5>

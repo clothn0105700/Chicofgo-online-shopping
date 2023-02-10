@@ -205,7 +205,7 @@ function AddressDetail() {
   return (
     <Form className={`shadow p-5 rounded-5 chicofgo-font`} Validate>
       <h2 className={`text-center chicofgo-font-700 chicofgo_brown_font pb-3`}>
-        地址修改
+        配送資訊修改
       </h2>
       <Row>
         <Col>

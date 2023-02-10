@@ -5,6 +5,43 @@ const { body, validationResult } = require('express-validator');
 const pool = require('../utils/db');
 const argon2 = require('argon2');
 const { emit } = require('../utils/db');
+// ---------------圖片上傳用--------------------
+const multer = require('multer');
+const path = require('path');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '..', 'public', 'uploads'));
+  }, // 圖片名稱
+  filename: function (req, file, cb) {
+    console.log('multer storage', file);
+    // {
+    //   fieldname: 'photo',
+    //   originalname: 'AI-replace.jpg',
+    //   encoding: '7bit',
+    //   mimetype: 'image/jpeg'
+    // }
+    const ext = file.originalname.split('.').pop();
+    cb(null, `${Date.now()}.${ext}`);
+  },
+});
+// 處理上傳
+const uploader = multer({
+  storage: storage,
+  // 圖片格式的 validation
+  fileFilter: function (req, file, cb) {
+    if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/jpg' && file.mimetype !== 'image/png') {
+      cb(new Error('上傳圖片格式不合法'), false);
+    } else {
+      cb(null, true);
+    }
+  },
+  // 限制檔案的大小
+  limits: {
+    //200k 200x1024
+    fileSize: 200 * 1024, // 204800
+  },
+});
+// ---------------圖片上傳用--------------------
 
 // GET /api/members
 router.get('/', checkLogin, (req, res, next) => {
@@ -35,6 +72,7 @@ router.use('/account', checkLogin, async (req, res, next) => {
       gender: accountData.gender,
       birthday: accountData.birthday,
       phone: accountData.phone,
+      imageUrl: accountData.img,
     });
   }
 });
@@ -64,23 +102,24 @@ const accountChangeRules = [
     .withMessage('請輸入正確手機號碼格式'),
 ];
 
-router.use('/accountChange', checkLogin, accountChangeRules, async (req, res, next) => {
-  console.log('I am changedata', req.body);
+router.use('/accountChange', checkLogin, uploader.single('photo'), accountChangeRules, async (req, res, next) => {
+  console.log('I am changedata', req.body, req.file);
   const validateResult = validationResult(req);
   console.log(validateResult);
   if (!validateResult.isEmpty()) {
     return res.status(401).json({ errors: validateResult.array() });
   }
-  let [oldAccountDatas] = await pool.execute('SELECT * FROM user_member WHERE id = ?', [req.session.member.id]);
-  let oldAccountData = oldAccountDatas[0];
-
-  let result = await pool.execute('UPDATE user_member SET name=?, email=?, phone=?, birthday=?, gender=? WHERE id = ?;', [
+  // let [oldAccountDatas] = await pool.execute('SELECT * FROM user_member WHERE id = ?', [req.session.member.id]);
+  // let oldAccountData = oldAccountDatas[0];
+  const filename = req.file ? path.join('uploads', req.file.filename) : '';
+  let result = await pool.execute('UPDATE user_member SET name=?, email=?, phone=?, birthday=?, gender=?, img=? WHERE id = ?;', [
     req.body.name,
     req.body.email,
     req.body.phone,
     req.body.birthday,
     req.body.gender,
-    thisId,
+    filename,
+    req.session.member.id,
   ]);
   console.log('更新結果', result);
 
