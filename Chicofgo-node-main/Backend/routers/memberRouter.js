@@ -54,6 +54,30 @@ router.get('/orders', checkLogin, (req, res, next) => {
   // 安心地使用 req.session.member.id 去資料庫拿這個 id 的訂單
 });
 
+router.use('/toShoppingcart', checkLogin, async (req, res, next) => {
+  // console.log('I am account', req.body);
+  // console.log('I am session', req.session.member.id);
+
+  let [accountDatas] = await pool.execute('SELECT * FROM user_member WHERE id = ?', [req.session.member.id]);
+  if (accountDatas.length > 0) {
+    let accountData = accountDatas[0];
+    // 表示這個 accountData 有存在資料庫中
+    // console.log('accountData', accountData);
+
+    // 回覆給前端
+    return res.json({
+      name: accountData.name,
+      phone: accountData.phone,
+      address: accountData.address,
+      email: accountData.email,
+      // account: accountData.account,
+      // gender: accountData.gender,
+      // birthday: accountData.birthday,
+      // imageUrl: accountData.img,
+    });
+  }
+});
+
 router.use('/account', checkLogin, async (req, res, next) => {
   // console.log('I am account', req.body);
   // console.log('I am session', req.session.member.id);

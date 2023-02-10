@@ -14,6 +14,8 @@ const ShoppingItem = ({
   checked,
   onCheckboxChange,
   onQuantityChange,
+  cartId,
+  onDeleteClick,
 }) => {
   return (
     <Row className={`px-4 `} key={id}>
@@ -32,7 +34,12 @@ const ShoppingItem = ({
       <Col className={`col-11 chicofgo_gray pb-4 mb-4 rounded-3 shadow`}>
         <Row>
           <Col className={`text-end p-0 `}>
-            <Button variant="" className={` chicofgo_brown_font m-0 pb-0`}>
+            <Button
+              variant=""
+              value={cartId}
+              className={` chicofgo_brown_font m-0 pb-0`}
+              onClick={onDeleteClick}
+            >
               <h3 className={`p-0 chicofgo_brown_font`}>
                 <FaWindowClose />
               </h3>

@@ -1,11 +1,4 @@
-import {
-  Row,
-  Col,
-  Button,
-  Form,
-  InputGroup,
-  FormControl,
-} from 'react-bootstrap';
+import { Row, Col, Button, Form, InputGroup } from 'react-bootstrap';
 import ChContainer from '../../ComponentShare/ChContainer';
 import style from './ShoppingCart.module.scss';
 import React, { useState, useEffect } from 'react';
@@ -17,22 +10,55 @@ function Checkout(props) {
   // ---勾選商品---
   const [products, setProducts] = useState([]);
   const { selectProducts, setSelectProducts } = useShoppingCart();
+  // ---會員資料---
+  const [memberInfo, setMemberInfo] = useState({});
+  const [errors, setErrors] = useState({
+    nameError: '',
+    name: false,
+    phoneError: '',
+    phone: false,
+    addressError: '',
+    address: false,
+    payError: '',
+    pay: false,
+    bill_idError: '',
+    bill_id: false,
+    send_informationError: '',
+    send_information: false,
+  });
+  const [showModal, setShowModal] = useState(false);
+
   useEffect(() => {
     setProducts(selectProducts);
-  }, []);
+    console.log(selectProducts);
 
-  // ---會員資料---
-  const [memberInfo, setMemberInfo] = useState({
-    id: 1,
-    name: '小明',
-    phone: '0912345678',
-    pay: '',
-    address: '桃園市XXX',
-    send_information: '',
-    bill_id: '',
-    totalPrice: '',
-    status: '1',
-  });
+    // -----------------------------------
+    async function getAccountData() {
+      let response = await axios.get(
+        'http://localhost:3001/api/members/toShoppingcart',
+        {
+          withCredentials: true,
+        }
+      );
+
+      setMemberInfo({
+        product_id: response.data.id,
+        name: response.data.name,
+        phone: response.data.phone,
+        pay: '',
+        address: response.data.address,
+        send_information: '',
+        bill_id: '',
+        totalPrice: '',
+        status: '1',
+        mail: response.data.email,
+        pay_info: '',
+      });
+      console.log(memberInfo);
+    }
+    getAccountData();
+    // -----------------------------------
+  }, []);
 
   function handleChange(e) {
     let newMemberInfo = { ...memberInfo };
@@ -58,11 +84,68 @@ function Checkout(props) {
   async function handleSubmit(e) {
     e.preventDefault();
     memberInfo.totalPrice = totalPrice;
-    // let response = await axios.post(
-    //   'http://localhost:3001/api/checkoutOrder',
-    //   memberInfo
-    // );
+    memberInfo.price = products[0].price;
+    memberInfo.discount = coupon;
+
     console.log(memberInfo);
+    console.log(products);
+
+    try {
+      let response = await axios.post(
+        'http://localhost:3001/api/shoppingCarts/sendOrder',
+        memberInfo,
+        {
+          // 為了跨源存取 cookie
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+
+      if (response.status === 200) {
+        console.log('更新成功');
+        setShowModal(true);
+        setErrors({
+          nameError: '',
+          name: false,
+          phoneError: '',
+          phone: false,
+          addressError: '',
+          address: false,
+          payError: '',
+          pay: false,
+          bill_idError: '',
+          bill_id: false,
+          send_informationError: '',
+          send_information: false,
+        });
+      }
+    } catch (e) {
+      if (e.response.status === 400) {
+        let allErrors = e.response.data.errors;
+        console.log('下單失敗');
+        console.log(allErrors);
+        let newErrors = {
+          nameError: '',
+          name: false,
+          phoneError: '',
+          phone: false,
+          addressError: '',
+          address: false,
+          payError: '',
+          pay: false,
+          bill_idError: '',
+          bill_id: false,
+          send_informationError: '',
+          send_information: false,
+        };
+        allErrors.forEach((thisError) => {
+          newErrors[thisError.param] = true;
+          newErrors[thisError.param + 'Error'] = thisError.msg;
+        });
+        setErrors(newErrors);
+        // console.log(errors);
+      }
+    }
   }
   return (
     <ChContainer
@@ -113,7 +196,14 @@ function Checkout(props) {
                         onChange={handleChange}
                         value={memberInfo.name}
                         className={'chicofgo_yello'}
+                        isInvalid={errors.name}
                       />
+                      <Form.Control.Feedback
+                        type="invalid"
+                        className="text-end"
+                      >
+                        {errors.nameError}
+                      </Form.Control.Feedback>
                     </InputGroup>
                     <InputGroup className="align-items-center mb-2">
                       行動電話：
@@ -125,7 +215,14 @@ function Checkout(props) {
                         onChange={handleChange}
                         value={memberInfo.phone}
                         className={'chicofgo_yello'}
+                        isInvalid={errors.phone}
                       />
+                      <Form.Control.Feedback
+                        type="invalid"
+                        className="text-end"
+                      >
+                        {errors.phoneError}
+                      </Form.Control.Feedback>
                     </InputGroup>
                     <InputGroup className="align-items-center mb-2">
                       使用票券：
@@ -136,7 +233,9 @@ function Checkout(props) {
                         onChange={(handleChange, couponChange)}
                         className={'chicofgo_yello'}
                       >
-                        <option value="0">選擇票券</option>
+                        <option selected value="0">
+                          選擇票券
+                        </option>
                         <option value="60">$60免運券</option>
                         <option value="200">$200折價券</option>
                       </Form.Select>
@@ -149,12 +248,21 @@ function Checkout(props) {
                         name="pay"
                         onChange={handleChange}
                         className={'chicofgo_yello'}
+                        isInvalid={errors.pay}
                       >
-                        <option>選擇付款方式</option>
+                        <option selected disabled>
+                          選擇付款方式
+                        </option>
                         <option value="1">貨到付款</option>
                         <option value="2">信用卡/金融卡</option>
                         <option value="3">銀行轉帳</option>
                       </Form.Select>
+                      <Form.Control.Feedback
+                        type="invalid"
+                        className="text-end"
+                      >
+                        {errors.payError}
+                      </Form.Control.Feedback>
                     </InputGroup>
                   </Col>
                   <Col>
@@ -168,7 +276,14 @@ function Checkout(props) {
                         onChange={handleChange}
                         value={memberInfo.address}
                         className={'chicofgo_yello'}
+                        isInvalid={errors.address}
                       />
+                      <Form.Control.Feedback
+                        type="invalid"
+                        className="text-end"
+                      >
+                        {errors.addressError}
+                      </Form.Control.Feedback>
                     </InputGroup>
                     <InputGroup className="align-items-center mb-2">
                       寄送門市：
@@ -178,13 +293,22 @@ function Checkout(props) {
                         name="send_information"
                         onChange={handleChange}
                         className={'chicofgo_yello'}
+                        isInvalid={errors.send_information}
                       >
-                        <option>選擇門市</option>
+                        <option selected disabled>
+                          選擇門市
+                        </option>
                         <option value="1">7-ELEVEN</option>
                         <option value="2">全家</option>
                         <option value="3">萊爾富</option>
                         <option value="4">OK</option>
                       </Form.Select>
+                      <Form.Control.Feedback
+                        type="invalid"
+                        className="text-end"
+                      >
+                        {errors.send_informationError}
+                      </Form.Control.Feedback>
                     </InputGroup>
                     <InputGroup className="align-items-center mb-2">
                       電子發票：
@@ -194,12 +318,33 @@ function Checkout(props) {
                         name="bill_id"
                         onChange={handleChange}
                         className={'chicofgo_yello'}
+                        isInvalid={errors.bill_id}
                       >
-                        <option>選擇發票</option>
+                        <option selected disabled>
+                          選擇發票
+                        </option>
                         <option value="1">二聯式發票</option>
                         <option value="2">三聯式發票</option>
                         <option value="3">捐贈發票</option>
                       </Form.Select>
+                      <Form.Control.Feedback
+                        type="invalid"
+                        className="text-end"
+                      >
+                        {errors.bill_idError}
+                      </Form.Control.Feedback>
+                    </InputGroup>
+                    <InputGroup className="align-items-center mb-2">
+                      備註：
+                      <Form.Control
+                        size="sm"
+                        type="text"
+                        // id="address"
+                        name="pay_info"
+                        onChange={handleChange}
+                        value={memberInfo.pay_info}
+                        className={'chicofgo_yello'}
+                      />
                     </InputGroup>
                   </Col>
                 </Row>
