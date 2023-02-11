@@ -308,12 +308,14 @@ function Checkout(props) {
                         isInvalid={errors.send_information}
                       >
                         <option selected disabled>
-                          選擇門市
+                          物流選擇
                         </option>
                         <option value="1">7-ELEVEN</option>
                         <option value="2">全家</option>
                         <option value="3">萊爾富</option>
                         <option value="4">OK</option>
+                        <option value="5">宅配</option>
+
                       </Form.Select>
                       <Form.Control.Feedback
                         type="invalid"
@@ -383,10 +385,10 @@ function Checkout(props) {
                 </Button>
                 <PopupWindow
                   show={showModal}
-                  onclose={() => navigate('/member')}
+                  onclose={() => navigate('/member/orderHistory')}
                   title="下單結果"
                   content="下單成功!"
-                  btnContent="回到會員中心"
+                  btnContent="查看訂單"
                 />
               </Col>
             </Row>

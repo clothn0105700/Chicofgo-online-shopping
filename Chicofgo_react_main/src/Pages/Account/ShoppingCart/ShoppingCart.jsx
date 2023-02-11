@@ -7,39 +7,6 @@ import { Link } from 'react-router-dom';
 import { useShoppingCart } from '../../../Contexts/ShoppingCartProvider';
 import axios from 'axios';
 
-// const productsData = [
-//   {
-//     id: 1,
-//     brandname: '西雅圖咖啡',
-//     title: `西雅圖咖啡即品拿鐵二合一咖啡(無加糖) 21g*100包原盒．好市多COSTCO熱銷【里德Coffee】`,
-//     desc: '即品拿鐵無加糖二合一×101包',
-//     quantity: 5,
-//     price: 100,
-//     productImg: 'test.jpg',
-//     checked: false,
-//   },
-//   {
-//     id: 2,
-//     brandname: '西雅圖咖啡',
-//     title: `西雅圖咖啡即品拿鐵二合一咖啡(無加糖) 21g*100包原盒．好市多COSTCO熱銷【里德Coffee】`,
-//     desc: '即品拿鐵無加糖二合一×102包',
-//     quantity: 8,
-//     price: 500,
-//     productImg: 'test.jpg',
-//     checked: false,
-//   },
-//   {
-//     id: 3,
-//     brandname: '西雅圖咖啡',
-//     title: `西雅圖咖啡即品拿鐵二合一咖啡(無加糖) 21g*100包原盒．好市多COSTCO熱銷【里德Coffee】`,
-//     desc: '即品拿鐵無加糖二合一×103包',
-//     quantity: 10,
-//     price: 3000,
-//     productImg: 'test.jpg',
-//     checked: false,
-//   },
-// ];
-
 function ShoppingCart(props) {
   const [products, setProducts] = useState([]);
   const [isCheckAll, setIsCheckAll] = useState(false);
@@ -56,9 +23,9 @@ function ShoppingCart(props) {
         // console.log(response.data);
         setProducts(response.data);
       } catch (e) {
-        if (e.response.status === 401) {
+        if (e.response.status === 400) {
           console.log('購物車是空的');
-          setProducts([]);
+          // setProducts([]);
         }
       }
     }

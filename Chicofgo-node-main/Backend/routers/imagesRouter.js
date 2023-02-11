@@ -52,5 +52,4 @@ router.get('/member/uploads/:imageName', (req, res, next) => {
 });
 
 //資料驗證
-
 module.exports = router;

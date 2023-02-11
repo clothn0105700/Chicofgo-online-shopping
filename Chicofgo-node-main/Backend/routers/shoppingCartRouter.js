@@ -73,7 +73,7 @@ router.use('/sendOrder', checkLogin, orderRules, async (req, res, next) => {
     return res.status(400).json({ errors: validateResult.array() });
   }
   let result = await pool.execute(
-    'INSERT INTO order_list (name, phone, pay, address, send_information, bill_id, total_price, status, mail, pay_info, price, discount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+    'INSERT INTO order_list (name, phone, pay, address, send_information, bill_id, total_price, status, mail, pay_info, price, discount ,member_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
     [
       req.body.name,
       req.body.phone,
@@ -87,6 +87,7 @@ router.use('/sendOrder', checkLogin, orderRules, async (req, res, next) => {
       req.body.pay_info,
       req.body.price,
       req.body.discount,
+      req.session.member.id,
     ]
   );
   console.log('更新結果1', result);

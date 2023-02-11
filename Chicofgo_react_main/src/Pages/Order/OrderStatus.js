@@ -1,20 +1,38 @@
-import { Container, Row, Col, Button, Table } from 'react-bootstrap';
-import Path from '../../Layout/Item/Path/Path';
+import { Row, Col, Button, Table } from 'react-bootstrap';
 import style from './OrderStatus.module.scss';
 import { SlCup } from 'react-icons/sl';
 import { TbMessage2 } from 'react-icons/tb';
 import ChContainer from '../ComponentShare/ChContainer';
-import {
-  orderMemberInfo,
-  orderStatusInfo,
-} from '../../Config/orderStatusConfig';
-
-function SumPriceMapReduce(arr) {
-  return arr.map((info) => info.amount * info.price).reduce((a, b) => a + b);
-}
-let totalPrice = SumPriceMapReduce(orderStatusInfo);
+import axios from 'axios';
+import React, { useState, useLayoutEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 function OrderStatus() {
+  let { order_id } = useParams();
+  const [orderStatusInfo, setOrderStatusInfo] = useState([]);
+  const [orderMemberInfo, setOrderMemberInfo] = useState([]);
+
+  useLayoutEffect(() => {
+    async function getOrderData() {
+      try {
+        let response = await axios.get(
+          `http://localhost:3001/api/members/orderDetail/${order_id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        console.log(response.data.products);
+        setOrderMemberInfo(response.data.member[0]);
+        setOrderStatusInfo(response.data.products);
+      } catch (e) {
+        if (e.response.status === 400) {
+          console.log('訂單是空的');
+        }
+      }
+    }
+    getOrderData();
+  }, []);
+
   return (
     <ChContainer
       ChClass={'chicofgo-font-700 border border-5'}
@@ -34,7 +52,11 @@ function OrderStatus() {
         >
           {/* 內容1 */}
           {/* 出貨狀態 */}
-          <Col className={`text-center`}>
+          <Col
+            className={`text-center ${
+              orderMemberInfo.status >= 1 ? 'chicofgo_brown_font' : 'text-muted'
+            } `}
+          >
             <h4>訂單成立</h4>
             <p className={`pb-2`}>(待店家出貨)</p>
             <svg
@@ -54,7 +76,11 @@ function OrderStatus() {
               <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z" />
             </svg>
           </Col>
-          <Col className={`text-center`}>
+          <Col
+            className={`text-center ${
+              orderMemberInfo.status >= 2 ? 'chicofgo_brown_font' : 'text-muted'
+            } `}
+          >
             <h4>店家出貨</h4>
             <p className={`pb-2`}>(待送達超商)</p>
             <svg
@@ -68,7 +94,11 @@ function OrderStatus() {
               <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
             </svg>
           </Col>
-          <Col className={`text-center`}>
+          <Col
+            className={`text-center ${
+              orderMemberInfo.status >= 3 ? 'chicofgo_brown_font' : 'text-muted'
+            }`}
+          >
             <h4>商品到貨</h4>
             <p className={`pb-2`}>(待買家完成取貨)</p>
             <svg
@@ -82,7 +112,11 @@ function OrderStatus() {
               <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z" />
             </svg>
           </Col>
-          <Col className={`text-center`}>
+          <Col
+            className={`text-center ${
+              orderMemberInfo.status >= 4 ? 'chicofgo_brown_font' : 'text-muted'
+            }`}
+          >
             <h4>取貨成功</h4>
             <p className={`pb-2`}>&nbsp;</p>
             <svg
@@ -98,7 +132,11 @@ function OrderStatus() {
               <path d="M10.854 7.854a.5.5 0 0 0-.708-.708L7.5 9.793 6.354 8.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3Z" />
             </svg>
           </Col>
-          <Col className={`text-center`}>
+          <Col
+            className={`text-center ${
+              orderMemberInfo.status >= 5 ? 'chicofgo_brown_font' : 'text-muted'
+            }`}
+          >
             <h4>完成評價</h4>
             <p className={`pb-2`}>&nbsp;</p>
             <svg
@@ -134,7 +172,7 @@ function OrderStatus() {
             {orderStatusInfo.map((info) => {
               return (
                 <Row
-                  key={info.id}
+                  key={info.shoppingcart_id}
                   className={`align-items-center ${style.poductInfo} px-4 py-3`}
                 >
                   <Col className={`col-7 pe-0`}>
@@ -165,8 +203,8 @@ function OrderStatus() {
                         />
                       </Col>
                       <Col className={`${style.orderItem} col-9 `}>
-                        <p className={`text-truncate`}>{info.desciption}</p>
-                        <span>{info.specifications}</span>
+                        <p className={`text-truncate`}>{info.title}</p>
+                        <span>{info.desc}</span>
                       </Col>
                     </Row>
                   </Col>
@@ -178,7 +216,7 @@ function OrderStatus() {
                         <p
                           className={`text-success fw-bold my-auto text-center`}
                         >
-                          {info.amount}
+                          {info.quantity}
                         </p>
                       </Col>
                       <Col className={`col`}>
@@ -231,31 +269,61 @@ function OrderStatus() {
               <tbody>
                 <tr>
                   <th scope="row">收件人姓名</th>
-                  <td>{orderMemberInfo[0].name}</td>
+                  <td>{orderMemberInfo.name}</td>
                   <th>地址</th>
-                  <td>{orderMemberInfo[0].address}</td>
+                  <td>{orderMemberInfo.address}</td>
                 </tr>
                 <tr>
                   <th scope="row">行動電話</th>
-                  <td>{orderMemberInfo[0].phone}</td>
+                  <td>0{orderMemberInfo.phone}</td>
                   <th>寄送資訊</th>
-                  <td>{orderMemberInfo[0].ExpressInfo}</td>
+                  <td>
+                    {orderMemberInfo.send_information == 1
+                      ? '7-ELEVEN'
+                      : orderMemberInfo.send_information == 2
+                      ? '全家'
+                      : orderMemberInfo.send_information == 3
+                      ? '萊爾富'
+                      : orderMemberInfo.send_information == 4
+                      ? 'OK'
+                      : orderMemberInfo.send_information == 5
+                      ? '宅配'
+                      : '未使用'}
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">使用票券</th>
-                  <td>{orderMemberInfo[0].coupon}</td>
-                  <th>{orderMemberInfo[0].ExpressInfoMethod}</th>
-                  <td>{orderMemberInfo[0].ExpressInfoMethodAddress}</td>
+                  <td>
+                    {orderMemberInfo.coupon === 60
+                      ? '$60免運券'
+                      : orderMemberInfo.coupon === 200
+                      ? '$200折價券'
+                      : '未使用'}
+                  </td>
+                  <th>電子發票</th>
+                  <td>
+                    {orderMemberInfo.bill_id === 1
+                      ? '二聯式發票'
+                      : orderMemberInfo.bill_id === 2
+                      ? '三聯式發票'
+                      : orderMemberInfo.bill_id === 3
+                      ? '捐贈發票'
+                      : '未使用'}
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">付款方式</th>
-                  <td>{orderMemberInfo[0].payMethod}</td>
-                  <th>電子發票</th>
-                  <td>{orderMemberInfo[0].bill}</td>
-                </tr>
-                <tr>
-                  <th scope="row">訂單備註</th>
-                  <td colspan="3">{orderMemberInfo[0].other}</td>
+                  <td>
+                    {orderMemberInfo.pay === 1
+                      ? '貨到付款'
+                      : orderMemberInfo.pay === 2
+                      ? '信用卡/金融卡'
+                      : orderMemberInfo.pay === 3
+                      ? '銀行轉帳'
+                      : '沒付錢'}
+                  </td>
+                  <th>訂單備註</th>
+                  <td>{orderMemberInfo.pay_info}</td>
                 </tr>
               </tbody>
             </Table>
@@ -265,7 +333,7 @@ function OrderStatus() {
           <Col className={`${style.bgYellow} px-5 my-3 text-end`}>
             {/* 內容4 */}
             <p className={`${style.priceTotal} my-4 `}>
-              訂單加總:<span className={`mx-2`}>${totalPrice}</span>
+              訂單加總:<span className={`mx-2`}>${orderMemberInfo.total}</span>
             </p>
           </Col>
         </Row>

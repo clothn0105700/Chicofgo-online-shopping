@@ -1,13 +1,37 @@
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import Path from '../../Layout/Item/Path/Path';
-import { orderInfo } from '../../Config/orderConfig';
+// import { orderInfo } from '../../Config/orderConfig';
 import { useNavigate } from 'react-router-dom';
 import { FaSearchDollar } from 'react-icons/fa';
 import ChContainer from '../ComponentShare/ChContainer';
-
 import style from './OrderHistory.module.scss';
+import axios from 'axios';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
+
 function OrderHistory() {
   const navigate = useNavigate();
+  const [orderInfo, setOrderInfo] = useState([]);
+  
+  useEffect(() => {
+    async function getOrderData() {
+      try {
+        let response = await axios.get(
+          'http://localhost:3001/api/members/orders',
+          {
+            withCredentials: true,
+          }
+        );
+        console.log(response.data);
+        setOrderInfo(response.data);
+      } catch (e) {
+        if (e.response.status === 400) {
+          console.log('OrderInfo是空的');
+        }
+      }
+    }
+    getOrderData();
+  }, []);
+
   function goToDetail(orderNumber) {
     navigate(`/member/orderStatus/${orderNumber}`, { replace: false });
   }
@@ -58,7 +82,7 @@ function OrderHistory() {
                       <td className={`py-4`}>
                         <Button
                           className={`${style.orderContentBtn} `}
-                          onClick={() => goToDetail(info.number)}
+                          onClick={() => goToDetail(info.order_id)}
                           variant=""
                         >
                           <FaSearchDollar />
