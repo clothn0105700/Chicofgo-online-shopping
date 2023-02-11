@@ -53,7 +53,7 @@ function ShoppingCart(props) {
             withCredentials: true,
           }
         );
-        console.log(response.data);
+        // console.log(response.data);
         setProducts(response.data);
       } catch (e) {
         if (e.response.status === 401) {

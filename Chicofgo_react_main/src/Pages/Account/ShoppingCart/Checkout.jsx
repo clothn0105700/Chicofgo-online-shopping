@@ -5,8 +5,11 @@ import React, { useState, useEffect } from 'react';
 import CheckoutItem from './Components/CheckoutItem';
 import { useShoppingCart } from '../../../Contexts/ShoppingCartProvider';
 import axios from 'axios';
+import PopupWindow from '../../ComponentShare/PopupWindow';
+import { useNavigate } from 'react-router-dom';
 
 function Checkout(props) {
+  const navigate = useNavigate();
   // ---勾選商品---
   const [products, setProducts] = useState([]);
   const { selectProducts, setSelectProducts } = useShoppingCart();
@@ -72,6 +75,11 @@ function Checkout(props) {
   function couponChange(e) {
     setCoupon(e.target.value);
   }
+  // ---訂單加總---
+  const thisprice = products.reduce(
+    (sum, product) => sum + product.price * product.quantity,
+    0
+  );
 
   // ---訂單加總---
   const totalPrice =
@@ -84,12 +92,16 @@ function Checkout(props) {
   async function handleSubmit(e) {
     e.preventDefault();
     memberInfo.totalPrice = totalPrice;
-    memberInfo.price = products[0].price;
     memberInfo.discount = coupon;
-
-    console.log(memberInfo);
-    console.log(products);
-
+    memberInfo.price = thisprice;
+    // memberInfo.shoppingcart_id = products.map((obj) => obj.shoppingcart_id);
+    memberInfo.shoppingcart_id = products
+      .map((obj) => obj.shoppingcart_id)
+      .join(', ');
+    // memberInfo.shoppingcart_id = `(${products
+    //   .map((obj) => obj.shoppingcart_id)
+    //   .join(', ')})`;
+    // console.log('7788888888');
     try {
       let response = await axios.post(
         'http://localhost:3001/api/shoppingCarts/sendOrder',
@@ -369,6 +381,13 @@ function Checkout(props) {
                 >
                   確認下單
                 </Button>
+                <PopupWindow
+                  show={showModal}
+                  onclose={() => navigate('/member')}
+                  title="下單結果"
+                  content="下單成功!"
+                  btnContent="回到會員中心"
+                />
               </Col>
             </Row>
           </Col>

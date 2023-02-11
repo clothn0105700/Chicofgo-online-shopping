@@ -5,10 +5,10 @@ const pool = require('../utils/db');
 const { body, validationResult } = require('express-validator');
 
 router.get('/shoppingCart', checkLogin, async (req, res, next) => {
-  let [shoppingCartDatas] = await pool.execute('SELECT * FROM shopping_cart JOIN product_list ON shopping_cart.product_id = product_list.id WHERE member = ? AND order_id = 0 ', [
-    req.session.member.id,
-  ]);
-  console.log('yyyyyyyyyyyyyyyyyyyyyyyy', shoppingCartDatas);
+  let [shoppingCartDatas] = await pool.execute(
+    'SELECT shopping_cart.id AS shoppingcart_id, shopping_cart.*, product_list.*  FROM shopping_cart JOIN product_list ON shopping_cart.product_id = product_list.id WHERE shopping_cart.member = ? AND shopping_cart.order_id = 0 ',
+    [req.session.member.id]
+  );
 
   if (shoppingCartDatas.length > 0) {
     const newObjects = shoppingCartDatas.map((obj) => {
@@ -24,11 +24,11 @@ router.get('/shoppingCart', checkLogin, async (req, res, next) => {
         checked: false,
       };
     });
-    // console.log(newObjects);
-    console.log('id:', shoppingCartDatas);
+    console.log(newObjects);
+    // console.log('id:', shoppingCartDatas);
     return res.json(newObjects);
   } else {
-    return res.status(401).json({
+    return res.status(400).json({
       errors: [
         {
           msg: '購物車無商品',
@@ -39,7 +39,7 @@ router.get('/shoppingCart', checkLogin, async (req, res, next) => {
 });
 
 router.use('/deleteShoppingCart', checkLogin, async (req, res, next) => {
-  let result = await pool.execute('UPDATE shopping_cart SET order_id=? WHERE shoppingcart_id = ?;', ['99999', req.body.deleteId]);
+  let result = await pool.execute('UPDATE shopping_cart SET order_id=? WHERE id = ?;', ['99999', req.body.deleteId]);
   // console.log('刪除結果', result);
   // 回覆給前端
   return res.json({
@@ -72,36 +72,38 @@ router.use('/sendOrder', checkLogin, orderRules, async (req, res, next) => {
   if (!validateResult.isEmpty()) {
     return res.status(400).json({ errors: validateResult.array() });
   }
-
-  // let [membersData] = await pool.execute('SELECT * FROM user_member WHERE id = ?', [req.session.member.id]);
-  // if (membersData.length === 0) {
-  //   // 表示這個 email 不存在資料庫中 -> 沒註冊過
-  //   // 不存在，就回覆 401
-  //   console.log('使用者不存在');
-  //   return res.status(401).json({
-  //     errors: [
-  //       {
-  //         msg: '使用者不存在',
-  //       },
-  //     ],
-  //   });
-  // }
-  let result = await pool.execute('INSERT INTO order_list (name, mail, phone, pay	, password) VALUES (?, ?, ?, ?, ?);', [
-    req.body.account,
-    req.body.email,
-    req.body.phone,
-    req.body.name,
-    hashedPassword,
-  ]);
-  console.log('註冊成功');
-
-  // let result = await pool.execute('UPDATE user_member SET password=? WHERE id = ?;', [hashedPassword, req.session.member.id]);
-  // console.log('更新結果', result);
-  // console.log('修改成功');
-
-  // 回覆給前端
-  return res.json({
-    msg: 'sendOrder~ok!',
+  let result = await pool.execute(
+    'INSERT INTO order_list (name, phone, pay, address, send_information, bill_id, total_price, status, mail, pay_info, price, discount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);',
+    [
+      req.body.name,
+      req.body.phone,
+      req.body.pay,
+      req.body.address,
+      req.body.send_information,
+      req.body.bill_id,
+      req.body.totalPrice,
+      req.body.status,
+      req.body.mail,
+      req.body.pay_info,
+      req.body.price,
+      req.body.discount,
+    ]
+  );
+  console.log('更新結果1', result);
+  if (result[0].insertId > 0) {
+    console.log(req.body.shoppingcart_id);
+    let result2 = await pool.execute(`UPDATE shopping_cart SET order_id=? WHERE id IN (${req.body.shoppingcart_id});`, [result[0].insertId]);
+    return res.json({
+      msg: '訂單成立',
+    });
+  }
+  console.log('購物車更改失敗');
+  return res.status(400).json({
+    errors: [
+      {
+        msg: '購物車更改失敗',
+      },
+    ],
   });
 });
 
