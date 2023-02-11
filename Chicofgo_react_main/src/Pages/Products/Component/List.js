@@ -393,7 +393,7 @@ const List = () => {
                     key={v.id}
                     onClick={() => goToDetail(v.id)}
                   >
-                    <Card title={v.name} rating={v.rating} price={v.price} />
+                    <Card product_id={v.id} title={v.name} rating={v.rating} price={v.price} />
                     <div
                       className={`${list_sendCart}`}
                       onClick={(e) => {

@@ -10,7 +10,6 @@ const ShoppingItem = ({
   desc,
   quantity,
   price,
-  productImg,
   checked,
   onCheckboxChange,
   onQuantityChange,
@@ -51,7 +50,7 @@ const ShoppingItem = ({
             className={`${style.brandArea} col-2 px-0 align-self-start text-center`}
           >
             <Image
-              src={require('../../../../Img/ProductsTest/' + productImg)}
+              src={`http://localhost:3001/api/images/productImg/coffee_${id}/coffee_${id}-1.png`}
               className={`${style.productPic} `}
             />
             <h2 className={`${style.brandname} m-2 chicofgo-font-700`}>

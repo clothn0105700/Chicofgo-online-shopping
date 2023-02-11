@@ -197,7 +197,7 @@ function OrderStatus() {
                     >
                       <Col className={`${style.orderItemImg} col-3 p-0`}>
                         <img
-                          src={require('./Component/dante.png')}
+                          src={`http://localhost:3001/api/images/productImg/coffee_${info.product_id}/coffee_${info.product_id}-1.png`}
                           fluid
                           alt="pic"
                         />

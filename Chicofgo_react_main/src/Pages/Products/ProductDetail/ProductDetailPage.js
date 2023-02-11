@@ -17,6 +17,7 @@ import { useProduct } from '../../../Contexts/ProductProvider';
 import { useMessage } from '../../../Contexts/MessageProvider';
 
 const ProductDetail = () => {
+  
   const { products, getProducts } = useProduct();
   const { message, getMessage } = useMessage();
   useEffect(() => {
@@ -105,8 +106,7 @@ const ProductDetail = () => {
 
           <div className={`${product_detail}`}>
             <div className={`${product_box} d-flex`}>
-              <PicRender />
-
+              <PicRender product_id={detail.id} />
               <div className={`${detail_content}`}>
                 <ProductInfo
                   productsCount={productsCount}

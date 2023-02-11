@@ -134,7 +134,6 @@ function ShoppingCart(props) {
                 quantity={p.quantity}
                 checked={p.checked}
                 price={p.price}
-                productImg={p.productImg}
                 onCheckboxChange={() => handleCheckboxChange(p.product_id)}
                 onQuantityChange={(delta) =>
                   handleQuantityChange(p.product_id, delta)

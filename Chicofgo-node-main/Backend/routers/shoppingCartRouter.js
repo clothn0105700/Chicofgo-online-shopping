@@ -4,6 +4,32 @@ const { checkLogin } = require('../middlewares/authMiddleware');
 const pool = require('../utils/db');
 const { body, validationResult } = require('express-validator');
 
+router.get('/productData/:productId', async (req, res, next) => {
+  const product_id = req.params.productId;
+  let [productDatas] = await pool.execute('SELECT * FROM product_list WHERE id = ?', [product_id]);
+  if (productDatas.length > 0) {
+    // console.log(productDatas);
+    const newObjects = productDatas.map((obj) => {
+      return {
+        product_id: obj.id,
+        name: obj.name,
+        price: obj.price,
+        rating: obj.rating,
+      };
+    });
+    // console.log(newObjects);
+    return res.json(newObjects);
+  } else {
+    return res.status(400).json({
+      errors: [
+        {
+          msg: '找不到商品',
+        },
+      ],
+    });
+  }
+});
+
 router.get('/shoppingCart', checkLogin, async (req, res, next) => {
   let [shoppingCartDatas] = await pool.execute(
     'SELECT shopping_cart.id AS shoppingcart_id, shopping_cart.*, product_list.*  FROM shopping_cart JOIN product_list ON shopping_cart.product_id = product_list.id WHERE shopping_cart.member = ? AND shopping_cart.order_id = 0 ',
@@ -20,7 +46,7 @@ router.get('/shoppingCart', checkLogin, async (req, res, next) => {
         desc: '即品拿鐵無加糖二合一×103包',
         quantity: obj.quantity,
         price: obj.price,
-        productImg: 'test.jpg',
+        // productImg: 'test.jpg',
         checked: false,
       };
     });

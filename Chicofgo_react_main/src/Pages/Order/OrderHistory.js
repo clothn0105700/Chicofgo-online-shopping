@@ -11,7 +11,7 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 function OrderHistory() {
   const navigate = useNavigate();
   const [orderInfo, setOrderInfo] = useState([]);
-  
+  let reversedData = orderInfo.slice().reverse();
   useEffect(() => {
     async function getOrderData() {
       try {
@@ -67,7 +67,7 @@ function OrderHistory() {
               </thead>
               {/* <br /> */}
               <tbody>
-                {orderInfo.map((info) => {
+                {reversedData.map((info) => {
                   return (
                     <tr
                       key={info.id}
@@ -78,7 +78,19 @@ function OrderHistory() {
                       <td className={` chicofgo_green_font py-4`}>
                         ${info.price}
                       </td>
-                      <td className={`py-4`}>{info.status}</td>
+                      <td className={`py-4`}>
+                        {info.status === 1
+                          ? '訂單成立'
+                          : info.status === 2
+                          ? '店家出貨'
+                          : info.status === 3
+                          ? '商品到貨'
+                          : info.status === 4
+                          ? '取貨成功'
+                          : info.status === 5
+                          ? '完成評價'
+                          : '取消'}
+                      </td>
                       <td className={`py-4`}>
                         <Button
                           className={`${style.orderContentBtn} `}

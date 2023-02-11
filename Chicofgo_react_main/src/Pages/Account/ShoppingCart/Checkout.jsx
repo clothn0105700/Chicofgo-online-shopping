@@ -181,14 +181,14 @@ function Checkout(props) {
             {/* ----------------------------------- */}
             {products.map((p) => (
               <CheckoutItem
-                id={p.id}
+                id={p.shoppingcart_id}
+                product_id={p.product_id}
                 brandname={p.brandname}
                 title={p.title}
                 desc={p.desc}
                 quantity={p.quantity}
                 checked={p.checked}
                 price={p.price}
-                productImg={p.productImg}
               />
             ))}
 
@@ -315,7 +315,6 @@ function Checkout(props) {
                         <option value="3">萊爾富</option>
                         <option value="4">OK</option>
                         <option value="5">宅配</option>
-
                       </Form.Select>
                       <Form.Control.Feedback
                         type="invalid"
