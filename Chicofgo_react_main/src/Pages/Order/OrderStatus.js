@@ -1,20 +1,57 @@
+import { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Table } from 'react-bootstrap';
 import Path from '../../Layout/Item/Path/Path';
 import style from './OrderStatus.module.scss';
 import { SlCup } from 'react-icons/sl';
 import { TbMessage2 } from 'react-icons/tb';
 import ChContainer from '../ComponentShare/ChContainer';
-import {
-  orderMemberInfo,
-  orderStatusInfo,
-} from '../../Config/orderStatusConfig';
+import RatingButton from './RatingButton';
+import axios from 'axios';
+import { useAuth } from '../../Contexts/AuthContext';
 
-function SumPriceMapReduce(arr) {
-  return arr.map((info) => info.amount * info.price).reduce((a, b) => a + b);
-}
-let totalPrice = SumPriceMapReduce(orderStatusInfo);
 
 function OrderStatus() {
+
+  // ---訂單資料---
+  const { userid } = useAuth();
+  const [orderList, setOrderList] = useState([{
+    id: 1,
+    purchaseNumber: 94871,
+    desciption: `1西雅圖咖啡即品拿鐵二合一咖啡(無加糖) 21g*100包原盒．好市多COSTCO熱銷【里德Coffee】`,
+    specifications: `規格: 即品拿鐵無加糖二合一×87包`,
+    amount: 1,
+    price: 100,
+  }])
+  const [orderInfo, setOrderInfo] = useState([{
+    name: '皮卡丘33',
+    phone: '0908084088',
+    coupon: '沒了',
+    payMethod: 'pay',
+    address: '桃園市中壢區新生路二段378之2號',
+    ExpressInfo: '沒了',
+    ExpressInfoMethod: 'send_information',
+    ExpressInfoMethodAddress:
+      '沒了',
+    bill: 'bill_id',
+    totalPrice: 'totalPrice',
+  },])
+  // useEffect(() => {
+  //   async function getShoppingCartData() {
+  //     let response = await axios.get(
+  //       'http://localhost:3001/api/shoppingCarts/shoppingCart',
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     );
+  //     // console.log(response.data);
+  //     setProducts(response.data);
+  //   }
+  //   getShoppingCartData();
+  // }, []);
+
+
+
+
   return (
     <ChContainer
       ChClass={'chicofgo-font-700 border border-5'}
@@ -131,7 +168,7 @@ function OrderStatus() {
             {/* 訂單內容-個別 */}
             {/* text-center align-middle */}
 
-            {orderStatusInfo.map((info) => {
+            {orderList.map((info) => {
               return (
                 <Row
                   key={info.id}
@@ -195,7 +232,11 @@ function OrderStatus() {
                         >
                           再買一次
                         </Button>
-                        <Button
+
+                        {/* --------------------評價按鈕(有會員ID還沒有商品ID)--------------------- */}
+                        <RatingButton member_id={userid} product_id='10' />
+
+                        {/* <Button
                           variant="chicofgo-brown"
                           className={`my-1 py-1 chicofgo_white_font`}
                         >
@@ -210,7 +251,7 @@ function OrderStatus() {
                             <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                           </svg>
                           評價
-                        </Button>
+                        </Button> */}
                       </Col>
                     </Row>
                   </Col>
@@ -231,31 +272,31 @@ function OrderStatus() {
               <tbody>
                 <tr>
                   <th scope="row">收件人姓名</th>
-                  <td>{orderMemberInfo[0].name}</td>
+                  <td>{orderInfo[0].name}</td>
                   <th>地址</th>
-                  <td>{orderMemberInfo[0].address}</td>
+                  <td>{orderInfo[0].address}</td>
                 </tr>
                 <tr>
                   <th scope="row">行動電話</th>
-                  <td>{orderMemberInfo[0].phone}</td>
+                  <td>{orderInfo[0].phone}</td>
                   <th>寄送資訊</th>
-                  <td>{orderMemberInfo[0].ExpressInfo}</td>
+                  <td>{orderInfo[0].ExpressInfo}</td>
                 </tr>
                 <tr>
                   <th scope="row">使用票券</th>
-                  <td>{orderMemberInfo[0].coupon}</td>
-                  <th>{orderMemberInfo[0].ExpressInfoMethod}</th>
-                  <td>{orderMemberInfo[0].ExpressInfoMethodAddress}</td>
+                  <td>{orderInfo[0].coupon}</td>
+                  <th>{orderInfo[0].ExpressInfoMethod}</th>
+                  <td>{orderInfo[0].ExpressInfoMethodAddress}</td>
                 </tr>
                 <tr>
                   <th scope="row">付款方式</th>
-                  <td>{orderMemberInfo[0].payMethod}</td>
+                  <td>{orderInfo[0].payMethod}</td>
                   <th>電子發票</th>
-                  <td>{orderMemberInfo[0].bill}</td>
+                  <td>{orderInfo[0].bill}</td>
                 </tr>
                 <tr>
                   <th scope="row">訂單備註</th>
-                  <td colspan="3">{orderMemberInfo[0].other}</td>
+                  <td colspan="3">{orderInfo[0].other}</td>
                 </tr>
               </tbody>
             </Table>
@@ -265,7 +306,7 @@ function OrderStatus() {
           <Col className={`${style.bgYellow} px-5 my-3 text-end`}>
             {/* 內容4 */}
             <p className={`${style.priceTotal} my-4 `}>
-              訂單加總:<span className={`mx-2`}>${totalPrice}</span>
+              訂單加總:<span className={`mx-2`}>${orderInfo[0].totalPrice}</span>
             </p>
           </Col>
         </Row>
