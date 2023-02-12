@@ -17,7 +17,7 @@ const ShoppingItem = ({
   onDeleteClick,
 }) => {
   return (
-    <Row className={`px-4 `} key={id}>
+    <Row className={`px-1 px-md-4`} key={id}>
       <Col className={`col-1 d-flex justify-content-center align-items-center`}>
         <Form.Group className={``}>
           <Form.Check
@@ -47,7 +47,7 @@ const ShoppingItem = ({
         </Row>
         <Row className={`justify-content-center `}>
           <Col
-            className={`${style.brandArea} col-2 px-0 align-self-start text-center`}
+            className={`${style.brandArea} col-2 px-0 align-self-start text-center d-none d-md-block `}
           >
             <Image
               src={`http://localhost:3001/api/images/productImg/coffee_${id}/coffee_${id}-1.png`}
@@ -56,7 +56,7 @@ const ShoppingItem = ({
             <h2 className={`${style.brandname} m-2 chicofgo-font-700`}>
               {brandname}
             </h2>
-            <Row className={`justify-content-center text-nowrap`}>
+            <Row className={`justify-content-center text-nowrap `}>
               <Col className={`col-12 col-xxl-6 `}>
                 <Button
                   variant="chicofgo-green"
@@ -75,7 +75,7 @@ const ShoppingItem = ({
               </Col>
             </Row>
           </Col>
-          <Col className={`col-9`}>
+          <Col className={`col-12 col-md-9`}>
             <Table
               hover
               variant=""
