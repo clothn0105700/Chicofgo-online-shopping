@@ -26,6 +26,10 @@ const ProductDetail = () => {
     const existingData =
       JSON.parse(localStorage.getItem('productsViewed')) || [];
 
+    // 如果矩陣數量大於10，則刪除最舊的項目
+    if (existingData.length >= 10) {
+      existingData.shift();
+    }
     // 判斷新增資料是否已存在
     const isExisting = existingData.includes(detail.id);
 
