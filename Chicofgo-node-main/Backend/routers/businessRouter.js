@@ -5,6 +5,9 @@ const pool = require('../utils/db');
 //處理content-type，express沒內建，使用第三方套件multer
 const multer = require('multer');
 const path =require('path')
+const bodyParser = require('body-parser');
+
+router.use(bodyParser.urlencoded({ extended: true }));
 
 router.use((req, res, next) => {
     console.log('這裡是 orderRouter 的中間件');
@@ -22,7 +25,7 @@ const storage = multer.diskStorage({
   },
   // 圖片名稱
   filename: function(req, file, cb) {
-    cb(null, 'test.png',);
+    cb(null, 'test.png', 'text2.png', 'text3.png');
   }
 })
 
@@ -80,9 +83,12 @@ router.get('/products/type', async (req, res, next) => {
   res.json(data)
 })
 
+
+
 //新增商品並上架
 router.post('/productOn',uploader.single('photo'),async (req, res) => {
   console.log('POST /api/product', req.body);
+  console.log('POST /api/product photos', req.files);
   // req.body.productId, req.body.productName
   // 完成 insert
   // let results = await pool.query('INSERT INTO product_list (name, place_of_orgin, type, amount, price, introduction, valid) VALUES (?, ?, ? ,? ,? ,?, 1);', [req.body.name, req.body.singlePlace, req.body.type, req.body.amount, req.body.price, req.body.introduction]);
@@ -93,6 +99,7 @@ router.post('/productOn',uploader.single('photo'),async (req, res) => {
 //新增商品並下架
 router.post('/productOff', async (req, res) => {
   console.log('POST /api/product', req.body);
+  console.log('POST /api/product photos', req.files);
   // req.body.productId, req.body.productName
   // 完成 insert
   let results = await pool.query('INSERT INTO product_list (name, place_of_orgin, type, amount, price, introduction ,valid) VALUES (?, ?, ? ,? ,? ,?);', [req.body.name, req.body.singlePlace, req.body.type, req.body.amount, req.body.price, req.body.introduction, 0]);
