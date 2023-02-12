@@ -1,21 +1,24 @@
 export const brands = [
-  { id: 1, name: '統一' },
-  { id: 2, name: '味全' },
-  { id: 3, name: '伯朗' },
-  { id: 4, name: '雀巢' },
+  { id: 1, name: 'Maxim' },
+  { id: 2, name: '微美咖啡' },
+  { id: 3, name: '金車/伯朗' },
+  { id: 4, name: 'Nestle雀巢' },
   { id: 5, name: 'UCC' },
-  { id: 6, name: '貝納頌' },
-  { id: 7, name: '星巴克' },
+  { id: 6, name: '西雅圖' },
+  { id: 7, name: 'STARBUCKS星巴克' },
+  { id: 8, name: '廣吉' },
+  { id: 9, name: 'Casa卡薩' },
 ];
 
 export const cates = [
-  { id: 1, name: '罐裝咖啡' },
+  { id: 1, name: '即飲咖啡' },
   { id: 2, name: '即溶咖啡' },
   { id: 3, name: '咖啡豆' },
-  { id: 4, name: '膠囊咖啡' },
+  { id: 4, name: '咖啡膠囊' },
   { id: 5, name: '奶精' },
-  { id: 6, name: '濾掛' },
-  { id: 7, name: '咖啡機' },
+  { id: 6, name: '濾掛式/茶包式' },
+  { id: 7, name: '咖啡粉' },
+  
 ];
 
 export const items = [
@@ -31,11 +34,12 @@ export const items = [
 export const origins = [
   { id: 1, name: '巴西' },
   { id: 2, name: '印尼' },
-  { id: 3, name: '肯尼亞' },
+  { id: 3, name: '韓國' },
   { id: 4, name: '夏威夷' },
   { id: 5, name: '義大利' },
   { id: 6, name: '台灣' },
   { id: 7, name: '日本' },
+  { id: 8, name: '英國' },
 ];
 
 export const filterRating = [

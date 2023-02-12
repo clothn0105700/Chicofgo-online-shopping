@@ -82,26 +82,48 @@ const List = () => {
     list_sendCart,
   } = styles;
 
+  const goToTop = () => {
+    window.scrollTo({
+      behavior: 'instant',
+      top: 0,
+      left: 0,
+    });
+  };
+
   //資料庫取資料
   // const [products, setProducts] = useState([]);
 
   const { products, getProducts } = useProduct();
 
+  // 載入指示的spinner動畫用的
+  const [isLoading, setIsLoading] = useState(false);
+
   //篩選所需值
   const [inputValue, setInputValue] = useState('');
-  const [brandsValue, setBrandsValue] = useState('');
-  const [brownValue, setBrownValue] = useState('');
-  console.log(brandsValue);
 
   //控制搜尋
-  const [isSearch, setIsSearch] = useState(false);
-  function goToSearch() {
-    setIsSearch(!isSearch);
-  }
+  // const [searchValue, setSearchValue] = useState('');
+
+  //種類
+  const [brandsValue, setBrandsValue] = useState('');
+  const [catesValue, setCatesValue] = useState('');
+  const [orginValue, setOrginValue] = useState('');
+  const [packageValue, setPackageValue] = useState('');
+
+  // x秒後自動關掉spinner(設定isLoading為false)
+  useEffect(() => {
+    if (isLoading) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    }
+  }, [isLoading]);
 
   useEffect(() => {
+    // setIsLoading(true);
     // if (products.length === 0) {
     // }
+
     getProducts();
   }, []);
 
@@ -153,28 +175,40 @@ const List = () => {
         return false;
       }
     });
-    // ["統一", "UCC"]
-    const brands = brandsValue;
+    //品牌
     const brandFilter = searchFilter.filter((product) => {
-      if (brandsValue === '') return true;
-      if (brands.indexOf(product.brand) !== -1) {
+      if (brandsValue.length === 0) {
         return true;
       } else {
-        return false;
+        return brandsValue.indexOf(product.brand) !== -1;
       }
     });
-
-    // const brown = brownValue;
-    // const brownFilter = products.filter((product) => {
-    //   if (brownValue === '') return true;
-    //   if (brown.indexOf(product.brand) !== -1) {
-    //     return true;
-    //   } else {
-    //     return false;
-    //   }
-    // });
-    return brandFilter;
-  }, [products, inputValue, brandsValue]);
+    //種類
+    const cateFilter = brandFilter.filter((product) => {
+      if (catesValue.length === 0) {
+        return true;
+      } else {
+        return catesValue.indexOf(product.type) !== -1;
+      }
+    });
+    //產地orginValue
+    const orginFilter = cateFilter.filter((product) => {
+      if (orginValue.length === 0) {
+        return true;
+      } else {
+        return orginValue.indexOf(product.place) !== -1;
+      }
+    });
+    //包裝packageValue
+    const packageFilter = orginFilter.filter((product) => {
+      if (packageValue.length === 0) {
+        return true;
+      } else {
+        return packageValue.indexOf(product.package) !== -1;
+      }
+    });
+    return packageFilter;
+  }, [products, inputValue, brandsValue, catesValue, orginValue, packageValue]);
 
   // 分頁
   const filteredProducts = useMemo(() => {
@@ -195,7 +229,64 @@ const List = () => {
   // 如果篩選條件有改 回到第一頁
   useEffect(() => {
     setCurrentPage(1);
-  }, [inputValue]);
+  }, [inputValue, brandsValue, catesValue, orginValue, packageValue]);
+
+  // bootstrap 的spinner
+  const spinner = (
+    <>
+      <div className="d-flex justify-content-center">
+        <div className="spinner-border text-success" role="status">
+          <span className="sr-only"></span>
+        </div>
+      </div>
+    </>
+  );
+  //CheckBox功能
+  function checkBrandHandler(event) {
+    // setIsLoading(true);
+    const value = event.target.value;
+    setBrandsValue((pre) => {
+      if (pre.indexOf(value) === -1) {
+        return [...pre, value];
+      } else {
+        return pre.filter((item) => item !== value);
+      }
+    });
+  }
+
+  function checkCateHandler(event) {
+    const value = event.target.value;
+    setCatesValue((pre) => {
+      if (pre.indexOf(value) === -1) {
+        return [...pre, value];
+      } else {
+        return pre.filter((item) => item !== value);
+      }
+    });
+  }
+
+  function checkOrginHandler(event) {
+    const value = event.target.value;
+    setOrginValue((pre) => {
+      if (pre.indexOf(value) === -1) {
+        return [...pre, value];
+      } else {
+        return pre.filter((item) => item !== value);
+      }
+    });
+  }
+
+  function checkPackageHandler(event) {
+    const value = event.target.value;
+    setPackageValue((pre) => {
+      if (pre.indexOf(value) === -1) {
+        return [...pre, value];
+      } else {
+        return pre.filter((item) => item !== value);
+      }
+    });
+  }
+
   return (
     <div className="custom-container d-flex justify-content-center">
       <div className={list_container}>
@@ -205,33 +296,8 @@ const List = () => {
           <div className={`${sidebar} col-md-2 d-flex flex-column `}>
             <div className={`${block_brand} d-flex flex-column px-2`}>
               <h4>品牌</h4>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="UCC"
-                  onChange={(e) => {
-                    setBrandsValue(e.target.value);
-                  }}
-                />
-                <label class="form-check-label" for="gridCheck1">
-                  UCC
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="金車/伯朗"
-                  onChange={(e) => {
-                    setBrownValue(e.target.value);
-                  }}
-                />
-                <label class="form-check-label" for="gridCheck2">
-                  伯朗
-                </label>
-              </div>
-              {/* {brands
+
+              {brands
                 .filter((brand, index) => (showMore ? true : index <= 3))
                 .map((brand) => {
                   return (
@@ -239,17 +305,15 @@ const List = () => {
                       <input
                         className="form-check-input"
                         type="checkbox"
-                        value="伯朗"
-                        onChange={(e) => {
-                          setBrandsValue(e.target.value);
-                        }}
+                        value={brand.name}
+                        onChange={checkBrandHandler}
                       />
                       <label class="form-check-label" for="gridCheck1">
                         {brand.name}
                       </label>
                     </div>
                   );
-                })} */}
+                })}
               {/* <button onClick={clickHandler}>{showMore ? '▲' : '▼'}</button> */}
               {!showMore && (
                 <button className="btn2" onClick={clickHandler}>
@@ -265,7 +329,12 @@ const List = () => {
                 .map((cate) => {
                   return (
                     <div className="form-check">
-                      <input className="form-check-input" type="checkbox" />
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value={cate.name}
+                        onChange={checkCateHandler}
+                      />
                       <label class="form-check-label" for="gridCheck1">
                         {cate.name}
                       </label>
@@ -287,7 +356,12 @@ const List = () => {
                 .map((item) => {
                   return (
                     <div className="form-check">
-                      <input className="form-check-input" type="checkbox" />
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value={item.name}
+                        onChange={checkPackageHandler}
+                      />
                       <label class="form-check-label" for="gridCheck1">
                         {item.name}
                       </label>
@@ -309,7 +383,12 @@ const List = () => {
                 .map((origin) => {
                   return (
                     <div className="form-check">
-                      <input className="form-check-input" type="checkbox" />
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        value={origin.name}
+                        onChange={checkOrginHandler}
+                      />
                       <label class="form-check-label" for="gridCheck1">
                         {origin.name}
                       </label>
@@ -352,15 +431,21 @@ const List = () => {
                     value={inputValue}
                     onChange={(e) => {
                       setInputValue(e.target.value);
+                      setIsLoading(true);
                     }}
                     placeholder="查詢商品"
                     inputProps={{ 'aria-label': 'search' }}
                   />
                 </Search>
               </div>
-              <button onClick={goToSearch} className={`${btn_push} btn1 `}>
+              {/* <button
+                onClick={() => {
+                  setSearchValue(inputValue);
+                }}
+                className={`${btn_push} btn1 `}
+              >
                 查詢
-              </button>
+              </button> */}
             </div>
 
             <div className={`${card_group} row mx-0`}>
@@ -386,38 +471,45 @@ const List = () => {
                  
                 );
               })} */}
-              {filteredProducts.map((v, i) => {
-                return (
-                  <div
-                    className={`${card_control} col-6 col-md-3 px-0 mb-3 `}
-                    key={v.id}
-                    onClick={() => goToDetail(v.id)}
-                  >
-                    <Card title={v.name} rating={v.rating} price={v.price} />
+              {isLoading ? (
+                spinner
+              ) : filteredProducts.length === 0 ? (
+                <h1>查無商品</h1>
+              ) : (
+                filteredProducts.map((v, i) => {
+                  return (
                     <div
-                      className={`${list_sendCart}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        console.log(123);
-                      }}
-                    ></div>
-                  </div>
-                );
-              })}
+                      className={`${card_control} col-6 col-md-3 px-0 mb-3 `}
+                      key={v.id}
+                      onClick={() => goToDetail(v.id)}
+                    >
+                      <Card
+                        title={v.name}
+                        rating={v.rating}
+                        price={v.price}
+                        id={v.id}
+                      />
+                    </div>
+                  );
+                })
+              )}
               {/* <Pagination
                 totalPosts={products.length}
                 postsPerPage={postsPerPage}
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
               /> */}
-              <div className={`${pages} d-flex justify-content-center`}>
-                <Pagination
-                  count={Math.ceil(searchProducts.length / postsPerPage)}
-                  page={currentPage}
-                  onChange={handleChange}
-                  siblingCount={3}
-                />
-              </div>
+              {isLoading ? null : (
+                <div className={`${pages} d-flex justify-content-center`}>
+                  <Pagination
+                    count={Math.ceil(searchProducts.length / postsPerPage)}
+                    page={currentPage}
+                    onChange={handleChange}
+                    onClick={goToTop}
+                    siblingCount={3}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
