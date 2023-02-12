@@ -127,7 +127,7 @@ const Card = (props) => {
           console.log(123);
         }}
       ></div> */}
-      {/* </div> */}
+
       {modalCase ? (
         <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
           <h4 style={{ color: 'rgb(73, 67, 61)', padding: '24px 36px' }}>
