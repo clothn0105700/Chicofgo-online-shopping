@@ -8,7 +8,7 @@ const CheckoutItem = ({
   desc,
   quantity,
   price,
-  productImg,
+  product_id,
 }) => {
   return (
     <Row className={`px-4 justify-content-center`} key={id}>
@@ -18,7 +18,7 @@ const CheckoutItem = ({
             className={`${style.brandArea} col-2 px-0 align-self-start text-center`}
           >
             <Image
-              src={require('../../../../Img/ProductsTest/' + productImg)}
+              src={`http://localhost:3001/api/images/productImg/coffee_${product_id}/coffee_${product_id}-1.png`}
               className={`${style.productPic} `}
             />
             <h2 className={`${style.brandname} m-2 chicofgo-font-700`}>

@@ -20,6 +20,21 @@ const ProductDetail = () => {
   const { products, getProducts } = useProduct();
   const { message, getMessage } = useMessage();
   useEffect(() => {
+    // ---------------2/12新增 存入看過的產品---------------
+    // 取得已有資料
+    const existingData =
+      JSON.parse(localStorage.getItem('productsViewed')) || [];
+
+    // 判斷新增資料是否已存在
+    const isExisting = existingData.includes(detail.id);
+
+    // 如果不存在則新增
+    if (!isExisting) {
+      existingData.push(detail.id);
+      localStorage.setItem('productsViewed', JSON.stringify(existingData));
+    }
+    // ------------------------------
+
     // async function getMessage() {
     //   let response = await axios.get('http://localhost:3001/api/products');
     //   setMessage(response.data);
@@ -105,8 +120,7 @@ const ProductDetail = () => {
 
           <div className={`${product_detail}`}>
             <div className={`${product_box} d-flex`}>
-              <PicRender />
-
+              <PicRender product_id={detail.id} />
               <div className={`${detail_content}`}>
                 <ProductInfo
                   productsCount={productsCount}
@@ -132,14 +146,16 @@ const ProductDetail = () => {
             className={`${evaluate_area} d-flex flex-column align-items-center `}
           >
             <h3 className="my-5">顧客評論區</h3>
-            <EvaluateArea />
+            {/* <EvaluateArea /> */}
           </div>
 
-          {filteredMessage.map((mes) => {
-            return (
-              <div key={mes.id}>
-                <br />
-                {haveMessage === 0 ? (
+          {filteredMessage.length === 0 ? (
+            <h1>暫無評論</h1>
+          ) : (
+            filteredMessage.map((mes) => {
+              return (
+                <div key={mes.id}>
+                  {/* {haveMessage === 0 ? (
                   <p>目前尚未有留言</p>
                 ) : (
                   <MessageArea
@@ -147,10 +163,16 @@ const ProductDetail = () => {
                     time={mes.message_time}
                     s={mes.speak}
                   />
-                )}
-              </div>
-            );
-          })}
+                )} */}
+                  <MessageArea
+                    rating={mes.message_rating}
+                    time={mes.message_time}
+                    s={mes.speak}
+                  />
+                </div>
+              );
+            })
+          )}
         </div>
       </div>
     </div>

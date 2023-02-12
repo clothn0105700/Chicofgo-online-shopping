@@ -49,9 +49,102 @@ router.get('/', checkLogin, (req, res, next) => {
   res.json(req.session.member);
 });
 
-router.get('/orders', checkLogin, (req, res, next) => {
-  // 能夠通過 checkLogin 中間件，表示一定一定有 req.session.member -> 一定是登入後
-  // 安心地使用 req.session.member.id 去資料庫拿這個 id 的訂單
+router.get('/orderDetail/:orderId', checkLogin, async (req, res, next) => {
+  // let [orderDatas] = await pool.execute(
+  //   'SELECT product_list.id AS product_list_id, product_list.*, shopping_cart.id AS shopping_cart_id, shopping_cart.*, order_list.id AS order_list_id, order_list.* FROM product_list JOIN shopping_cart ON product_list.id = shopping_cart.product_id JOIN order_list ON shopping_cart.order_id = order_list.id WHERE order_list.id = ? AND shopping_cart.member = ?',
+  //   [req.params.orderId, req.session.member.id]
+  // );
+  // console.log(orderDatas);
+  let [orderDatas] = await pool.execute('SELECT * FROM order_list WHERE id = ? AND member_id = ?', [req.params.orderId, req.session.member.id]);
+  const newObjects = orderDatas.map((obj) => {
+    return {
+      order_id: obj.id,
+      name: obj.name,
+      phone: obj.phone,
+      pay: obj.pay,
+      send_information:obj.send_information,
+      pay_info: obj.pay_info,
+      bill_id: obj.bill_id,
+      address: obj.address,
+      coupon: obj.coupon_id,
+      status: obj.status,
+      total: obj.total_price,
+    };
+  });
+  let [shoppingCartDatas] = await pool.execute(
+    'SELECT shopping_cart.id AS shoppingcart_id, shopping_cart.*, product_list.*  FROM shopping_cart JOIN product_list ON shopping_cart.product_id = product_list.id WHERE shopping_cart.member = ? AND shopping_cart.order_id = ? ',
+    [req.session.member.id, req.params.orderId]
+  );
+  const newObjects2 = shoppingCartDatas.map((obj) => {
+    return {
+      shoppingcart_id: obj.shoppingcart_id,
+      product_id: obj.id,
+      brandname: obj.brand,
+      title: obj.name,
+      desc: '即品拿鐵無加糖二合一×103包',
+      quantity: obj.quantity,
+      price: obj.price,
+      productImg: 'test.jpg',
+    };
+  });
+  console.log(newObjects);
+  return res.json({ member: newObjects, products: newObjects2 });
+});
+
+router.get('/orders', checkLogin, async (req, res, next) => {
+  let [orderDatas] = await pool.execute('SELECT * FROM order_list WHERE member_id = ?', [req.session.member.id]);
+  if (orderDatas.length > 0) {
+    // console.log(orderDatas);
+    const newObjects = orderDatas.map((obj) => {
+      const date = new Date(obj.time);
+      const formattedDate = date.toLocaleDateString('zh-TW', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      });
+      return {
+        order_id: obj.id,
+        number: obj.id + 735560800000,
+        time: formattedDate,
+        price: obj.total_price,
+        status: obj.status,
+      };
+    });
+    // console.log(newObjects);
+    return res.json(newObjects);
+  } else {
+    return res.status(400).json({
+      errors: [
+        {
+          msg: '無訂單資料',
+        },
+      ],
+    });
+  }
+});
+
+router.use('/toShoppingcart', checkLogin, async (req, res, next) => {
+  // console.log('I am account', req.body);
+  // console.log('I am session', req.session.member.id);
+
+  let [accountDatas] = await pool.execute('SELECT * FROM user_member WHERE id = ?', [req.session.member.id]);
+  if (accountDatas.length > 0) {
+    let accountData = accountDatas[0];
+    // 表示這個 accountData 有存在資料庫中
+    // console.log('accountData', accountData);
+
+    // 回覆給前端
+    return res.json({
+      name: accountData.name,
+      phone: accountData.phone,
+      address: accountData.address,
+      email: accountData.email,
+      // account: accountData.account,
+      // gender: accountData.gender,
+      // birthday: accountData.birthday,
+      // imageUrl: accountData.img,
+    });
+  }
 });
 
 router.use('/account', checkLogin, async (req, res, next) => {
@@ -102,36 +195,47 @@ const accountChangeRules = [
     .withMessage('請輸入正確手機號碼格式'),
 ];
 
-router.use('/accountChange', checkLogin, uploader.single('photo'), accountChangeRules, async (req, res, next) => {
-  console.log('I am changedata', req.body, req.file);
-  const validateResult = validationResult(req);
-  console.log(validateResult);
-  if (!validateResult.isEmpty()) {
-    return res.status(401).json({ errors: validateResult.array() });
-  }
-  // let [oldAccountDatas] = await pool.execute('SELECT * FROM user_member WHERE id = ?', [req.session.member.id]);
-  // let oldAccountData = oldAccountDatas[0];
-  const filename = req.file ? path.join('uploads', req.file.filename) : '';
-  let result = await pool.execute('UPDATE user_member SET name=?, email=?, phone=?, birthday=?, gender=?, img=? WHERE id = ?;', [
-    req.body.name,
-    req.body.email,
-    req.body.phone,
-    req.body.birthday,
-    req.body.gender,
-    filename,
-    req.session.member.id,
-  ]);
-  console.log('更新結果', result);
+router.use(
+  '/accountChange',
+  checkLogin,
+  uploader.single('photo'),
+  accountChangeRules,
+  async (req, res, next) => {
+    console.log('I am changedata', req.body, req.file);
+    const validateResult = validationResult(req);
+    console.log(validateResult);
+    if (!validateResult.isEmpty()) {
+      return res.status(401).json({ errors: validateResult.array() });
+    }
+    // let [oldAccountDatas] = await pool.execute('SELECT * FROM user_member WHERE id = ?', [req.session.member.id]);
+    // let oldAccountData = oldAccountDatas[0];
+    const filename = req.file ? path.join('uploads', req.file.filename) : '';
+    let result = await pool.execute('UPDATE user_member SET name=?, email=?, phone=?, birthday=?, gender=?, img=? WHERE id = ?;', [
+      req.body.name,
+      req.body.email,
+      req.body.phone,
+      req.body.birthday,
+      req.body.gender,
+      filename,
+      req.session.member.id,
+    ]);
+    console.log('更新結果', result);
 
-  // 回覆給前端
-  return res.json({
-    name: req.body.name,
-    email: req.body.email,
-    gender: req.body.gender,
-    birthday: req.body.birthday,
-    phone: req.body.phone,
-  });
-});
+    // 回覆給前端
+    return res.json({
+      name: req.body.name,
+      email: req.body.email,
+      gender: req.body.gender,
+      birthday: req.body.birthday,
+      phone: req.body.phone,
+    });
+  },
+  (error, req, res, next) => {
+    // 上傳失敗，丟出錯誤訊息時執行
+    let imgError = [{ msg: error.message, param: 'photo' }];
+    res.status(401).send({ errors: imgError });
+  }
+);
 
 const passwordChangeRules = [
   body('oldPassword').notEmpty().withMessage('不得為空'),
