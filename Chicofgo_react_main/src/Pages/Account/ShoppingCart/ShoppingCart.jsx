@@ -1,45 +1,36 @@
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import ChContainer from '../../ComponentShare/ChContainer';
 import style from './ShoppingCart.module.scss';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import ShoppingItem from './Components/ShoppingItem';
-
-const productsData = [
-  {
-    id: 1,
-    brandname: '西雅圖咖啡',
-    title: `西雅圖咖啡即品拿鐵二合一咖啡(無加糖) 21g*100包原盒．好市多COSTCO熱銷【里德Coffee】`,
-    desc: '即品拿鐵無加糖二合一×101包',
-    quantity: 5,
-    price: 100,
-    productImg: 'test.jpg',
-    checked: false,
-  },
-  {
-    id: 2,
-    brandname: '西雅圖咖啡',
-    title: `西雅圖咖啡即品拿鐵二合一咖啡(無加糖) 21g*100包原盒．好市多COSTCO熱銷【里德Coffee】`,
-    desc: '即品拿鐵無加糖二合一×102包',
-    quantity: 8,
-    price: 500,
-    productImg: 'test.jpg',
-    checked: false,
-  },
-  {
-    id: 3,
-    brandname: '西雅圖咖啡',
-    title: `西雅圖咖啡即品拿鐵二合一咖啡(無加糖) 21g*100包原盒．好市多COSTCO熱銷【里德Coffee】`,
-    desc: '即品拿鐵無加糖二合一×103包',
-    quantity: 10,
-    price: 3000,
-    productImg: 'test.jpg',
-    checked: false,
-  },
-];
+import { Link } from 'react-router-dom';
+import { useShoppingCart } from '../../../Contexts/ShoppingCartProvider';
+import axios from 'axios';
 
 function ShoppingCart(props) {
-  const [products, setProducts] = useState(productsData);
+  const [products, setProducts] = useState([]);
   const [isCheckAll, setIsCheckAll] = useState(false);
+  const { selectProducts, setSelectProducts } = useShoppingCart();
+  useEffect(() => {
+    async function getShoppingCartData() {
+      try {
+        let response = await axios.get(
+          'http://localhost:3001/api/shoppingCarts/shoppingCart',
+          {
+            withCredentials: true,
+          }
+        );
+        // console.log(response.data);
+        setProducts(response.data);
+      } catch (e) {
+        if (e.response.status === 400) {
+          console.log('購物車是空的');
+          // setProducts([]);
+        }
+      }
+    }
+    getShoppingCartData();
+  }, []);
 
   useEffect(() => {
     setIsCheckAll((prevIsCheckAll) =>
@@ -50,7 +41,9 @@ function ShoppingCart(props) {
   const handleCheckboxChange = (id) => {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
-        product.id === id ? { ...product, checked: !product.checked } : product
+        product.product_id === id
+          ? { ...product, checked: !product.checked }
+          : product
       )
     );
   };
@@ -68,16 +61,48 @@ function ShoppingCart(props) {
   const handleQuantityChange = (id, delta) => {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
-        product.id === id
+        product.product_id === id
           ? {
               ...product,
               quantity:
-                product.quantity + delta >= 0 ? product.quantity + delta : 0,
+                product.quantity + delta >= 1 ? product.quantity + delta : 1,
             }
           : product
       )
     );
   };
+
+  const handleSelectProducts = () => {
+    setSelectProducts(products.filter((product) => product.checked));
+    // console.log(products.filter((product) => product.checked));
+  };
+
+  async function handleDeleteProducts(event) {
+    const theCartId = event.currentTarget.value;
+    try {
+      let response = await axios.post(
+        'http://localhost:3001/api/shoppingCarts/deleteShoppingCart',
+        { deleteId: theCartId },
+        {
+          // 為了跨源存取 cookie
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+      if (response.status === 200) {
+        setProducts(
+          products.filter((items) => items.shoppingcart_id != theCartId)
+        );
+        console.log('刪除成功');
+      }
+    } catch (e) {
+      if (e.response.status === 400) {
+        let allErrors = e.response.data.errors;
+        console.log('刪除失敗');
+        console.log(allErrors);
+      }
+    }
+  }
 
   const totalPrice = products
     .filter((product) => product.checked)
@@ -102,19 +127,36 @@ function ShoppingCart(props) {
             {/* ----------------------------------- */}
             {products.map((p) => (
               <ShoppingItem
-                id={p.id}
+                id={p.product_id}
                 brandname={p.brandname}
                 title={p.title}
                 desc={p.desc}
                 quantity={p.quantity}
                 checked={p.checked}
                 price={p.price}
-                productImg={p.productImg}
-                onCheckboxChange={() => handleCheckboxChange(p.id)}
-                onQuantityChange={(delta) => handleQuantityChange(p.id, delta)}
+                onCheckboxChange={() => handleCheckboxChange(p.product_id)}
+                onQuantityChange={(delta) =>
+                  handleQuantityChange(p.product_id, delta)
+                }
+                cartId={p.shoppingcart_id}
+                onDeleteClick={handleDeleteProducts}
                 // isChecked2={true}
               />
             ))}
+            {/* ----------------------------------- */}
+            <Row className={`px-5`}>
+              <Col
+                className={`${
+                  products.length > 0 ? 'd-none' : 'd-inline'
+                } shadow p-5 rounded-5 chicofgo-font text-center m-5`}
+              >
+                <h5
+                  className={`py-3 rounded-5 chicofgo-font-700 chicofgo_green_font text-center`}
+                >
+                  購物車是空的
+                </h5>
+              </Col>
+            </Row>
 
             {/* ----------------------------------- */}
 
@@ -137,18 +179,34 @@ function ShoppingCart(props) {
               <Col
                 className={`${style.totalSum} col-5 chicofgo_gray text-nowrap `}
               >
-                (已選擇3件商品) 商品總計:
-                <span>{totalPrice}</span>
+                已選擇
+                {products.filter((product) => product.checked).length}
+                件商品商品總計:<span>{totalPrice}</span>
               </Col>
             </Row>
             <Row className={`mt-5`}>
               <Col className={`text-center`}>
-                <Button
-                  variant="chicofgo-brown"
-                  className={` px-5 py-1 shadow chicofgo_white_font`}
+                <Link
+                  to={
+                    (products.length <= 0) |
+                    (products.filter((product) => product.checked).length <= 0)
+                      ? '#'
+                      : '/member/checkout'
+                  }
                 >
-                  前往結帳
-                </Button>
+                  <Button
+                    variant="chicofgo-brown"
+                    className={` px-5 py-1 shadow chicofgo_white_font`}
+                    onClick={handleSelectProducts}
+                    disabled={
+                      (products.length <= 0) |
+                      (products.filter((product) => product.checked).length <=
+                        0)
+                    }
+                  >
+                    前往結帳
+                  </Button>
+                </Link>
               </Col>
             </Row>
           </Col>

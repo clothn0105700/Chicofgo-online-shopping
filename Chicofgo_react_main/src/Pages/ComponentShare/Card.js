@@ -1,12 +1,12 @@
 import React from 'react';
 import { useEffect, useMemo } from 'react';
 import styles from './Card.module.scss';
-import testpic from '../../Img/ProductsTest/test.jpg';
+// import testpic from '../../Img/ProductsTest/test.jpg';
 import { v4 } from 'uuid';
 import { FaShoppingCart, FaBookmark } from 'react-icons/fa';
 
 const Card = (props) => {
-  const { title, rating, price } = props;
+  const { title, rating, price, product_id } = props;
 
   const {
     card_contorl,
@@ -28,7 +28,11 @@ const Card = (props) => {
     <div className={`${card_contorl}`}>
       <div className={`${card_body} card`}>
         <div className={`${p_img_c} `}>
-          <img src={testpic} className="card-img-top" alt="" />
+          <img
+            src={`http://localhost:3001/api/images/productImg/coffee_${product_id}/coffee_${product_id}-1.png`}
+            className="card-img-top"
+            alt=""
+          />
         </div>
         <div
           className={`${content} d-flex flex-column align-items-center mt-2`}
@@ -47,9 +51,9 @@ const Card = (props) => {
           className={`${keepshop} card-img-bottom d-flex align-items-center `}
         >
           <div className={`${price_contorl} `}>${price}</div>
-          <div className={`${mark_contorl} `}>
+          {/* <div className={`${mark_contorl} `}>
             <FaBookmark />
-          </div>
+          </div> */}
           <div className={`${cart_contorl} `}>
             <FaShoppingCart />
           </div>

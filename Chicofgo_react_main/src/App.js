@@ -7,9 +7,8 @@ import Coupon from './Pages/Coupon/Coupon';
 import Account from './Pages/Account/Account';
 import Password from './Pages/Account/Password/ChangePassword';
 import Creditcard from './Pages/Account/CreditCard/CreditCard';
-import CardDetail from './Pages/Account/CreditCard/CardDetail';
 import Address from './Pages/Account/Address/Address';
-import AddressDetail from './Pages/Account/Address/AddressDetail';
+// import AddressDetail from './Pages/Account/Address/AddressDetail';
 import Footer from './Layout/Footer/Footer';
 import ProductDetail from './Pages/Products/ProductDetail/ProductDetailPage';
 import OrderHistory from './Pages/Order/OrderHistory';
@@ -25,6 +24,9 @@ import Collect from './Pages/Account/Collect/Collect';
 import CollectItem from './Pages/Account/Collect/Component/CollectItem';
 import CollectShop from './Pages/Account/Collect/Component/CollectShop';
 import ShoppingCart from './Pages/Account/ShoppingCart/ShoppingCart';
+
+import Checkout from './Pages/Account/ShoppingCart/Checkout';
+
 import BusinessOrder from './Pages/Business/BusinessOrder/BusinessOrder';
 import BusinessProducts from './Pages/Business/BusinessProducts/BusinessProducts';
 import BusinessProductsAdd from './Pages/Business/BusinessProductsAdd/BusinessProductsAdd';
@@ -79,12 +81,12 @@ function App() {
                 <Route path="orderStatus/:order_id" element={<OrderStatus />} />
                 <Route path="password" element={<Password />} />
                 <Route path="creditcard" element={<Creditcard />} />
-                <Route path="cardDetail" element={<CardDetail />} />
                 <Route path="address" element={<Address />} />
-                <Route path="addressDatail" element={<AddressDetail />} />
+                {/* <Route path="addressDatail" element={<AddressDetail />} /> */}
                 <Route path="coupons" element={<Coupons />} />
                 <Route path="messages" element={<Messages />} />
                 <Route path="shoppingcart" element={<ShoppingCart />} />
+                <Route path="checkout" element={<Checkout />} />
 
                 <Route path="collect" element={<Collect />}>
                   <Route
@@ -98,16 +100,19 @@ function App() {
                 </Route>
               </Route>
               <Route path="businessOrder" element={<BusinessOrder />} />
+
               <Route
                 path="businessOrderDetail/:orderId"
                 element={<BusinessOrderDetail />}
               />
+
               <Route path="businessProducts" element={<BusinessProducts />} />
               <Route
                 path="businessProductsAdd"
                 element={<BusinessProductsAdd />}
               />
               <Route path="businessReview" element={<BusinessReview />} />
+
             </Routes>
           </ScrollToTop>
 

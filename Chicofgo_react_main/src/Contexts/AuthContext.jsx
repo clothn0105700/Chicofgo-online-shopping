@@ -1,10 +1,15 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-export const AuthContext = createContext();
+const AuthContext = createContext();
+
+export function useAuth() {
+  return useContext(AuthContext);
+}
 
 const AuthContextProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
+  const [userid, setUserid] = useState('');
 
   useEffect(() => {
     async function getMember() {
@@ -18,6 +23,8 @@ const AuthContextProvider = (props) => {
         console.log('登入成功');
         setIsLoggedIn(true);
         setUsername(response.data.name);
+        setUserid(response.data.id);
+        // setUserid()
         // localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
         // localStorage.setItem('username', JSON.stringify(username));
       }
@@ -27,7 +34,14 @@ const AuthContextProvider = (props) => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, setIsLoggedIn, username, setUsername }}
+      value={{
+        isLoggedIn,
+        setIsLoggedIn,
+        username,
+        setUsername,
+        userid,
+        setUserid,
+      }}
     >
       {props.children}
     </AuthContext.Provider>

@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect, useRef } from 'react';
 import axios from 'axios';
 import { Row, Col, Form, Button, Image, InputGroup } from 'react-bootstrap';
 import { BsFillPencilFill } from 'react-icons/bs';
@@ -11,11 +11,17 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { registerLocale } from 'react-datepicker';
 import ZhTW from 'date-fns/locale/zh-TW';
+import PopupWindow from '../ComponentShare/PopupWindow';
 registerLocale('zh-TW', ZhTW);
 
 function Account() {
+  const [fileName, setFileName] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const fileInput = useRef(null);
   const [inputDisable, setInputDisable] = useState('true');
   const [backendData, setbackendData] = useState({});
+  const [backendImg, setBackendImg] = useState(null);
+
   const [startDate, setStartDate] = useState();
   const [selectedOption, setSelectedOption] = useState();
   const [errors, setErrors] = useState({
@@ -27,24 +33,34 @@ function Account() {
     phone: false,
     birthdayError: '',
     birthday: false,
+    photoError: '',
+    photo: false,
   });
+  const [showModal, setShowModal] = useState(false);
+
+  function handleUpload(e) {
+    // 改圖片
+    setFileName(e.target.files[0].name);
+    setImageUrl(URL.createObjectURL(e.target.files[0]));
+    setbackendData({ ...backendData, photo: e.target.files[0] });
+  }
+
+  function handleFileInputClick() {
+    fileInput.current.click();
+  }
 
   function handleDateChange(date) {
     setStartDate(date);
     // 改生日
-    let newMember = { ...backendData };
-    newMember.birthday = date.toLocaleDateString();
-    setbackendData(newMember);
-    console.log(newMember);
+    setbackendData({ ...backendData, birthday: date.toLocaleDateString() });
+    console.log(backendData);
   }
 
   function handleOptionChange(event) {
     // 改性別
     setSelectedOption(event.target.value);
-    let newMember = { ...backendData };
-    newMember.gender = event.target.value;
-    setbackendData(newMember);
-    console.log(newMember);
+    setbackendData({ ...backendData, gender: event.target.value });
+    console.log(backendData);
   }
 
   //
@@ -59,15 +75,21 @@ function Account() {
   async function handleSubmit(e) {
     // 送出
     console.log('handleSubmit');
-    // console.log(backendData);
+    console.log(backendData);
     setInputDisable(false);
-
     // 關閉表單的預設行為
     e.preventDefault();
+    let formData = new FormData();
+    formData.append('name', backendData.name || '');
+    formData.append('email', backendData.email || '');
+    formData.append('phone', backendData.phone || '');
+    formData.append('birthday', backendData.birthday || '');
+    formData.append('gender', backendData.gender || '');
+    formData.append('photo', backendData.photo || '');
     try {
       let response = await axios.post(
         'http://localhost:3001/api/members/accountChange',
-        backendData,
+        formData,
         {
           // 為了跨源存取 cookie
           withCredentials: true,
@@ -76,6 +98,8 @@ function Account() {
       console.log(response.data);
       if (response.status === 200) {
         console.log('更新成功');
+        setFileName('');
+        setShowModal(true);
         setErrors({
           nameError: '',
           name: false,
@@ -85,10 +109,12 @@ function Account() {
           phone: false,
           birthdayError: '',
           birthday: false,
+          photoError: '',
+          photo: false,
         });
       }
     } catch (e) {
-      if (e.response.status === 400) {
+      if (e.response.status === 401) {
         let allErrors = e.response.data.errors;
         console.log('更新失敗');
         console.log(allErrors);
@@ -102,13 +128,13 @@ function Account() {
           phone: false,
           birthdayError: '',
           birthday: false,
+          photoError: '',
+          photo: false,
         };
-        allErrors.map(
-          (thisError) => (
-            (newErrors[thisError.param] = true),
-            (newErrors[thisError.param + 'Error'] = thisError.msg)
-          )
-        );
+        allErrors.forEach((thisError) => {
+          newErrors[thisError.param] = true;
+          newErrors[thisError.param + 'Error'] = thisError.msg;
+        });
         setErrors(newErrors);
         console.log(errors);
       }
@@ -124,7 +150,13 @@ function Account() {
         }
       );
       setbackendData(response.data);
+
+      console.log(backendData);
       setSelectedOption(String(response.data.gender));
+      setStartDate(new Date(response.data.birthday));
+      setBackendImg(
+        `http://localhost:3001/api/images/member/${response.data.imageUrl}`
+      );
     }
     getAccountData();
   }, []);
@@ -151,11 +183,34 @@ function Account() {
           alt=""
           width={150}
           height={150}
-          src={require('../../Layout/Navbar/logo.png')}
+          src={
+            imageUrl
+              ? imageUrl
+              : backendData.imageUrl
+              ? backendImg
+              : require('../../Layout/Navbar/logo.png')
+          }
           className={`border border-3 rounded-circle  ${style.pic}`}
         />
+        <div
+          className={`${style.photoError} ${
+            errors.photo ? 'd-inline' : 'd-none'
+          } mt-3`}
+        >
+          <span className={`chicofgo-font-700`}>照片格式錯誤</span>
+        </div>
+        <p className={`pt-3 mb-0 ${fileName ? 'd-inline' : 'd-none'}`}>
+          {fileName}
+        </p>
         <h5 className={`${style.imgLimitIcon}`}>
-          <Button variant="">
+          <input
+            type="file"
+            ref={fileInput}
+            style={{ display: 'none' }}
+            name="photo"
+            onChange={handleUpload}
+          />
+          <Button variant="chicofgo-white" onClick={handleFileInputClick}>
             <FaEdit />
           </Button>
         </h5>
@@ -275,62 +330,59 @@ function Account() {
           </h5>
 
           {/* 性別 radio */}
-          {['radio'].map((type) => (
-            <div key={`inline-${type}`} className=" h5-border-bottom  pt-1">
-              <h5 className="pt-3 pb-1">
-                性別：
-                <Form.Check
-                  inline
-                  label="男性"
-                  name="gender"
-                  type={type}
-                  id={`inline-${type}-1`}
-                  onChange={handleOptionChange}
-                  checked={selectedOption === '1'}
-                  value="1"
-                />
-                <Form.Check
-                  inline
-                  label="女性"
-                  name="gender"
-                  type={type}
-                  id={`inline-${type}-2`}
-                  onChange={handleOptionChange}
-                  checked={selectedOption === '2'}
-                  value="2"
-                />
-                <Form.Check
-                  inline
-                  label="不透露"
-                  name="gender"
-                  type={type}
-                  id={`inline-${type}-3`}
-                  onChange={handleOptionChange}
-                  checked={selectedOption === '0'}
-                  value="0"
-                />
-              </h5>
-            </div>
-          ))}
+          {/* {['radio'].map((type) => ( */}
+          <div className=" h5-border-bottom  pt-1">
+            <h5 className="pt-3 pb-1">
+              性別：
+              <Form.Check
+                inline
+                label="男性"
+                name="gender"
+                type="radio"
+                // id={`inline-${type}-1`}
+                onChange={handleOptionChange}
+                checked={selectedOption === '1'}
+                value="1"
+              />
+              <Form.Check
+                inline
+                label="女性"
+                name="gender"
+                type="radio"
+                // id={`inline-${type}-2`}
+                onChange={handleOptionChange}
+                checked={selectedOption === '2'}
+                value="2"
+              />
+              <Form.Check
+                inline
+                label="不透露"
+                name="gender"
+                type="radio"
+                // id={`inline-${type}-3`}
+                onChange={handleOptionChange}
+                checked={selectedOption === '0'}
+                value="0"
+              />
+            </h5>
+          </div>
+          {/* ))} */}
           <h5 className={`${style.setBorder}`}>
             <Row className="py-2 align-items-center">
               <Col className="col-2 text-nowrap ">生日：</Col>
               <Col className={`col-5 `}>
                 <div
                   className={`${style.datePicker} py-2 text-nowrap`}
+
                   // style={{ border: '1px solid red' }}
                 >
                   <DatePicker
-                    className={`w-100`}
+                    className={`w-100  ${
+                      errors.birthday ? 'border-danger rounded' : ''
+                    }`}
                     dateFormat="yyyy-MM-dd"
-                    // locale="zh-TW"
                     selected={startDate}
                     onChange={(date) => handleDateChange(date)}
-                    isClearable
-                    placeholderText={String(backendData.birthday).substring(
-                      0,
-                      10
-                    )}
                   />
                 </div>
               </Col>
@@ -355,6 +407,13 @@ function Account() {
             >
               儲存
             </Button>
+            <PopupWindow
+              show={showModal}
+              onclose={() => setShowModal(false)}
+              title="修改結果"
+              content="成功修改!"
+              btnContent="關閉"
+            />
           </Col>
         </Row>
       </Col>
