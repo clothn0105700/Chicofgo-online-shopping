@@ -152,8 +152,7 @@ const ProductDetail = () => {
             <Fragment>
               <div className={`${product_detail}`}>
                 <div className={`${product_box} d-flex`}>
-                  <PicRender />
-
+                  <PicRender product_id={detail.id} />
 
                   <div className={`${detail_content}`}>
                     <ProductInfo
@@ -168,7 +167,6 @@ const ProductDetail = () => {
                     />
                   </div>
                 </div>
-
               </div>
               <div className={`${specification_box}`}>
                 <br />
