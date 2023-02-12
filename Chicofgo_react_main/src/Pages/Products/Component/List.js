@@ -468,9 +468,10 @@ const List = () => {
                       );
                     })}
                   </Fragment>
-                 
+
                 );
               })} */}
+
               {isLoading ? (
                 spinner
               ) : filteredProducts.length === 0 ? (
@@ -478,6 +479,7 @@ const List = () => {
               ) : (
                 filteredProducts.map((v, i) => {
                   return (
+
                     <div
                       className={`${card_control} col-6 col-md-3 px-0 mb-3 `}
                       key={v.id}

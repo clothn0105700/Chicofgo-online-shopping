@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import styles from './Card.module.scss';
-import testpic from '../../Img/ProductsTest/test.jpg';
+// import testpic from '../../Img/ProductsTest/test.jpg';
 import { v4 } from 'uuid';
 import { FaShoppingCart, FaBookmark } from 'react-icons/fa';
 import { useAuth } from '../../Contexts/AuthContext';
@@ -12,7 +12,9 @@ import Modal from './Modal';
 import { Link } from 'react-router-dom';
 
 const Card = (props) => {
+
   const { title, rating, price, id } = props;
+
 
   const {
     card_contorl,
@@ -74,11 +76,16 @@ const Card = (props) => {
   }, [rating]);
 
   return (
-    <div>
-      <div className={`${card_contorl}`}>
-        <div className={`${card_body} card`}>
-          <div className={`${p_img_c} `}>
-            <img src={testpic} className="card-img-top" alt="" />
+
+    <div className={`${card_contorl}`}>
+      <div className={`${card_body} card`}>
+        <div className={`${p_img_c} `}>
+          <img
+            src={`http://localhost:3001/api/images/productImg/coffee_${id}/coffee_${id}-1.png`}
+            className="card-img-top"
+            alt=""
+          />
+        
           </div>
           <div
             className={`${content} d-flex flex-column align-items-center mt-2`}
