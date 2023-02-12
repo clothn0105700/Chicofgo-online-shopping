@@ -4,16 +4,19 @@ import Col from 'react-bootstrap/Col';
 import style from './Home.module.scss';
 import Carousels from './Component/Carousels';
 import CardListS from './Component/CardListS';
-import Card from '../ComponentShare/Card';
+import Card from '../ComponentShare/ThisCard';
 import { cardInfo } from '../../Config/ProductConfig';
 import { useNavigate } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
 import Nav from 'react-bootstrap/Nav';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
+import MoreCard from '../ComponentShare/MoreCard';
 
 function Home() {
   const navigate = useNavigate();
+  const productsViewedItem =
+    JSON.parse(localStorage.getItem('productsViewed')) || [];
   function goToDetail(cardId) {
     navigate(`/product_detail/${cardId}`, { replace: false });
   }
@@ -127,17 +130,22 @@ function Home() {
                 <Col
                   className={`d-flex justify-content-center flex-wrap mx-0 my-5`}
                 >
-                  {cardInfo.map((info) => {
+                  <MoreCard amount={12} product_id={[9, 11, 15, 18, 22]} />
+                  {/* {cardInfo.map((info) => {
                     return (
                       <div
                         key={info.id}
                         onClick={() => goToDetail(info.id)}
                         className={`mx-3`}
                       >
-                        <Card title={info.title} rating={info.rating} />
+                        <Card
+                          title={info.title}
+                          rating={info.rating}
+                          product_id={87}
+                        />
                       </div>
                     );
-                  })}
+                  })} */}
                 </Col>
               </Row>
             </Col>
@@ -265,17 +273,7 @@ function Home() {
             <Col
               className={`d-flex justify-content-center flex-wrap mx-0 my-5`}
             >
-              {cardInfo.map((info) => {
-                return (
-                  <div
-                    key={info.id}
-                    onClick={() => goToDetail(info.id)}
-                    className={`mx-3`}
-                  >
-                    <Card title={info.title} rating={info.rating} />
-                  </div>
-                );
-              })}
+              <MoreCard amount={12} />
             </Col>
           </Row>
         </Col>
@@ -394,19 +392,10 @@ function Home() {
           </Row>
           <Row>
             <Col
+              // className={`d-flex justify-content-center flex-wrap mx-0 my-5`}
               className={`d-flex justify-content-center flex-wrap mx-0 my-5`}
             >
-              {cardInfo.map((info) => {
-                return (
-                  <div
-                    key={info.id}
-                    onClick={() => goToDetail(info.id)}
-                    className={`mx-3`}
-                  >
-                    <Card title={info.title} rating={info.rating} />
-                  </div>
-                );
-              })}
+              <MoreCard product_id={productsViewedItem} />
             </Col>
           </Row>
         </Col>

@@ -20,10 +20,12 @@ function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoggedIn) {
-      navigate(-1);
-    }
-  }, [isLoggedIn]);
+    // if (isLoggedIn) {
+    //   navigate(-1);
+    // }
+
+    isLoggedIn ? navigate(-1) : console.log('尚未登入');
+  }, [isLoggedIn, navigate]);
 
   const [member, setMember] = useState({
     account: 'c8763',

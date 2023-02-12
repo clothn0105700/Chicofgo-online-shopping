@@ -32,7 +32,6 @@ import BusinessReview from './Pages/Business/BusinessReview/BusinessReview';
 import BusinissCoupon from './Pages/Business/BusinissCoupon/BusinissCoupon';
 import AllProviders from './Contexts/AllProviders';
 
-
 function App() {
   return (
     <>
