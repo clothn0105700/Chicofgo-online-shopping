@@ -11,7 +11,16 @@ import Modal from '../../../ComponentShare/Modal';
 import Btn from '../../../../Layout/Item/Btn/Btn';
 
 const Productinfo = (props) => {
-  const { title, content, price, productsCount, setProductsCount } = props;
+  const {
+    title,
+    content,
+    price,
+    productsCount,
+    setProductsCount,
+    type,
+    place,
+    product_package,
+  } = props;
   const {
     info_contorl,
     spe_text,
@@ -25,6 +34,9 @@ const Productinfo = (props) => {
     btn_cart,
     title_box,
     content_box,
+    box,
+    o_box,
+    p_box,
   } = styles;
 
   const location = useLocation();
@@ -68,7 +80,7 @@ const Productinfo = (props) => {
         setIsOpen(true);
       } else if (response.data.result === 'been added') {
         setModalCase(true);
-        setModalContent('已加過');
+        setModalContent('已加入過購物車囉，看看其他商品吧');
         setIsOpen(true);
       } else {
         setModalCase(true);
@@ -97,22 +109,25 @@ const Productinfo = (props) => {
         <h4 className="d-flex mt-2">
           價格:<div className="mx-3">{price}</div>
         </h4>
-        <h4 className="mt-3">
-          <div className="d-flex align-items-center">
-            類別:
-            <button className="btn1 mx-3 ">
-              <div className={spe_text}>1箱/10包入</div>
-            </button>
-            <button className="btn1 mx-3">
-              <div className={spe_text}>1箱/20包入</div>
-            </button>
-            <button className="btn1 mx-3">
-              <div className={spe_text}>1箱/25包入</div>
-            </button>
-          </div>
+        <h4 className="mt-3 d-flex">
+          <div className="d-flex align-items-center">類別:</div>
+          <div className="mx-2">{type}</div>
+          <div className={`${o_box} d-flex align-items-center`}>產地:</div>
+          <div className="mx-2">{place}</div>
         </h4>
+        <div className={`${p_box} d-flex align-items-center`}>
+          <h4>包裝:</h4>
+          <div className="mx-2">
+            {product_package === null ? (
+              <h4>暫無</h4>
+            ) : (
+              <h4>{product_package}</h4>
+            )}
+          </div>
+        </div>
+
         <div className="mt-5 d-flex">
-          <div>
+          <div className={`${box}`}>
             <h4>總計:{price * productsCount} 元</h4>
             <div className={`${products_count} mt-3`}>
               <h4>數量</h4>

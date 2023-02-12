@@ -32,11 +32,11 @@ function BusinessSiderbar() {
                 新增商品
               </Link>
             </li>
-            <li className="py-3 my-2 ">
+            {/* <li className="py-3 my-2 ">
               <Link to="/" className={`${style.BusinessSiderbarLink}`}>
                 賣場管理
               </Link>
-            </li>
+            </li> */}
             <li className="py-3 my-2 ">
               <Link
                 to="/businessReview"
@@ -45,11 +45,11 @@ function BusinessSiderbar() {
                 賣場評價
               </Link>
             </li>
-            <li className="py-3 my-2 ">
+            {/* <li className="py-3 my-2 ">
               <Link to="/businissCoupon" className={`${style.BusinessSiderbarLink}`}>
                 優惠券
               </Link>
-            </li>
+            </li> */}
           </div>
         </ul>
       </div>

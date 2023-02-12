@@ -4,12 +4,11 @@ import { useEffect, useMemo } from 'react';
 import { v4 } from 'uuid';
 
 const MessageArea = (props) => {
-  const { rating, time, s } = props;
+  const { rating, time, s, name } = props;
+  console.log(time);
   const numberRating = useMemo(() => {
     return Number.isNaN(parseInt(rating)) ? 1 : parseInt(rating);
   }, [rating]);
-
-  
 
   const {
     message_control,
@@ -24,10 +23,11 @@ const MessageArea = (props) => {
   } = styles;
   return (
     <div className={`${message_control}`}>
+      <br />
       <div className={`${message_box} d-flex`}>
         <div className={`${member_pic} d-flex align-items-center flex-column`}>
           <div className={`${main_pic}`}></div>
-          <div className={`${member_name} mt-3`}>123</div>
+          <div className={`${member_name} mt-3`}>{name}</div>
         </div>
         <div className={`${message_info} d-flex  flex-column`}>
           <div className={`${message_rating} d-flex `}>
