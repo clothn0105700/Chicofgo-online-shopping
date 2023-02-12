@@ -1,13 +1,17 @@
+import React, { useState, useLayoutEffect } from 'react';
 import { Row, Col, Button, Table } from 'react-bootstrap';
 import style from './OrderStatus.module.scss';
 import { SlCup } from 'react-icons/sl';
 import { TbMessage2 } from 'react-icons/tb';
 import ChContainer from '../ComponentShare/ChContainer';
+import RatingButton from './RatingButton';
 import axios from 'axios';
-import React, { useState, useLayoutEffect } from 'react';
+import { useAuth } from '../../Contexts/AuthContext';
 import { useParams } from 'react-router-dom';
 
 function OrderStatus() {
+  // ---訂單資料---
+  const { userid } = useAuth();
   let { order_id } = useParams();
   const [orderStatusInfo, setOrderStatusInfo] = useState([]);
   const [orderMemberInfo, setOrderMemberInfo] = useState([]);
@@ -32,6 +36,7 @@ function OrderStatus() {
     }
     getOrderData();
   }, []);
+
 
   return (
     <ChContainer
@@ -169,7 +174,7 @@ function OrderStatus() {
             {/* 訂單內容-個別 */}
             {/* text-center align-middle */}
 
-            {orderStatusInfo.map((info) => {
+            {orderList.map((info) => {
               return (
                 <Row
                   key={info.shoppingcart_id}
@@ -233,7 +238,11 @@ function OrderStatus() {
                         >
                           再買一次
                         </Button>
-                        <Button
+
+                        {/* --------------------評價按鈕(有會員ID還沒有商品ID)--------------------- */}
+                        <RatingButton member_id={userid} product_id={info.product_id} />
+
+                        {/* <Button
                           variant="chicofgo-brown"
                           className={`my-1 py-1 chicofgo_white_font`}
                         >
@@ -248,7 +257,7 @@ function OrderStatus() {
                             <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                           </svg>
                           評價
-                        </Button>
+                        </Button> */}
                       </Col>
                     </Row>
                   </Col>
@@ -324,6 +333,7 @@ function OrderStatus() {
                   </td>
                   <th>訂單備註</th>
                   <td>{orderMemberInfo.pay_info}</td>
+
                 </tr>
               </tbody>
             </Table>
@@ -333,7 +343,9 @@ function OrderStatus() {
           <Col className={`${style.bgYellow} px-5 my-3 text-end`}>
             {/* 內容4 */}
             <p className={`${style.priceTotal} my-4 `}>
+
               訂單加總:<span className={`mx-2`}>${orderMemberInfo.total}</span>
+
             </p>
           </Col>
         </Row>
