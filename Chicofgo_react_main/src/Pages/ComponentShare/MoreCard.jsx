@@ -16,6 +16,8 @@ const MoreCard = (props) => {
     autoplay: true,
     autoplaySpeed: 2000,
     pauseOnHover: true,
+    adaptiveHeight: true,
+    // centerMode: true,
     responsive: [
       {
         breakpoint: 768,
@@ -24,6 +26,7 @@ const MoreCard = (props) => {
           slidesToScroll: 1,
           infinite: true,
           dots: true,
+          centerMode: true,
         },
       },
       {
@@ -48,10 +51,10 @@ const MoreCard = (props) => {
   const total = product_id.length || amount;
   const cards = [];
   for (let i = 0; i < total; i++) {
-    let productIds = product_id[i] || i;
+    let productIds = product_id[i] || i + 1;
     cards.push(
-      <div key={i}>
-        <ThisCard product_id={productIds + 1} />
+      <div key={i} className="py-3">
+        <ThisCard product_id={productIds} />
       </div>
     );
   }

@@ -15,6 +15,8 @@ import MoreCard from '../ComponentShare/MoreCard';
 
 function Home() {
   const navigate = useNavigate();
+  const productsViewedItem =
+    JSON.parse(localStorage.getItem('productsViewed')) || [];
   function goToDetail(cardId) {
     navigate(`/product_detail/${cardId}`, { replace: false });
   }
@@ -390,9 +392,10 @@ function Home() {
           </Row>
           <Row>
             <Col
+              // className={`d-flex justify-content-center flex-wrap mx-0 my-5`}
               className={`d-flex justify-content-center flex-wrap mx-0 my-5`}
             >
-              <MoreCard amount={12} product_id={[500, 411, 515, 718, 122]} />
+              <MoreCard product_id={productsViewedItem} />
             </Col>
           </Row>
         </Col>
