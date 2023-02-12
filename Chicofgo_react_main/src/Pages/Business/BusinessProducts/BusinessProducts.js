@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Container,
   Row,
@@ -13,6 +14,21 @@ import BusinessSiderbar from '../Components/BusinessSiderbar';
 import ProductsList from './Components/ProductsList';
 
 function BusinessProducts() {
+  const [searchName, setSearchName] = useState('');
+  const [searchNumber, setSearchNumber] = useState('');
+  const [searchType, setSearchType] = useState('');
+
+  const handleChangeName = (e) => {
+    setSearchName(e.target.value);
+  };
+
+  const handleChangeNumber = (e) => {
+    setSearchNumber(e.target.value);
+  };
+
+  const handleChangeType = (e) => {
+    setSearchType(e.target.value);
+  };
 
   return (
     <div className="chicofgo_white">
@@ -26,37 +42,43 @@ function BusinessProducts() {
               </Col>
 
               <Col sm={6} className="my-2">
-                <div className="input-group">
-                  <Col sm={4}>
-                    <select
-                      className="form-select"
-                      id="inputGroupSelect04"
-                      aria-label="Example select with button addon"
-                    >
-                      <option selected>商品名稱</option>
-                      <option value="1">商品貨號</option>
-                    </select>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      class="form-control"
-                      aria-label="Text input with dropdown button"
-                    />
-                  </Col>
-                </div>
-              </Col>
-              <Col sm={6} className="my-2">
                 <InputGroup className="mb-3">
-                  <div className="d-flex align-items-center mx-2">類別</div>
+                  <div className="d-flex align-items-center mx-2">商品名稱</div>
                   <Form.Control
                     aria-label="Example text with button addon"
                     aria-describedby="basic-addon1"
+                    placeholder="請輸入商品名稱"
+                    value={searchName}
+                    onChange={handleChangeName}
+                  />
+                </InputGroup>
+              </Col>
+              <Col sm={6} className="my-2">
+                <InputGroup className="mb-3">
+                  <div className="d-flex align-items-center mx-2">商品貨號</div>
+                  <Form.Control
+                    aria-label="Example text with button addon"
+                    aria-describedby="basic-addon1"
+                    placeholder="請輸入商品貨號"
+                    value={searchNumber}
+                    onChange={handleChangeNumber}
+                  />
+                </InputGroup>
+              </Col>
+              <Col sm={6} className="my-2">
+                <InputGroup className="mb-3">
+                  <div className="d-flex align-items-center mx-2">商品類別</div>
+                  <Form.Control
+                    aria-label="Example text with button addon"
+                    aria-describedby="basic-addon1"
+                    placeholder="請輸入商品類別"
+                    value={searchType}
+                    onChange={handleChangeType}
                   />
                 </InputGroup>
               </Col>
 
-              <Col sm={6} className="my-2">
+              {/* <Col sm={6} className="my-2">
                 <InputGroup className="mb-3">
                   <div className="d-flex align-items-center mx-2">價格</div>
                   <Form.Control
@@ -69,8 +91,8 @@ function BusinessProducts() {
                     aria-describedby="basic-addon1"
                   />
                 </InputGroup>
-              </Col>
-              <Col sm={6}></Col>
+              </Col> */}
+              {/* <Col sm={6}></Col>
               <Col sm={2}>
                 <Button className="px-5" variant="chicofgo-brown text-white">
                   搜尋
@@ -80,7 +102,7 @@ function BusinessProducts() {
                 <Button className="px-5" variant="chicofgo-khaki text-white">
                   重設
                 </Button>
-              </Col>
+              </Col> */}
 
               <Col sm={12} className="my-3">
                 查詢結果
@@ -94,11 +116,11 @@ function BusinessProducts() {
                 <Col>狀態</Col>
               </div>
             </Row>
-            <ProductsList />
-            <ProductsList />
-            <ProductsList />
-            <ProductsList />
-            <ProductsList />
+            <ProductsList
+              searchName={searchName}
+              searchNumber={searchNumber}
+              searchType={searchType}
+            />
           </Col>
         </Row>
       </Container>

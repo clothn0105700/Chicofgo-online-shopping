@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Container,
   Row,
@@ -13,6 +14,20 @@ import BusinessSiderbar from '../Components/BusinessSiderbar';
 import BusinessOrderList from './Components/BusinessOrderList';
 
 function BusinessOrder() {
+  const [search, setSearch] = useState('');
+
+  const [selectedStatus, setSelectedStatus] = useState('');
+
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const handleSelect = (e) => {
+    setSelectedStatus(e.target.value);
+  };
+  // console.log(search);
+  console.log(selectedStatus);
+
   return (
     <div className="chicofgo_white">
       <Container className="pt-5">
@@ -23,17 +38,41 @@ function BusinessOrder() {
               <Col sm={12} className="text-center pt-2">
                 <h4>訂單管理</h4>
               </Col>
-              <Col className="btn" sm={2}>
-                全部
+              <Col className="text-center" sm={2}>
+                <Button
+                  variant="chicofgo-brown text-white"
+                  value={selectedStatus}
+                  onClick={handleSelect}
+                >
+                  全部
+                </Button>
               </Col>
-              <Col className="btn" sm={2}>
-                待出貨
+              <Col className="text-center" sm={2}>
+                <Button
+                  variant="chicofgo-brown text-white"
+                  value="待出貨"
+                  onClick={handleSelect}
+                >
+                  待出貨
+                </Button>
               </Col>
-              <Col className="btn" sm={2}>
-                運送中
+              <Col className="text-center" sm={2}>
+                <Button
+                  variant="chicofgo-brown text-white"
+                  value="運送中"
+                  onClick={handleSelect}
+                >
+                  運送中
+                </Button>
               </Col>
-              <Col className="btn" sm={2}>
-                已完成
+              <Col className="" sm={2}>
+                <Button
+                  variant="chicofgo-brown text-white"
+                  value="已完成"
+                  onClick={handleSelect}
+                >
+                  已完成
+                </Button>
               </Col>
               <Col sm={2}></Col>
               <Col sm={2}></Col>
@@ -46,9 +85,10 @@ function BusinessOrder() {
                       id="inputGroupSelect04"
                       aria-label="Example select with button addon"
                     >
-                      <option selected>訂單編號</option>
-                      <option value="1">賣家帳號</option>
-                      <option value="2">商品</option>
+                      {/* <option selected value="2">
+                        訂單編號
+                      </option> */}
+                      <option value="1">買家帳號</option>
                     </select>
                   </Col>
                   <Col>
@@ -56,15 +96,18 @@ function BusinessOrder() {
                       type="text"
                       class="form-control"
                       aria-label="Text input with dropdown button"
+                      placeholder="請輸入買家姓名"
+                      value={search}
+                      onChange={handleChange}
                     />
                   </Col>
                 </div>
               </Col>
-              <Col sm={2} className="my-4">
+              {/* <Col sm={2} className="my-4">
                 <Button className="px-5" variant="chicofgo-brown text-white">
                   查詢
                 </Button>
-              </Col>
+              </Col> */}
               <Col sm={12}>查詢結果</Col>
               <div className="chicofgo_gray d-flex text-center py-2">
                 <Col>日期</Col>
@@ -75,7 +118,10 @@ function BusinessOrder() {
               </div>
             </Row>
             <Col>
-              <BusinessOrderList />
+              <BusinessOrderList
+                search={search}
+                selectedStatus={selectedStatus}
+              />
             </Col>
           </Col>
         </Row>

@@ -44,7 +44,7 @@ function BusinessProductsAdd() {
 
   function handleUpload(e) {
     // 值存在files
-    setAddProduct({ ...addProduct, photo: e.target.files[0] });
+    setAddProduct({ ...addProduct, photo: e.target.files });
   }
   //產地
   useEffect(() => {
@@ -90,19 +90,29 @@ function BusinessProductsAdd() {
     // console.log(response.data);
 
     //有檔案的表單
+
     let formData = new FormData();
+
     formData.append('name', addProduct.name);
     formData.append('singlePlace', addProduct.singlePlace);
     formData.append('singleType', addProduct.singleType);
     formData.append('amount', addProduct.amount);
     formData.append('price', addProduct.price);
     formData.append('introduction', addProduct.introduction);
-    formData.append('price', addProduct.price);
-    formData.append('photo', addProduct.photo);
+    // formData.append('photo', addProduct.photo);
+
+    for (let i = 0; i < addProduct.photo.length; i++) {
+      formData.append('photo', addProduct.photo[i]);
+    }
 
     let response = await axios.post(
       'http://localhost:3001/api/business/productOn',
-      formData
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
     );
     console.log(response.data);
   }
