@@ -12,9 +12,7 @@ import Modal from './Modal';
 import { Link } from 'react-router-dom';
 
 const Card = (props) => {
-
   const { title, rating, price, id } = props;
-
 
   const {
     card_contorl,
@@ -76,7 +74,6 @@ const Card = (props) => {
   }, [rating]);
 
   return (
-
     <div className={`${card_contorl}`}>
       <div className={`${card_body} card`}>
         <div className={`${p_img_c} `}>
@@ -85,53 +82,52 @@ const Card = (props) => {
             className="card-img-top"
             alt=""
           />
-        
+        </div>
+        <div
+          className={`${content} d-flex flex-column align-items-center mt-2`}
+        >
+          <div className={`${text_contorl}`}>
+            {/* <p>【Maxim】KANU迷你美式咖啡(0.9gx100入/盒;附限定專屬贈品)</p> */}
+            <p>{title}</p>
           </div>
-          <div
-            className={`${content} d-flex flex-column align-items-center mt-2`}
-          >
-            <div className={`${text_contorl}`}>
-              {/* <p>【Maxim】KANU迷你美式咖啡(0.9gx100入/盒;附限定專屬贈品)</p> */}
-              <p>{title}</p>
-            </div>
-            <div className={`${evaluate} d-flex justify-content-center mt-2`}>
-              {new Array(numberRating).fill().map((star) => {
-                return <p key={v4()}>⭐</p>;
-              })}
-            </div>
-          </div>
-          <div
-            className={`${keepshop} card-img-bottom d-flex align-items-center `}
-          >
-            <div className={`${price_contorl} `}>${price}</div>
-            {/* <div className={`${mark_contorl} `}>
-            <FaBookmark />
-          </div> */}
-            <div
-              className={`${cart_contorl} `}
-              onClick={(e) => {
-                e.stopPropagation(sendCart);
-                if (isLoggedIn) {
-                  sendCart();
-                } else {
-                  setModalContent('請先登入');
-                  setIsOpen(true);
-                }
-                console.log(123, id);
-              }}
-            >
-              <FaShoppingCart />
-            </div>
+          <div className={`${evaluate} d-flex justify-content-center mt-2`}>
+            {new Array(numberRating).fill().map((star) => {
+              return <p key={v4()}>⭐</p>;
+            })}
           </div>
         </div>
-        {/* <div
+        <div
+          className={`${keepshop} card-img-bottom d-flex align-items-center `}
+        >
+          <div className={`${price_contorl} `}>${price}</div>
+          {/* <div className={`${mark_contorl} `}>
+            <FaBookmark />
+          </div> */}
+          <div
+            className={`${cart_contorl} `}
+            onClick={(e) => {
+              e.stopPropagation(sendCart);
+              if (isLoggedIn) {
+                sendCart();
+              } else {
+                setModalContent('請先登入');
+                setIsOpen(true);
+              }
+              console.log(123, id);
+            }}
+          >
+            <FaShoppingCart />
+          </div>
+        </div>
+      </div>
+      {/* <div
         className={`${list_sendCart}`}
         onClick={(e) => {
           e.preventDefault();
           console.log(123);
         }}
       ></div> */}
-      </div>
+
       {modalCase ? (
         <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
           <h4 style={{ color: 'rgb(73, 67, 61)', padding: '24px 36px' }}>
