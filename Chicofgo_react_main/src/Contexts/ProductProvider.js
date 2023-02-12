@@ -10,18 +10,28 @@ export function useProduct() {
 function ProductProvider(props) {
   const { children } = props;
   const [products, setProducts] = useState([]);
+  // const [realIsLoading, setRealIsLoading] = useState(false);
+  // const [errorMessage, setErrorMessage] = useState('');
   async function getProducts() {
-    const response = await axios.get('http://localhost:3001/api/products');
-    const output = response.data.map((item) => {
-      return {
-        ...item,
-        introduction: item.introduction.split('<br>').join('\n'),
-        detail: item.detail.split('<br>').join('\n'),
-      };
-    });
-    setProducts(output);
+    // setRealIsLoading(true);
+    try {
+      const response = await axios.get('http://localhost:3001/api/products');
+      const output = response.data.map((item) => {
+        return {
+          ...item,
+          introduction: item.introduction.split('<br>').join('\n'),
+          detail: item.detail.split('<br>').join('\n'),
+        };
+      });
+      // setRealIsLoading(false);
+      setProducts(output);
+    } catch (error) {
+      // setRealIsLoading(false);
+      // setErrorMessage(error);
+    }
   }
   return (
+    // <ProductContext.Provider value={{ products, getProducts, realIsLoading, errorMessage }}>
     <ProductContext.Provider value={{ products, getProducts }}>
       {children}
     </ProductContext.Provider>

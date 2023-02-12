@@ -5,6 +5,8 @@ import testpic from '../../../Img/ProductsTest/test.jpg';
 import { v4 } from 'uuid';
 import { FaShoppingCart, FaBookmark } from 'react-icons/fa';
 
+
+
 const Card1 = (props) => {
   const { title, rating, price } = props;
 
