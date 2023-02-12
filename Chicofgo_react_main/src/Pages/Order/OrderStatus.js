@@ -37,7 +37,6 @@ function OrderStatus() {
     getOrderData();
   }, []);
 
-
   return (
     <ChContainer
       ChClass={'chicofgo-font-700 border border-5'}
@@ -174,7 +173,7 @@ function OrderStatus() {
             {/* 訂單內容-個別 */}
             {/* text-center align-middle */}
 
-            {orderList.map((info) => {
+            {orderStatusInfo.map((info) => {
               return (
                 <Row
                   key={info.shoppingcart_id}
@@ -240,7 +239,10 @@ function OrderStatus() {
                         </Button>
 
                         {/* --------------------評價按鈕(有會員ID還沒有商品ID)--------------------- */}
-                        <RatingButton member_id={userid} product_id={info.product_id} />
+                        <RatingButton
+                          member_id={userid}
+                          product_id={info.product_id}
+                        />
 
                         {/* <Button
                           variant="chicofgo-brown"
@@ -333,7 +335,6 @@ function OrderStatus() {
                   </td>
                   <th>訂單備註</th>
                   <td>{orderMemberInfo.pay_info}</td>
-
                 </tr>
               </tbody>
             </Table>
@@ -343,9 +344,7 @@ function OrderStatus() {
           <Col className={`${style.bgYellow} px-5 my-3 text-end`}>
             {/* 內容4 */}
             <p className={`${style.priceTotal} my-4 `}>
-
               訂單加總:<span className={`mx-2`}>${orderMemberInfo.total}</span>
-
             </p>
           </Col>
         </Row>
