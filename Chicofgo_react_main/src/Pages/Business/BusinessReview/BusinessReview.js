@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import {
   Container,
   Row,
@@ -12,7 +11,7 @@ import {
   InputGroup,
 } from 'react-bootstrap';
 import BusinessSiderbar from '../Components/BusinessSiderbar';
-import BusinessReviewDetail from './Components/BusinessReviewDetail';
+import BusinessReviewList from './Components/BusinessReviewList';
 
 // import Date
 import DatePicker from 'react-datepicker';
@@ -90,9 +89,18 @@ function BusinessReview() {
                 </InputGroup>
               </Col>
               <Col sm={6}></Col>
-              <Col sm={5} className="mb-3">
-                <Button className="ms-2 me-4 px-4">重設</Button>
-                <Button className="px-4">查詢</Button>
+              <Col sm={2}>
+                <Button
+                  className="px-5 mb-4"
+                  variant="chicofgo-brown text-white"
+                >
+                  搜尋
+                </Button>
+              </Col>
+              <Col sm={2}>
+                <Button className="px-5" variant="chicofgo-khaki text-white">
+                  重設
+                </Button>
               </Col>
             </Row>
             <Row className="bg-white mt-3">
@@ -136,10 +144,10 @@ function BusinessReview() {
                 <Col>我的回評</Col>
               </div>
             </Row>
-            <BusinessReviewDetail />
-            <BusinessReviewDetail />
-            <BusinessReviewDetail />
-            <BusinessReviewDetail />
+            <BusinessReviewList />
+            <BusinessReviewList />
+            <BusinessReviewList />
+            <BusinessReviewList />
           </Col>
         </Row>
       </Container>

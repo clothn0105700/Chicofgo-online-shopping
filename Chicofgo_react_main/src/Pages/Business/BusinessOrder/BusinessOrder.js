@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Container,
   Row,
@@ -13,6 +14,20 @@ import BusinessSiderbar from '../Components/BusinessSiderbar';
 import BusinessOrderList from './Components/BusinessOrderList';
 
 function BusinessOrder() {
+  const [search, setSearch] = useState('');
+
+  const [selectedStatus, setSelectedStatus] = useState('');
+
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const handleSelect = (e) => {
+    setSelectedStatus(e.target.value);
+  };
+  // console.log(search);
+  console.log(selectedStatus);
+
   return (
     <div className="chicofgo_white">
       <Container className="pt-5">
@@ -23,54 +38,90 @@ function BusinessOrder() {
               <Col sm={12} className="text-center pt-2">
                 <h4>訂單管理</h4>
               </Col>
-              <Col className="btn" sm={2} >
-                全部
+              <Col className="text-center" sm={2}>
+                <Button
+                  variant="chicofgo-brown text-white"
+                  value={selectedStatus}
+                  onClick={handleSelect}
+                >
+                  全部
+                </Button>
               </Col>
-              <Col className="btn" sm={2}>
-                待出貨
+              <Col className="text-center" sm={2}>
+                <Button
+                  variant="chicofgo-brown text-white"
+                  value="待出貨"
+                  onClick={handleSelect}
+                >
+                  待出貨
+                </Button>
               </Col>
-              <Col className="btn" sm={2}>
-                運送中
+              <Col className="text-center" sm={2}>
+                <Button
+                  variant="chicofgo-brown text-white"
+                  value="運送中"
+                  onClick={handleSelect}
+                >
+                  運送中
+                </Button>
               </Col>
-              <Col className="btn" sm={2}>
-                已完成
+              <Col className="" sm={2}>
+                <Button
+                  variant="chicofgo-brown text-white"
+                  value="已完成"
+                  onClick={handleSelect}
+                >
+                  已完成
+                </Button>
               </Col>
               <Col sm={2}></Col>
               <Col sm={2}></Col>
 
               <Col sm={10} className="my-4">
-                <InputGroup className="mb-3">
-                  <DropdownButton
-                    variant="outline-secondary"
-                    title="Dropdown"
-                    id="input-group-dropdown-1"
-                  >
-                    <Dropdown.Item href="#">Action</Dropdown.Item>
-                    <Dropdown.Item href="#">Another action</Dropdown.Item>
-                    <Dropdown.Item href="#">Something else here</Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item href="#">Separated link</Dropdown.Item>
-                  </DropdownButton>
-                  <Form.Control aria-label="Text input with dropdown button" />
-                </InputGroup>
+                <div className="input-group">
+                  <Col sm={2}>
+                    <select
+                      className="form-select"
+                      id="inputGroupSelect04"
+                      aria-label="Example select with button addon"
+                    >
+                      {/* <option selected value="2">
+                        訂單編號
+                      </option> */}
+                      <option value="1">買家帳號</option>
+                    </select>
+                  </Col>
+                  <Col>
+                    <input
+                      type="text"
+                      class="form-control"
+                      aria-label="Text input with dropdown button"
+                      placeholder="請輸入買家姓名"
+                      value={search}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                </div>
               </Col>
-              <Col sm={2} className="my-4">
-                <Button>查詢</Button>
-              </Col>
+              {/* <Col sm={2} className="my-4">
+                <Button className="px-5" variant="chicofgo-brown text-white">
+                  查詢
+                </Button>
+              </Col> */}
               <Col sm={12}>查詢結果</Col>
               <div className="chicofgo_gray d-flex text-center py-2">
                 <Col>日期</Col>
                 <Col>編號</Col>
                 <Col>購買人</Col>
-                <Col>運送方式</Col>
+                <Col>狀態</Col>
                 <Col>操作</Col>
               </div>
             </Row>
             <Col>
-              <BusinessOrderList />
-              <BusinessOrderList />
-              <BusinessOrderList />
-              <BusinessOrderList />
+              <BusinessOrderList
+                search={search}
+                selectedStatus={selectedStatus}
+              />
             </Col>
           </Col>
         </Row>
