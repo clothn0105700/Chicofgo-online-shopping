@@ -6,6 +6,7 @@ const pool = require('../utils/db');
 const multer = require('multer');
 const path =require('path')
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 router.use(bodyParser.urlencoded({ extended: true }));
 
@@ -14,20 +15,37 @@ router.use((req, res, next) => {
     next();
   });
 
+//生成檔案夾
+let fileNumber = 2000;
+
+function createDirectory() {
+  // const dir = `./coffee_${++fileNumber}`;
+  fs.mkdir(path.join(__dirname, '..', 'public', 'productsImg',`coffee_${fileNumber}`), (err) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(`Directory created successfully.`);
+    }
+  });
+  fileNumber++;
+}
+
+const addFile = createDirectory
+
 //處理圖片存在哪
+
+let counter = 0;
 const storage = multer.diskStorage({
-  // 設定儲存的目的地
-  // 先手動建立好檔案夾public/uploads
-  destination: function(req, file, cb) {
-  // path.join: 避免不同作業系統 / 與 \ 的問題
-  // __dirname --> 目前檔案所在的目錄路徑
-    cb(null, path.join(__dirname, '..', 'public', 'uploads'))
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '..', 'public', 'productsImg',`coffee_${fileNumber}`));
+  }, 
+  filename: function (req, file, cb) {
+    console.log('multer storage', file);
+    const ext = file.originalname.split('.').pop();
+    cb(null, `coffee_1-${++counter}.${ext}`);
   },
-  // 圖片名稱
-  filename: function(req, file, cb) {
-    cb(null, 'test.png', 'text2.png', 'text3.png');
-  }
 })
+
 
 //處理上傳圖片
 const uploader = multer({
@@ -35,7 +53,7 @@ const uploader = multer({
   storage: storage,
   //圖片格式的驗證
   fileFilter: function(req ,file, cb) {
-    if(file.mimetype !== 'image/jpeg' && mimetype !== 'image/jpg' && mimetype !== 'image/png'){
+    if(file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/jpg' && file.mimetype !== 'image/png'){
       cb(new Error('上傳圖片格式不合法'), false)
     }else {
       cb(null, true)
@@ -69,6 +87,20 @@ router.get('/products', async (req, res, next) => {
   res.json(data)
 })
 
+//商品上下架
+router.put('/products/:productId', async (req, res, next) => {
+  console.log('/order/:productId => ', req.params.productId);
+  console.log('payload => ', req.body);
+  let [data] = await pool.query(
+    'UPDATE product_list SET valid = ? WHERE id=?',
+    [req.body.valid, req.params.productId]
+  );
+  res.json(data);
+});
+
+
+
+
 //商品產地
 router.get('/products/place', async (req, res, next) => {
   console.log('這裡是 /api/products/place')
@@ -86,15 +118,37 @@ router.get('/products/type', async (req, res, next) => {
 
 
 //新增商品並上架
-router.post('/productOn',uploader.single('photo'),async (req, res) => {
+// router.post('/productOn' ,uploader.array('photo'),async (req, res) => {
+//   console.log('POST /api/product', req.body);
+//   console.log('POST /api/product photos', req.files);
+//   // req.body.productId, req.body.productName
+//   // 完成 insert
+//   // let results = await pool.query('INSERT INTO product_list (name, place_of_orgin, type, amount, price, introduction, valid) VALUES (?, ?, ? ,? ,? ,?, 1);', [req.body.name, req.body.singlePlace, req.body.type, req.body.amount, req.body.price, req.body.introduction]);
+//   // console.log('POST product results', results);
+//   res.json({ result: 'ok' });
+// });
+
+router.post('/productOn', async (req, res) => {
+  console.log('Creating new directory...');
+  createDirectory();
+  
+  //req.body.productId, req.body.productName
+  //完成 insert
+  let results = await pool.query('INSERT INTO product_list (name, place_of_orgin, type, amount, price, introduction, valid) VALUES (?, ?, ? ,? ,? ,?, 1);', [req.body.name, req.body.singlePlace, req.body.type, req.body.amount, req.body.price, req.body.introduction]);
+  console.log('POST product results', results);
+
+
+  uploader.array('photo')(req, res, (err) => {
+  if (err) {
+  console.error(err);
+  return res.status(400).json({ result: 'error', message: err.message });
+  }
   console.log('POST /api/product', req.body);
   console.log('POST /api/product photos', req.files);
-  // req.body.productId, req.body.productName
-  // 完成 insert
-  // let results = await pool.query('INSERT INTO product_list (name, place_of_orgin, type, amount, price, introduction, valid) VALUES (?, ?, ? ,? ,? ,?, 1);', [req.body.name, req.body.singlePlace, req.body.type, req.body.amount, req.body.price, req.body.introduction]);
-  // console.log('POST product results', results);
   res.json({ result: 'ok' });
 });
+});
+
 
 //新增商品並下架
 router.post('/productOff', async (req, res) => {
