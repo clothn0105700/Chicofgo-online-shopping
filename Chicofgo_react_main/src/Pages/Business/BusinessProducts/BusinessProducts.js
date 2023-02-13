@@ -12,6 +12,7 @@ import {
 } from 'react-bootstrap';
 import BusinessSiderbar from '../Components/BusinessSiderbar';
 import ProductsList from './Components/ProductsList';
+import './BusinessProducts.scss';
 
 function BusinessProducts() {
   const [searchName, setSearchName] = useState('');
@@ -104,16 +105,16 @@ function BusinessProducts() {
                 </Button>
               </Col> */}
 
-              <Col sm={12} className="my-3">
+              {/* <Col sm={12} className="my-3">
                 查詢結果
-              </Col>
+              </Col> */}
               <div className="chicofgo_gray d-flex text-center py-2">
-                <Col>商品名稱</Col>
-                <Col>商品貨號</Col>
-                <Col>價錢</Col>
-                <Col>商品數量</Col>
-                <Col>已售出</Col>
-                <Col>狀態</Col>
+                <Col className="option">商品名稱</Col>
+                <Col className="option">商品貨號</Col>
+                <Col className="option">價錢</Col>
+                <Col className="option">商品數量</Col>
+                <Col className="option">已售出</Col>
+                <Col className="option">狀態</Col>
               </div>
             </Row>
             <ProductsList
