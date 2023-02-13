@@ -7,7 +7,9 @@ function BusinessSiderbar() {
   return (
     <Col md={3} xs={12} className="">
       <div className="text-center d-flex justify-content-center">
-        <ul className="list-unstyled w-75 d-flex flex-column">
+        <ul
+          className={`list-unstyled w-75 d-flex flex-column ${style.BusinessUl}`}
+        >
           <div className="bg-white">
             <li className="py-3 my-2 ">
               <Link

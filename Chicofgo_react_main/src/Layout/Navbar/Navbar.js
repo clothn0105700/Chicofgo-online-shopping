@@ -12,8 +12,7 @@ import React from 'react';
 import axios from 'axios';
 
 function ChicofgoNavBar() {
-  const { isLoggedIn, username, setIsLoggedIn } = useAuth();
-
+  const { isLoggedIn, username, setIsLoggedIn, userRank } = useAuth();
   async function handleLogout() {
     await axios.get('http://localhost:3001/api/auth/logout', {
       withCredentials: true,
@@ -96,10 +95,15 @@ function ChicofgoNavBar() {
           {/* <Button as={Link} to="/" variant="" className={`mx-1 mb-1`}>
             <BsFillBellFill />
           </Button> */}
-          <Button as={Link} to="/" variant="" className={`me-1 mb-1`}>
+          <Button
+            as={Link}
+            to={userRank == '2' ? '/businessOrder' : '/'}
+            variant=""
+            className={`me-1 mb-1`}
+          >
             <BsSuitHeartFill />
           </Button>
-          <Button as={Link} to="/member" variant="" className={`me-1 mb-1`}>
+          <Button as={Link} to={'/member'} variant="" className={`me-1 mb-1`}>
             <BsFillPersonFill />
           </Button>
           <Button

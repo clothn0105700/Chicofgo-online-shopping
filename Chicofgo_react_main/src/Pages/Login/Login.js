@@ -24,7 +24,7 @@ function Login() {
     //   navigate(-1);
     // }
 
-    isLoggedIn ? navigate(-1) : console.log('尚未登入');
+    isLoggedIn ? navigate('/') : console.log('尚未登入');
   }, [isLoggedIn, navigate]);
 
   // const [member, setMember] = useState({
