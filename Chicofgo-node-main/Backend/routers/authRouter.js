@@ -111,6 +111,7 @@ router.post('/login', async (req, res, next) => {
     id: member.id,
     name: member.name,
     account: member.account,
+    rank: member.rank,
   };
   // 寫入 session
   req.session.member = retMember;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import { useProduct } from '../../../Contexts/ProductProvider';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Card from '../../ComponentShare/Card';
 import styles from './List.module.scss';
 import Path from '../../../Layout/Item/Path/Path';
@@ -92,9 +92,13 @@ const List = () => {
 
   //資料庫取資料
   // const [products, setProducts] = useState([]);
+  // ============================2/13改================================
 
-  const { products, getProducts } = useProduct();
-
+  const { products, getProducts, chooseCategory } = useProduct();
+  const location = useLocation();
+  const urlArray = location.pathname.split('/');
+  const lastWord = urlArray[urlArray.length - 1];
+  // ============================2/13改================================
   // 載入指示的spinner動畫用的
   const [isLoading, setIsLoading] = useState(false);
 
@@ -106,7 +110,12 @@ const List = () => {
 
   //種類
   const [brandsValue, setBrandsValue] = useState('');
-  const [catesValue, setCatesValue] = useState('');
+  // ============================2/13改================================
+  const [catesValue, setCatesValue] = useState(
+    lastWord === 'category' ? chooseCategory : []
+  );
+  // ============================2/13改================================
+
   const [orginValue, setOrginValue] = useState('');
   const [packageValue, setPackageValue] = useState('');
 
@@ -334,6 +343,9 @@ const List = () => {
                         type="checkbox"
                         value={cate.name}
                         onChange={checkCateHandler}
+                        // ============================2/13改================================
+                        checked={catesValue.includes(cate.name)}
+                        // ============================2/13改================================
                       />
                       <label class="form-check-label" for="gridCheck1">
                         {cate.name}
@@ -479,7 +491,6 @@ const List = () => {
               ) : (
                 filteredProducts.map((v, i) => {
                   return (
-
                     <div
                       className={`${card_control} col-6 col-md-3 px-0 mb-3 `}
                       key={v.id}
