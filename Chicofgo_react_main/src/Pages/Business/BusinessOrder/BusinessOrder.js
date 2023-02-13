@@ -12,6 +12,7 @@ import {
 } from 'react-bootstrap';
 import BusinessSiderbar from '../Components/BusinessSiderbar';
 import BusinessOrderList from './Components/BusinessOrderList';
+import './BusinessOrder.scss';
 
 function BusinessOrder() {
   const [search, setSearch] = useState('');
@@ -34,20 +35,21 @@ function BusinessOrder() {
         <Row>
           <BusinessSiderbar />
           <Col>
-            <Row className="bg-white">
-              <Col sm={12} className="text-center pt-2">
+            <Row className="bg-white btn-group">
+              <Col sm={12} className="text-center pt-2 pb-3">
                 <h4>訂單管理</h4>
               </Col>
-              <Col className="text-center" sm={2}>
+              <Col className="col-2"></Col>
+              <Col className="text-center col-2 button">
                 <Button
                   variant="chicofgo-brown text-white"
-                  value={selectedStatus}
+                  value={''}
                   onClick={handleSelect}
                 >
                   全部
                 </Button>
               </Col>
-              <Col className="text-center" sm={2}>
+              <Col className="text-center col-2">
                 <Button
                   variant="chicofgo-brown text-white"
                   value="待出貨"
@@ -56,7 +58,7 @@ function BusinessOrder() {
                   待出貨
                 </Button>
               </Col>
-              <Col className="text-center" sm={2}>
+              <Col className="text-center col-2">
                 <Button
                   variant="chicofgo-brown text-white"
                   value="運送中"
@@ -65,7 +67,7 @@ function BusinessOrder() {
                   運送中
                 </Button>
               </Col>
-              <Col className="" sm={2}>
+              <Col className="text-center col-2">
                 <Button
                   variant="chicofgo-brown text-white"
                   value="已完成"
@@ -74,22 +76,26 @@ function BusinessOrder() {
                   已完成
                 </Button>
               </Col>
-              <Col sm={2}></Col>
-              <Col sm={2}></Col>
 
-              <Col sm={10} className="my-4">
+              <Col className="col-2"></Col>
+
+              <Col sm={6} className="my-3">
+                <InputGroup className="mb-3">
+                  <div className="d-flex align-items-center mx-2">商品名稱</div>
+                  <Form.Control
+                    type="text"
+                    class="form-control"
+                    aria-label="Text input with dropdown button"
+                    placeholder="請輸入買家姓名"
+                    value={search}
+                    onChange={handleChange}
+                  />
+                </InputGroup>
+              </Col>
+              {/* <Col sm={10} className="my-4">
                 <div className="input-group">
                   <Col sm={2}>
-                    <select
-                      className="form-select"
-                      id="inputGroupSelect04"
-                      aria-label="Example select with button addon"
-                    >
-                      {/* <option selected value="2">
-                        訂單編號
-                      </option> */}
-                      <option value="1">買家帳號</option>
-                    </select>
+                    <div className="d-flex align-items-center">商品名稱</div>
                   </Col>
                   <Col>
                     <input
@@ -102,19 +108,19 @@ function BusinessOrder() {
                     />
                   </Col>
                 </div>
-              </Col>
+              </Col> */}
               {/* <Col sm={2} className="my-4">
                 <Button className="px-5" variant="chicofgo-brown text-white">
                   查詢
                 </Button>
               </Col> */}
-              <Col sm={12}>查詢結果</Col>
+              {/* <Col sm={12}>查詢結果</Col> */}
               <div className="chicofgo_gray d-flex text-center py-2">
                 <Col>日期</Col>
                 <Col>編號</Col>
                 <Col>購買人</Col>
                 <Col>狀態</Col>
-                <Col>操作</Col>
+                <Col className="control">操作</Col>
               </div>
             </Row>
             <Col>

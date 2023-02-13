@@ -9,21 +9,20 @@ import {
   Dropdown,
   DropdownButton,
   InputGroup,
+  Modal,
 } from 'react-bootstrap';
 import BusinessSiderbar from '../Components/BusinessSiderbar';
 import { Link, useAsyncError } from 'react-router-dom';
 import axios from 'axios';
 
 function BusinessProductsAdd() {
-  // const [name, setName] = useState('');
   const [placeOfOrigin, setPlaceOfOrigin] = useState([]);
-  // const [singlePlace, setSinglePlace] = useState([]);
   const [type, setType] = useState([]);
-  // const [singleType, setSingleType] = useState([]);
-  // const [amount, setAmount] = useState('');
-  // const [price, setPrice] = useState('');
-  // const [introduction, setIntroduction] = useState('');
-  // const [photo, setPhoto] = useState([]);
+  //彈跳視窗
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   //物件寫法
   const [addProduct, setAddProduct] = useState({
@@ -72,25 +71,6 @@ function BusinessProductsAdd() {
 
   //上架，點擊按鈕把資料送到後端
   async function handleSubmitOn(e) {
-    // console.log(singlePlace);
-    //無檔案的表單
-    // console.log('handleSubmit');
-    // e.preventDefault();
-    // let response = await axios.post(
-    //   'http://localhost:3001/api/business/productOn',
-    //   {
-    //     name,
-    //     singlePlace,
-    //     singleType,
-    //     amount,
-    //     price,
-    //     introduction,
-    //   }
-    // );
-    // console.log(response.data);
-
-    //有檔案的表單
-
     let formData = new FormData();
 
     formData.append('name', addProduct.name);
@@ -107,33 +87,25 @@ function BusinessProductsAdd() {
 
     let response = await axios.post(
       'http://localhost:3001/api/business/productOn',
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
+      formData
     );
+
     console.log(response.data);
+    //清空表單
+    setAddProduct({
+      name: '',
+      singlePlace: '',
+      singleType: '',
+      amount: '',
+      price: '',
+      introduction: '',
+      photo: '',
+    });
+    //彈跳出視窗
+    setShow(true);
   }
 
   async function handleSubmitOff(e) {
-    // console.log(singlePlace);
-    // console.log('handleSubmit');
-    // e.preventDefault();
-    // let response = await axios.post(
-    //   'http://localhost:3001/api/business/productOff',
-    //   {
-    //     name,
-    //     singlePlace,
-    //     singleType,
-    //     amount,
-    //     price,
-    //     introduction,
-    //   }
-    // );
-    // console.log(response.data);
-
     //有檔案的表單
     let formData = new FormData();
     formData.append('name', addProduct.name);
@@ -150,6 +122,18 @@ function BusinessProductsAdd() {
       formData
     );
     console.log(response.data);
+    //清空表單
+    setAddProduct({
+      name: '',
+      singlePlace: '',
+      singleType: '',
+      amount: '',
+      price: '',
+      introduction: '',
+      photo: '',
+    });
+    //彈跳出視窗
+    setShow(true);
   }
 
   return (
@@ -295,6 +279,16 @@ function BusinessProductsAdd() {
           </Col>
         </Row>
       </Container>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>上傳成功</Modal.Title>
+        </Modal.Header>
+        <Modal.Footer>
+          <Button variant="chicofgo-brown text-white" onClick={handleClose}>
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
