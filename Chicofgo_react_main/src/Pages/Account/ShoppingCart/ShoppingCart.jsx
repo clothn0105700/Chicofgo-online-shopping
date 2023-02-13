@@ -116,7 +116,7 @@ function ShoppingCart(props) {
       <Col>
         <Row>
           <Col>
-            <h1 className={`${style.shoppingcartTitle} text-center pt-5 py-4`}>
+            <h1 className={`${style.shoppingcartTitle} text-center pt-3 pb-2 py-md-5`}>
               我的購物車
             </h1>
           </Col>
@@ -148,7 +148,7 @@ function ShoppingCart(props) {
               <Col
                 className={`${
                   products.length > 0 ? 'd-none' : 'd-inline'
-                } shadow p-5 rounded-5 chicofgo-font text-center m-5`}
+                } shadow p-md-5 rounded-5 chicofgo-font text-center m-5`}
               >
                 <h5
                   className={`py-3 rounded-5 chicofgo-font-700 chicofgo_green_font text-center`}
@@ -161,9 +161,9 @@ function ShoppingCart(props) {
             {/* ----------------------------------- */}
 
             <Row
-              className={`chicofgo_gray justify-content-between text-center px-4 py-3 mb-3`}
+              className={`chicofgo_gray justify-content-between text-center px-0 px-md-4 py-2 py-md-3 mb-3`}
             >
-              <Col className={`col-4 `}>
+              <Col className={`col-12 col-md-4 px-0`}>
                 <Form className={`mx-3 chicofgo_brown_font my-1`}>
                   <Form.Check
                     type="checkbox"
@@ -177,7 +177,7 @@ function ShoppingCart(props) {
                 </Form>
               </Col>
               <Col
-                className={`${style.totalSum} col-5 chicofgo_gray text-nowrap `}
+                className={`${style.totalSum} col-12 col-md-5 chicofgo_gray text-nowrap`}
               >
                 已選擇
                 {products.filter((product) => product.checked).length}

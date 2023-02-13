@@ -170,7 +170,7 @@ function Checkout(props) {
       <Col>
         <Row>
           <Col>
-            <h1 className={`${style.shoppingcartTitle} text-center pt-5 py-4`}>
+            <h1 className={`${style.shoppingcartTitle} text-center pt-3 pb-2 py-md-5`}>
               下單結帳
             </h1>
           </Col>
@@ -194,10 +194,10 @@ function Checkout(props) {
 
             {/* ----------------------------------- */}
             <div className="chicofgo_yello">
-              <Form className="p-5 chicofgo_yello">
+              <Form className="p-3 p-md-5 chicofgo_yello">
                 <h5 className="chicofgo-font-700">編輯買家資訊</h5>
                 <Row>
-                  <Col>
+                  <Col xs={12} md={6}>
                     <InputGroup className="align-items-center mb-2">
                       收件人姓名：
                       <Form.Control
@@ -277,7 +277,7 @@ function Checkout(props) {
                       </Form.Control.Feedback>
                     </InputGroup>
                   </Col>
-                  <Col>
+                  <Col xs={12} md={6}>
                     <InputGroup className="align-items-center mb-2">
                       地址：
                       <Form.Control
@@ -361,7 +361,7 @@ function Checkout(props) {
                     </InputGroup>
                   </Col>
                 </Row>
-                <h5 className={'pt-5 chicofgo-font-900'}>折扣計算</h5>
+                <h5 className={'pt-3 pt-md-5 chicofgo-font-700'}>折扣計算</h5>
                 <Row className={`${style.totalSum}`}>
                   <Col>
                     折抵：$

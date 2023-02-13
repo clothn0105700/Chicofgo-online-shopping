@@ -203,7 +203,7 @@ function AddressDetail() {
     }
   }
   return (
-    <Form className={`shadow p-5 rounded-5 chicofgo-font`} Validate>
+    <Form className={`shadow px-2 py-4 p-md-5 rounded-5 chicofgo-font`} Validate>
       <h2 className={`text-center chicofgo-font-700 chicofgo_brown_font pb-3`}>
         配送資訊修改
       </h2>
@@ -224,8 +224,8 @@ function AddressDetail() {
             </thead>
             <tbody>
               <tr>
-                <td>{backendData.name}</td>
-                <td>{backendData.phone}</td>
+                <td>姓名：{backendData.name}</td>
+                <td>電話：{backendData.phone}</td>
               </tr>
               <tr>
                 <td colSpan={2}>{backendData.address || '尚未設定地址'}</td>

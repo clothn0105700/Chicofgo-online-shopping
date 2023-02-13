@@ -44,25 +44,25 @@ function OrderHistory() {
       <Col>
         <Row>
           <Col>
-            <h1 className={`${style.orderTitle} text-center pt-5 py-4`}>
+            <h1 className={`${style.orderTitle} text-center pt-3 pb-2 py-md-5`}>
               歷史訂單
             </h1>
           </Col>
         </Row>
         <Row>
-          <Col className={`px-0 pb-5`}>
+          <Col className={`px-0 pb-3 pb-md-5`}>
             {/* 內容 */}
 
             <table className={`table text-center table-secondary`}>
               <thead className={`mb-5`}>
                 <tr
-                  className={`${style.orderSubTitle} my-3 border-top border-bottom border-white border-5`}
+                  className={`${style.orderSubTitle} my-3 text-nowrap border-top border-bottom border-white border-5`}
                 >
                   <th>訂單編號</th>
                   <th>日期</th>
                   <th>總價</th>
                   <th>訂單狀態</th>
-                  <th>查詢詳細</th>
+                  <th>詳細</th>
                 </tr>
               </thead>
               {/* <br /> */}
@@ -73,12 +73,12 @@ function OrderHistory() {
                       key={info.id}
                       className={`${style.orderContent} border-top border-bottom border-white border-5 align-middle`}
                     >
-                      <td className={`py-4`}>{info.number}</td>
-                      <td className={`py-4`}>{info.time}</td>
-                      <td className={` chicofgo_green_font py-4`}>
+                      <td className={`py-2 py-md-4`}>{info.number}</td>
+                      <td className={`py-2 py-md-4`}>{info.time}</td>
+                      <td className={` chicofgo_green_font py-2 py-md-4`}>
                         ${info.price}
                       </td>
-                      <td className={`py-4`}>
+                      <td className={`py-2 py-md-4`}>
                         {info.status === 1
                           ? '訂單成立'
                           : info.status === 2
@@ -91,7 +91,7 @@ function OrderHistory() {
                           ? '完成評價'
                           : '取消'}
                       </td>
-                      <td className={`py-4`}>
+                      <td className={`py-2 py-md-4`}>
                         <Button
                           className={`${style.orderContentBtn} `}
                           onClick={() => goToDetail(info.order_id)}
