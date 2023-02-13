@@ -7,7 +7,7 @@ import { useAuth } from '../Contexts/AuthContext';
 function Member() {
   const { isLoggedIn, userRank } = useAuth();
   if (!isLoggedIn) return <Navigate to="/login" replace={true} />;
-  if (userRank === 1) return <Navigate to="/businessOrder" replace={true} />;
+  if (userRank === '2') return <Navigate to="/businessOrder" replace={true} />;
   return (
     <>
       <Container
@@ -20,7 +20,7 @@ function Member() {
         }}
       >
         <Row>
-          <Col xs={12} md={2}className={`p-0`}>
+          <Col xs={12} md={2} className={`p-0`}>
             {/* <MemberSideBar /> */}
             <SideBar />
           </Col>
