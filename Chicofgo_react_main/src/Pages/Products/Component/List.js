@@ -80,6 +80,8 @@ const List = () => {
     btn_push,
     pages,
     list_sendCart,
+    brands_show,
+    brands_show2,
   } = styles;
 
   const goToTop = () => {
@@ -323,9 +325,15 @@ const List = () => {
                     </div>
                   );
                 })}
-              {/* <button onClick={clickHandler}>{showMore ? '▲' : '▼'}</button> */}
+
+              {/* <button className={`${brands_show} btn2`} onClick={clickHandler}>
+                {showMore ? '▲' : '▼'}
+              </button> */}
               {!showMore && (
-                <button className="btn2" onClick={clickHandler}>
+                <button
+                  className={`${brands_show2} btn2`}
+                  onClick={clickHandler}
+                >
                   更多 ▼
                 </button>
               )}
@@ -415,7 +423,7 @@ const List = () => {
               )}
             </div>
 
-            <div className={`${block_price} d-flex flex-column px-2`}>
+            {/* <div className={`${block_price} d-flex flex-column px-2`}>
               <h4>價格範圍</h4>
               <div className="price-check">
                 <input type="text" className={text_c} placeholder="最小值$" />
@@ -426,7 +434,7 @@ const List = () => {
               <button type="submit" className={`btn1 ${Inquire} `}>
                 查詢
               </button>
-            </div>
+            </div> */}
           </div>
 
           <div className={`${card_block} col-12 col-md-10 `}>

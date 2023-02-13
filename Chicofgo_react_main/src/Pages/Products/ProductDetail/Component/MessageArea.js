@@ -23,7 +23,6 @@ const MessageArea = (props) => {
   } = styles;
   return (
     <div className={`${message_control}`}>
-      <br />
       <div className={`${message_box} d-flex`}>
         <div className={`${member_pic} d-flex align-items-center flex-column`}>
           <div className={`${main_pic}`}></div>

@@ -18,7 +18,6 @@ export const cates = [
   { id: 5, name: '奶精' },
   { id: 6, name: '濾掛式/茶包式' },
   { id: 7, name: '咖啡粉' },
-  
 ];
 
 export const items = [
@@ -35,11 +34,10 @@ export const origins = [
   { id: 1, name: '巴西' },
   { id: 2, name: '印尼' },
   { id: 3, name: '韓國' },
-  { id: 4, name: '夏威夷' },
+  { id: 4, name: '英國' },
   { id: 5, name: '義大利' },
   { id: 6, name: '台灣' },
   { id: 7, name: '日本' },
-  { id: 8, name: '英國' },
 ];
 
 export const filterRating = [
