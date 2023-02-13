@@ -137,6 +137,11 @@ $mainColor: rgb(161, 113, 98);
   @include button-variant(rgb(54, 111, 84), rgb(54, 111, 84));
 }
 
+.btn-chicofgo-khaki {
+  background-color: rgb(166, 155, 132);
+  @include button-variant(rgb(166, 155, 132), rgb(166, 155, 132));
+}
+
 .btn-outline-chicofgo-brown {
   border-color: rgb(161, 113, 98);
   @include button-outline-variant(rgb(161, 113, 98));

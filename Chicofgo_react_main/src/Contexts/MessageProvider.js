@@ -11,10 +11,19 @@ function MessageProvider(props) {
   const { children } = props;
   const [message, setMessage] = useState([]);
   async function getMessage() {
-    const response = await axios.get(
-      'http://localhost:3001/api/products/message'
-    );
-    setMessage(response.data);
+    try {
+      const response = await axios.get(
+        'http://localhost:3001/api/products/message'
+      );
+      const output = response.data.map((item) => {
+        return {
+          ...item,
+
+          message_time: item.message_time.split('T16:00:00.000Z'),
+        };
+      });
+      setMessage(output);
+    } catch (error) {}
   }
   return (
     <MessageContext.Provider value={{ message, getMessage }}>

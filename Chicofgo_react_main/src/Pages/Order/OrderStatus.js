@@ -8,6 +8,7 @@ import RatingButton from './RatingButton';
 import axios from 'axios';
 import { useAuth } from '../../Contexts/AuthContext';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function OrderStatus() {
   // ---訂單資料---
@@ -15,6 +16,7 @@ function OrderStatus() {
   let { order_id } = useParams();
   const [orderStatusInfo, setOrderStatusInfo] = useState([]);
   const [orderMemberInfo, setOrderMemberInfo] = useState([]);
+  const [orderReviewInfo, setOrderReviewInfo] = useState([]);
 
   useLayoutEffect(() => {
     async function getOrderData() {
@@ -25,9 +27,13 @@ function OrderStatus() {
             withCredentials: true,
           }
         );
-        console.log(response.data.products);
+        console.log('OrderStatus', response.data.products);
+        console.log('Member', response.data.member[0]);
+        console.log('review', response.data.review);
+
         setOrderMemberInfo(response.data.member[0]);
         setOrderStatusInfo(response.data.products);
+        setOrderReviewInfo(response.data.review);
       } catch (e) {
         if (e.response.status === 400) {
           console.log('訂單是空的');
@@ -181,12 +187,12 @@ function OrderStatus() {
                 >
                   <Col className={`col-7 pe-0`}>
                     <Row
-                      className={`${style.contactShop} justify-content-start `}
+                      className={`${style.contactShop} justify-content-evenly `}
                     >
                       <Col className={`d-none d-md-block col-4`}>
                         <span>
                           <SlCup />
-                          純粹飲品
+                          {info.brandname}
                         </span>
                       </Col>
                       <Col className={`d-none d-md-block col-4 m-0`}>
@@ -208,7 +214,7 @@ function OrderStatus() {
                       </Col>
                       <Col className={`${style.orderItem} col-12 col-md-9 `}>
                         <p className={`text-truncate`}>{info.title}</p>
-                        <span>{info.desc}</span>
+                        <span className={`text-truncate`}>{info.desc}</span>
                       </Col>
                     </Row>
                   </Col>
@@ -234,6 +240,8 @@ function OrderStatus() {
                         <Button
                           variant="chicofgo-green"
                           className={`my-1 py-1 chicofgo_white_font d-none d-md-block `}
+                          as={Link}
+                          to={`/products/product_detail/${info.product_id}`}
                         >
                           再買一次
                         </Button>
@@ -242,7 +250,9 @@ function OrderStatus() {
                         <RatingButton
                           member_id={userid}
                           product_id={info.product_id}
-
+                          orderId={orderMemberInfo.order_id}
+                          disabled={orderMemberInfo.status <= 3}
+                          // ||orderReviewInfo.includes(info.product_id.toString()
                         />
 
                         {/* <Button

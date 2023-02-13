@@ -2,6 +2,7 @@ import React from 'react';
 import ProductProvider from './ProductProvider';
 import MessageProvider from './MessageProvider';
 import AuthProvider from './AuthContext';
+
 import ShoppingCartProvider from './ShoppingCartProvider';
 
 function AllProviders(props) {

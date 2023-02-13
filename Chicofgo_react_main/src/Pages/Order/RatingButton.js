@@ -1,17 +1,24 @@
 import { React, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap/';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import PopupWindow from '../ComponentShare/PopupWindow';
+import { useNavigate } from 'react-router-dom';
 
 function RatingButton(props) {
-  const [show, setShow] = useState(false);
+  let { order_id } = useParams();
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   const [ratingInfo, setRatingInfo] = useState({
     message_rating: '',
     speak: '',
     message_with_products_id: props.product_id,
     member_id: props.member_id,
+    order_id: order_id,
   });
 
   function handleChange(e) {
@@ -20,8 +27,33 @@ function RatingButton(props) {
     setRatingInfo(newRatingInfo);
   }
 
-  function handleMessage() {
+  async function handleMessage(e) {
     console.log(ratingInfo);
+    console.log('handleSubmit');
+    e.preventDefault();
+    console.log(ratingInfo);
+    try {
+      let response = await axios.post(
+        'http://localhost:3001/api/members/sendreview',
+        ratingInfo,
+        {
+          // 為了跨源存取 cookie
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+      if (response.status === 200) {
+        console.log('更新成功');
+        setShow(false);
+        setShowModal(true);
+      }
+    } catch (e) {
+      if (e.response.status === 401) {
+        let allErrors = e.response.data.errors;
+        console.log('更新失敗');
+        console.log(allErrors);
+      }
+    }
   }
 
   return (
@@ -30,6 +62,7 @@ function RatingButton(props) {
         variant="chicofgo-brown"
         className={`my-1 py-1 mx-3 mx-md-0 chicofgo_white_font text-center text-nowrap`}
         onClick={handleShow}
+        disabled={props.disabled}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -91,6 +124,13 @@ function RatingButton(props) {
           </Button>
         </Modal.Footer>
       </Modal>
+      <PopupWindow
+        show={showModal}
+        onclose={() => navigate('/member/orderHistory')}
+        title="送出評價"
+        content="成功!"
+        btnContent="回到歷史訂單"
+      />
     </>
   );
 }

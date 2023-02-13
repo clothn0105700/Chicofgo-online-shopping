@@ -108,7 +108,7 @@ app.use("/api/products", productsRouter);
 // app.use("/api/message/messages",messageRouter)
 
 
-
+// ========
 
 const stockRouter = require('./routers/stockRouter');
 app.use('/api/stocks', stockRouter);
@@ -119,11 +119,16 @@ app.use('/api/auth', authRouter);
 const memberRouter = require('./routers/memberRouter');
 app.use('/api/members', memberRouter);
 
+
+const businessRouter = require('./routers/businessRouter');
+app.use('/api/business', businessRouter)
+
 const imagesRouter = require('./routers/imagesRouter');
 app.use('/api/images', imagesRouter);
 
 const shoppingCartRouter = require('./routers/shoppingCartRouter');
 app.use('/api/shoppingCarts', shoppingCartRouter);
+
 
 
 
