@@ -11,11 +11,11 @@ const CheckoutItem = ({
   product_id,
 }) => {
   return (
-    <Row className={`px-4 justify-content-center`} key={id}>
+    <Row className={`px-1 px-md-4 justify-content-center`} key={id}>
       <Col className={`col-11 chicofgo_gray py-4 mb-4 rounded-3 shadow`}>
         <Row className={`justify-content-center `}>
           <Col
-            className={`${style.brandArea} col-2 px-0 align-self-start text-center`}
+            className={`${style.brandArea} col-2 px-0 align-self-start text-center d-none d-md-block `}
           >
             <Image
               src={`http://localhost:3001/api/images/productImg/coffee_${product_id}/coffee_${product_id}-1.png`}
@@ -43,7 +43,7 @@ const CheckoutItem = ({
               </Col>
             </Row>
           </Col>
-          <Col className={`col-9`}>
+          <Col className={`col-12 col-md-9`}>
             <Table
               hover
               variant=""

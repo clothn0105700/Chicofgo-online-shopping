@@ -190,7 +190,7 @@ function Account() {
               ? backendImg
               : require('../../Layout/Navbar/logo.png')
           }
-          className={`border border-3 rounded-circle  ${style.pic}`}
+          className={`border border-3 mt-3 rounded-circle  ${style.pic}`}
         />
         <div
           className={`${style.photoError} ${
@@ -220,7 +220,7 @@ function Account() {
           檔案限制: .JPEG, .PNG
         </h5>
       </Col>
-      <Col sm={7} className={`border py-3 px-5 mb-5 mt-3`}>
+      <Col sm={7} className={` py-3 px-md-5 mb-5 mt-3`}>
         <Form className={`${style.formText} `}>
           <h2 className="text-center chicofgo_brown_font large pb-2">
             我的帳號
