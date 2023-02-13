@@ -138,14 +138,14 @@ const ProductDetail = () => {
             />
           </p>
 
-          <Link to="/products" style={{ textDecoration: 'none' }}>
-            <div className={`${btn_contorl} d-flex justify-content-end mb-3`}>
+          <div className={`${btn_contorl} d-flex justify-content-end mb-3`}>
+            <Link to="/products" style={{ textDecoration: 'none' }}>
               <button className="btn1 d-flex align-items-center justify-content-center ">
                 <BsFillReplyFill />
                 回商品列表
               </button>
-            </div>
-          </Link>
+            </Link>
+          </div>
           {isLoading ? (
             spinner
           ) : (
@@ -194,7 +194,7 @@ const ProductDetail = () => {
           ) : (
             filteredMessage.map((mes) => {
               return (
-                <div key={mes.id}>
+                <Fragment key={mes.id}>
                   {/* {haveMessage === 0 ? (
                   <p>目前尚未有留言</p>
                 ) : (
@@ -210,7 +210,7 @@ const ProductDetail = () => {
                     s={mes.speak}
                     name={mes.account}
                   />
-                </div>
+                </Fragment>
               );
             })
           )}

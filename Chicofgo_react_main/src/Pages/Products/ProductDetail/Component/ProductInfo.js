@@ -64,6 +64,7 @@ const Productinfo = (props) => {
   async function sendCart() {
     const urlArray = location.pathname.split('/');
     const id = parseInt(urlArray[urlArray.length - 1]);
+    console.log(id);
     try {
       let response = await axios.post(
         'http://localhost:3001/api/products/sendCart',
@@ -80,7 +81,7 @@ const Productinfo = (props) => {
         setIsOpen(true);
       } else if (response.data.result === 'been added') {
         setModalCase(true);
-        setModalContent('已加入過購物車囉，看看其他商品吧');
+        setModalContent('已加入過購物車囉，看看其他商品吧。');
         setIsOpen(true);
       } else {
         setModalCase(true);
@@ -119,7 +120,7 @@ const Productinfo = (props) => {
           <h4>包裝:</h4>
           <div className="mx-2">
             {product_package === null ? (
-              <h4>暫無</h4>
+              <h4>其他</h4>
             ) : (
               <h4>{product_package}</h4>
             )}

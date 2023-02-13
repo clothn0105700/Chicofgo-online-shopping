@@ -54,7 +54,7 @@ const Card = (props) => {
         setIsOpen(true);
       } else if (response.data.result === 'been added') {
         setModalCase(true);
-        setModalContent('已加入過購物車囉，看看其他商品吧');
+        setModalContent('已加入過購物車囉，看看其他商品吧。');
         setIsOpen(true);
       } else {
         setModalCase(true);
