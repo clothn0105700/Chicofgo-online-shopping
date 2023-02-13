@@ -3,8 +3,10 @@ import { Outlet } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import { Link, NavLink } from 'react-router-dom';
 
+
 import ChContainer from '../../ComponentShare/ChContainer';
 import style from './Collect.module.scss';
+import CollectItem from './Component/CollectItem';
 function Collect() {
   return (
     <ChContainer
@@ -28,16 +30,16 @@ function Collect() {
                 {/* 商家 */}
                 <Nav
                   variant="tabs"
-                  defaultActiveKey="/member/collect/shop"
+                  defaultActiveKey="/member/collect/items"
                   className={`justify-content-evenly`}
                 >
-                  <Nav.Item>
+                  {/* <Nav.Item>
                     <Nav.Link as={NavLink} to="/member/collect/shop">
                       <p className={`px-3 py-0 my-0 chicofgo_dark_font`}>
                         商家
                       </p>
                     </Nav.Link>
-                  </Nav.Item>
+                  </Nav.Item> */}
                   <Nav.Item>
                     <Nav.Link as={NavLink} to="/member/collect/items">
                       <p className={`px-3 py-0 my-0 chicofgo_dark_font`}>
