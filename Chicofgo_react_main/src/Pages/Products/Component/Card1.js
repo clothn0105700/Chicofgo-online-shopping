@@ -28,13 +28,17 @@ const Card1 = (props) => {
     <div className={`${card_contorl}`}>
       <div className={`${card_body} card`}>
         <div className={`${p_img_c} `}>
-          <img src={testpic} className="card-img-top" alt="" />
+          <img
+            src={`http://localhost:3001/api/images/productImg/coffee_7/coffee_7-1.png`}
+            className="card-img-top"
+            alt=""
+          />
         </div>
         <div
           className={`${content} d-flex flex-column align-items-center mt-2`}
         >
           <div className={`${text_contorl}`}>
-            <p>【Maxim】KANU迷你美式咖啡(0.9gx100入/盒;附限定專屬贈品)</p>
+            <p>【金杯咖啡】女王咖啡豆x3袋(250g/袋)</p>
             {/* <p>{title}</p> */}
           </div>
           <div className={`${evaluate} d-flex justify-content-center mt-2`}>
@@ -51,7 +55,7 @@ const Card1 = (props) => {
         <div
           className={`${keepshop} card-img-bottom d-flex align-items-center `}
         >
-          <div className={`${price_contorl} `}>$</div>
+          <div className={`${price_contorl} `}>$899</div>
           {/* <div className={`${mark_contorl} `}>
             <FaBookmark />
           </div>

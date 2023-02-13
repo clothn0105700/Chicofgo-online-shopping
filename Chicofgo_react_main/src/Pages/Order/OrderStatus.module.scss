@@ -41,6 +41,9 @@
   span {
     margin: 0;
     font-size: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   svg {
@@ -85,7 +88,9 @@
 .orderItem {
   background: #eeeeee;
   padding: 12.5px 0;
-
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   p {
     font-size: 18px;
   }

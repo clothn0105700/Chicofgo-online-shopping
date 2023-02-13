@@ -24,12 +24,15 @@ import Collect from './Pages/Account/Collect/Collect';
 import CollectItem from './Pages/Account/Collect/Component/CollectItem';
 import CollectShop from './Pages/Account/Collect/Component/CollectShop';
 import ShoppingCart from './Pages/Account/ShoppingCart/ShoppingCart';
+
 import Checkout from './Pages/Account/ShoppingCart/Checkout';
+
 import BusinessOrder from './Pages/Business/BusinessOrder/BusinessOrder';
 import BusinessProducts from './Pages/Business/BusinessProducts/BusinessProducts';
 import BusinessProductsAdd from './Pages/Business/BusinessProductsAdd/BusinessProductsAdd';
 import BusinessReview from './Pages/Business/BusinessReview/BusinessReview';
-import BusinissCoupon from './Pages/Business/BusinissCoupon/BusinissCoupon';
+import BusinessOrderDetail from './Pages/Business/BusinessOrder/BusinessOrderDetail';
+
 import AllProviders from './Contexts/AllProviders';
 
 function App() {
@@ -48,6 +51,7 @@ function App() {
               {/*product*/}
               <Route path="/products">
                 <Route path="/products" element={<Products />} />
+                <Route path="/products/category" element={<Products />} />
                 <Route
                   path="/products/product_detail/:product_id"
                   element={<ProductDetail />}
@@ -70,6 +74,7 @@ function App() {
               {/* <Route path="/">
             <Route index element={}
           </Route> */}
+
               <Route path="member" element={<Member />}>
                 <Route index element={<Account />} />
                 <Route path="account" element={<Account />} />
@@ -96,13 +101,18 @@ function App() {
                 </Route>
               </Route>
               <Route path="businessOrder" element={<BusinessOrder />} />
+
+              <Route
+                path="businessOrderDetail/:orderId"
+                element={<BusinessOrderDetail />}
+              />
+
               <Route path="businessProducts" element={<BusinessProducts />} />
               <Route
                 path="businessProductsAdd"
                 element={<BusinessProductsAdd />}
               />
               <Route path="businessReview" element={<BusinessReview />} />
-              <Route path="businissCoupon" element={<BusinissCoupon />} />
             </Routes>
           </ScrollToTop>
 

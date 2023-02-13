@@ -38,19 +38,22 @@ router.get('/shoppingCart', checkLogin, async (req, res, next) => {
 
   if (shoppingCartDatas.length > 0) {
     const newObjects = shoppingCartDatas.map((obj) => {
+      let string = obj.detail;
+      const descSubstring = string.substring(string.indexOf('：') + 1, string.indexOf('<br>'));
+      descSubstring.length <= 0 ? (descSubstring = string.substring(0, string.indexOf('<br>'))) : '';
       return {
         shoppingcart_id: obj.shoppingcart_id,
         product_id: obj.id,
         brandname: obj.brand,
         title: obj.name,
-        desc: '即品拿鐵無加糖二合一×103包',
+        desc: descSubstring || '',
         quantity: obj.quantity,
         price: obj.price,
         // productImg: 'test.jpg',
         checked: false,
       };
     });
-    console.log(newObjects);
+    // console.log(newObjects);
     // console.log('id:', shoppingCartDatas);
     return res.json(newObjects);
   } else {

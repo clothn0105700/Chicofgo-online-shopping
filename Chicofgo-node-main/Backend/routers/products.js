@@ -26,7 +26,13 @@ router.get('/', middlewares, async (req, res, next) => {
   // let results = await connection.query('SELECT * FROM stocks');
   // let data = results[0];
   console.log('這裡是 /api/products');
-  let [data] = await pool.query('SELECT * FROM product_list');
+  const sql = `
+    SELECT * FROM product_list
+    JOIN product_type ON product_list.type = product_type.tid
+    JOIN product_place_of_orgin ON product_list.place_of_orgin = product_place_of_orgin.oid
+    LEFT JOIN product_package ON product_package.pid = product_list.package
+  `;
+  let [data] = await pool.query(sql);
   console.log('product data: ', data);
   res.json(data);
 });
@@ -34,7 +40,7 @@ router.get('/message', middlewares, async (req, res, next) => {
   // let results = await connection.query('SELECT * FROM stocks');
   // let data = results[0];
   console.log('這裡是 /api/message');
-  let [data] = await pool.query('SELECT * FROM member_message');
+  let [data] = await pool.query('SELECT * FROM `member_message` JOIN user_member ON member_message.member_id = user_member.id');
   console.log('product data: ', data);
   res.json(data);
 });

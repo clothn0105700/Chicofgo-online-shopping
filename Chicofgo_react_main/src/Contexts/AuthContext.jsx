@@ -10,13 +10,14 @@ const AuthContextProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
   const [userid, setUserid] = useState('');
+  const [userRank, setUserRank] = useState('');
 
   useEffect(() => {
     async function getMember() {
       let response = await axios.get('http://localhost:3001/api/members', {
         withCredentials: true,
       });
-      //   console.log(response.data);
+      console.log('members', response.data);
       //   console.log(response.data.name);
 
       if (response.status === 200) {
@@ -24,6 +25,7 @@ const AuthContextProvider = (props) => {
         setIsLoggedIn(true);
         setUsername(response.data.name);
         setUserid(response.data.id);
+        setUserRank(response.data.rank);
         // setUserid()
         // localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
         // localStorage.setItem('username', JSON.stringify(username));
@@ -41,6 +43,7 @@ const AuthContextProvider = (props) => {
         setUsername,
         userid,
         setUserid,
+        userRank,
       }}
     >
       {props.children}
