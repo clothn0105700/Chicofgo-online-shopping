@@ -36,6 +36,7 @@ function createDirectory() {
 
 //處理圖片存在哪
 
+
 let counter = 0;
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -47,6 +48,7 @@ const storage = multer.diskStorage({
     cb(null, `coffee_1-${++counter}.${ext}`);
   },
 })
+
 
 
 //處理上傳圖片
