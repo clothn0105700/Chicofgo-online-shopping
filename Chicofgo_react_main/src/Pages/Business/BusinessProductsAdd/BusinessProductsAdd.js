@@ -87,12 +87,7 @@ function BusinessProductsAdd() {
 
     let response = await axios.post(
       'http://localhost:3001/api/business/productOn',
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
+      formData
     );
 
     console.log(response.data);

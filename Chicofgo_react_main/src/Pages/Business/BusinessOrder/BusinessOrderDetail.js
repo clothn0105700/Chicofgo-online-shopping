@@ -84,7 +84,9 @@ function BusinessOrder() {
                 付款方式
               </Col>
               <Col sm={12} className="py-1 text-end">
-                <Button>返回</Button>
+                <Link to={`/businessOrder`}>
+                  <Button variant="chicofgo-brown text-white">返回</Button>
+                </Link>
               </Col>
             </Row>
           </Col>

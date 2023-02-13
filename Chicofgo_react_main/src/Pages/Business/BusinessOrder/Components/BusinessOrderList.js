@@ -66,7 +66,7 @@ function BusinessOrderList(props) {
                     className="mb-2 detail"
                     variant="chicofgo-khaki text-white"
                   >
-                    訂單細節
+                    訂單詳細
                   </Button>
                 </Link>
               </Col>

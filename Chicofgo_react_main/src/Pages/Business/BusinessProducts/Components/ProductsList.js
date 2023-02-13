@@ -7,6 +7,7 @@ import {
   Button,
   Image,
   pagination,
+  Modal,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -33,6 +34,12 @@ function ProductsList(props) {
     currentPage * perPage + perPage
   );
 
+  //彈跳視窗
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   useEffect(() => {
     async function getproducts() {
       let response = await axios.get(
@@ -41,9 +48,9 @@ function ProductsList(props) {
       setProducts(response.data);
     }
     getproducts();
-  }, []);
+  }, [show, valid]);
 
-  const handleOff = async (productId) => {
+  const handleOn = async (productId) => {
     try {
       const responseOff = await axios.put(
         `http://localhost:3001/api/business/products/${productId}`,
@@ -60,7 +67,7 @@ function ProductsList(props) {
     }
   };
 
-  const handleOn = async (productId) => {
+  const handleOff = async (productId) => {
     try {
       const responseOff = await axios.put(
         `http://localhost:3001/api/business/products/${productId}`,
@@ -72,6 +79,19 @@ function ProductsList(props) {
       setValid(1);
 
       console.log(responseOff);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //刪除商品
+  const handleDelete = async (productId) => {
+    try {
+      const responseDelete = await axios.put(
+        `http://localhost:3001/api/business/products/delete/${productId}`
+      );
+      setShow(true);
+      console.log(responseDelete);
     } catch (error) {
       console.log(error);
     }
@@ -127,22 +147,31 @@ function ProductsList(props) {
                 123
               </Col>
               <Col className="pb-2">
-                <Row className="justify-content-end text-center">
+                <Row className="justify-content-between text-center">
                   <Col sm={2} className="text-center">
                     <Button
+                      className="px-2 mx-1 btn-danger"
+                      id={product.id}
+                      value={product.valid}
+                      onClick={(e) => handleDelete(e.target.id)}
+                    >
+                      刪除
+                    </Button>
+                  </Col>
+                  <Col sm={2} className="text-center">
+                    {/* <Button
                       className="px-2 mx-1"
                       variant="chicofgo-brown text-white"
                     >
                       詳細
-                    </Button>
-
-                    {valid === 1 ? (
+                    </Button> */}
+                    {product.valid === 1 ? (
                       <Button
                         className="px-2 mx-1"
                         variant="chicofgo-khaki text-white"
                         id={product.id}
                         value={product.valid}
-                        onClick={(e) => handleOff(e.target.id)}
+                        onClick={(e) => handleOn(e.target.id)}
                       >
                         上架
                       </Button>
@@ -151,8 +180,8 @@ function ProductsList(props) {
                         className="px-2 mx-1"
                         id={product.id}
                         value={product.valid}
-                        variant="chicofgo-khaki text-white"
-                        onClick={(e) => handleOn(e.target.id)}
+                        variant="chicofgo-brown text-white"
+                        onClick={(e) => handleOff(e.target.id)}
                       >
                         下架
                       </Button>
@@ -190,6 +219,16 @@ function ProductsList(props) {
         </Col>
         <Col className="col-4"></Col>
       </Row>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>刪除成功</Modal.Title>
+        </Modal.Header>
+        <Modal.Footer>
+          <Button variant="chicofgo-brown text-white" onClick={handleClose}>
+            ok
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
