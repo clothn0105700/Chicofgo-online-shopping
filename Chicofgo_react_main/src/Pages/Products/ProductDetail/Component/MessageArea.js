@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './MessageArea.module.scss';
 import { useEffect, useMemo } from 'react';
 import { v4 } from 'uuid';
+import { Image } from 'react-bootstrap';
 
 const MessageArea = (props) => {
   const { rating, time, s, name } = props;
@@ -23,11 +24,19 @@ const MessageArea = (props) => {
   } = styles;
   return (
     <div className={`${message_control}`}>
-      <br />
       <div className={`${message_box} d-flex`}>
         <div className={`${member_pic} d-flex align-items-center flex-column`}>
-          <div className={`${main_pic}`}></div>
-          <div className={`${member_name} mt-3`}>{name}</div>
+          <div className={``}>
+            <Image
+              alt=""
+              width={150}
+              height={150}
+              src={`http://localhost:3001/api/images/member/uploads/1676260514036.png`}
+              className={`border border-3 rounded-circle  ${main_pic}`}
+            />
+
+          </div>
+          <div className={`${member_name} mt-3 text-center`}>{name}</div>
         </div>
         <div className={`${message_info} d-flex  flex-column`}>
           <div className={`${message_rating} d-flex `}>

@@ -27,15 +27,15 @@ function Login() {
     isLoggedIn ? navigate(-1) : console.log('尚未登入');
   }, [isLoggedIn, navigate]);
 
-  const [member, setMember] = useState({
-    account: 'c8763',
-    password: 'test1234',
-  });
+  // const [member, setMember] = useState({
+  //   account: 'c8763',
+  //   password: 'test1234',
+  // });
 
   //-----------記住帳號功能-------------
-  // const [member, setMember] = useState({
-  //   account: localStorage.getItem('accountRememberMe') || '',
-  // });
+  const [member, setMember] = useState({
+    account: localStorage.getItem('accountRememberMe') || '',
+  });
   //-----------記住帳號功能-------------
 
   function handleChange(e) {

@@ -31,7 +31,7 @@ function ChicofgoNavBar() {
         <Navbar.Brand as={NavLink} to="/home">
           <Image
             src={require('./logo.png')}
-            className={`d-inline-block align-top ms-5`}
+            className={`d-inline-block align-top ms-md-5`}
             alt="Responsive image"
             width="80"
           />
@@ -93,9 +93,9 @@ function ChicofgoNavBar() {
             </>
           )}
 
-          <Button as={Link} to="/" variant="" className={`mx-1 mb-1`}>
+          {/* <Button as={Link} to="/" variant="" className={`mx-1 mb-1`}>
             <BsFillBellFill />
-          </Button>
+          </Button> */}
           <Button as={Link} to="/" variant="" className={`me-1 mb-1`}>
             <BsSuitHeartFill />
           </Button>
