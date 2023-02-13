@@ -22,6 +22,7 @@ const storage = multer.diskStorage({
     // }
     const ext = file.originalname.split('.').pop();
     cb(null, `${Date.now()}.${ext}`);
+
   },
 });
 // 處理上傳
@@ -65,6 +66,7 @@ router.get('/orderDetail/:orderId', checkLogin, async (req, res, next) => {
       status: obj.status,
       total: obj.total_price,
     };
+
   });
   let [shoppingCartDatas] = await pool.execute(
     'SELECT shopping_cart.id AS shoppingcart_id, shopping_cart.*, product_list.*  FROM shopping_cart JOIN product_list ON shopping_cart.product_id = product_list.id WHERE shopping_cart.member = ? AND shopping_cart.order_id = ? ',
