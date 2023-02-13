@@ -7,9 +7,20 @@
 }
 
 .adBanner {
-  height: 250px;
+  // height: 250px;
   width: 100%;
 }
+@media screen and (min-width: 979px) {
+  // 如果使用者之視窗寬度介於 768px ~ 979px，將會再載入這裡的 CSS。
+  .adBanner {
+    height: 250px;
+  }
+}
+
+@media screen and (max-width: 979px) {
+  // 如果使用者之視窗寬度 <= 768px，將會再載入這裡的 CSS。
+}
+
 .homeCategory {
   height: 100px;
   background: rgb(238, 238, 238);
@@ -25,7 +36,7 @@ span {
   font-weight: 500;
 }
 
-.pageTitle p{
+.pageTitle p {
   font-size: 32px;
   font-weight: 700;
   // color: rgb(161, 113, 98);

@@ -18,3 +18,9 @@
 .cursorPointer {
   cursor: pointer;
 }
+
+@media (max-width:768px) {
+  .cardForm{
+    padding: 10px 5px;
+  }
+}
