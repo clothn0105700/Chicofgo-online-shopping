@@ -108,11 +108,13 @@ function ThisCard(props) {
       <Card.Footer className={` fs-4 py-1`}>
         <Row className={`justify-content-between text-center`}>
           <Col className={`col-6`}>
-            <span className={`chicofgo-font-700 `}>${backendData.price}</span>
+            <span className={`chicofgo-font-700 text-nowrap`}>
+              ${backendData.price}
+            </span>
           </Col>
           <Col className={`col-3`}>
             <span className={`chicofgo_brown_font`}>
-              <FaBookmark />
+              {/* <FaBookmark /> */}
             </span>
           </Col>
           <Col className={`col-3`}>

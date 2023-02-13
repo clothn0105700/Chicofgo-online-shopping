@@ -15,19 +15,32 @@ router.use((req, res, next) => {
   });
 
 //處理圖片存在哪
+// const storage = multer.diskStorage({
+//   // 設定儲存的目的地
+//   // 先手動建立好檔案夾public/uploads
+//   destination: function(req, file, cb) {
+//   // path.join: 避免不同作業系統 / 與 \ 的問題
+//   // __dirname --> 目前檔案所在的目錄路徑
+//     cb(null, path.join(__dirname, '..', 'public', 'uploads'))
+//   },
+//   // 圖片名稱
+//   filename: function(req, file, cb) {
+//     cb(null, 'test.png', 'text2.png', 'text3.png');
+//   }
+// })
+
+let counter = 0;
+
 const storage = multer.diskStorage({
-  // 設定儲存的目的地
-  // 先手動建立好檔案夾public/uploads
-  destination: function(req, file, cb) {
-  // path.join: 避免不同作業系統 / 與 \ 的問題
-  // __dirname --> 目前檔案所在的目錄路徑
-    cb(null, path.join(__dirname, '..', 'public', 'uploads'))
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '..', 'public', 'uploads'));
   },
-  // 圖片名稱
-  filename: function(req, file, cb) {
-    cb(null, 'test.png', 'text2.png', 'text3.png');
-  }
-})
+  filename: function (req, file, cb) {
+    console.log('multer storage', file);
+    const ext = file.originalname.split('.').pop();
+    cb(null, `coffee_1-${++counter}.${ext}`);
+  },
+});
 
 //處理上傳圖片
 const uploader = multer({
