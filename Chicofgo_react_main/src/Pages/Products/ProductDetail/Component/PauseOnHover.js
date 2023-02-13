@@ -28,7 +28,7 @@ export default class PauseOnHover extends Component {
     return (
       <div className="container">
         <div className="t_color">
-          <h2>活動優惠中</h2>
+          <h2>推薦商品</h2>
           <Slider {...settings}>
             <div>
               <Link
@@ -40,7 +40,7 @@ export default class PauseOnHover extends Component {
             </div>
             <div>
               <Link
-                to="/product_detail/8"
+                to="/product_detail/14"
                 style={{ textDecoration: 'none', color: 'rgb(161, 113, 98)' }}
               >
                 <Card2 />
@@ -56,7 +56,7 @@ export default class PauseOnHover extends Component {
             </div>
             <div>
               <Link
-                to="/product_detail/10"
+                to="/product_detail/24"
                 style={{ textDecoration: 'none', color: 'rgb(161, 113, 98)' }}
               >
                 <Card4 />
@@ -64,7 +64,7 @@ export default class PauseOnHover extends Component {
             </div>
             <div>
               <Link
-                to="/product_detail/11"
+                to="/product_detail/104"
                 style={{ textDecoration: 'none', color: 'rgb(161, 113, 98)' }}
               >
                 <Card5 />
@@ -72,7 +72,7 @@ export default class PauseOnHover extends Component {
             </div>
             <div>
               <Link
-                to="/product_detail/12"
+                to="/product_detail/78"
                 style={{ textDecoration: 'none', color: 'rgb(161, 113, 98)' }}
               >
                 <Card6 />

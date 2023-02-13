@@ -5,19 +5,11 @@
     background-color: rgb(238, 238, 238);
 }
 
-@media  (min-width: 1440px){
 
-  
-}
 
 .detail_contorl {
     max-width: 1015px;
-    min-width: 1015px;
     
-
-    
-    
-   
 }
 
 
@@ -61,5 +53,42 @@
     width: 100%;
     height: auto;
 }
+
+@media  (max-width: 768px){
+
+    .detail_contorl{
+        width: 400px;
+        margin-top: 70px;
+    }
+    .path_box{
+        display: none;
+    }
+  .product_detail{
+    width: 400px;
+    padding: 0px;
+  }
+
+  .product_box{
+    display: flex;
+    flex-direction: column;
+    
+  }
+
+  .btn_contorl{
+    margin-right: 10px;
+  }
+
+  .detail_content{
+    width: 400px;
+    margin: 0px;
+  }
+  .specification_box{
+    width: 400px;
+  }
+  .orther_product{
+    display: none;
+  }
+    
+  }
 
 
