@@ -18,10 +18,11 @@ function CouponCard2(props) {
       <Row
         className={`text-nowrap align-items-center justify-content-center text-center`}
       >
-        <Col className={`col-7 `}>
-          <h3 className={`my-auto `}>{props.title}</h3>
+
+        <Col className={`col p-2 p-md-0 text-end`}>
+          <h3 className={`my-auto`}>{props.title}</h3>
         </Col>
-        <Col className={`col-4 `}>
+        <Col className={`col-4 col-md-5 ps-2 ps-md-4 text-start`}>
           <Button
             variant="chicofgo-green"
             className={`p-1 px-3`}
@@ -41,3 +42,4 @@ function CouponCard2(props) {
 }
 
 export default CouponCard2;
+
