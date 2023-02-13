@@ -18,8 +18,7 @@ function MessageProvider(props) {
       const output = response.data.map((item) => {
         return {
           ...item,
-
-          message_time: item.message_time.split('T16:00:00.000Z'),
+          message_time: item.message_time.substring(0, 10),
         };
       });
       setMessage(output);
