@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Container,
   Row,
@@ -12,24 +12,51 @@ import {
 } from 'react-bootstrap';
 import BusinessSiderbar from '../Components/BusinessSiderbar';
 import ProductsList from './Components/ProductsList';
+import axios from 'axios';
 import './BusinessProducts.scss';
 
 function BusinessProducts() {
   const [searchName, setSearchName] = useState('');
-  const [searchNumber, setSearchNumber] = useState('');
+  const [searchPackage, setSearchPackage] = useState('');
   const [searchType, setSearchType] = useState('');
+  const [type, setType] = useState([]);
+  const [boxing, setBoxing] = useState([]);
 
   const handleChangeName = (e) => {
     setSearchName(e.target.value);
   };
 
-  const handleChangeNumber = (e) => {
-    setSearchNumber(e.target.value);
-  };
-
   const handleChangeType = (e) => {
     setSearchType(e.target.value);
   };
+
+  const handleChangePackage = (e) => {
+    setSearchPackage(e.target.value);
+  };
+
+  //類別
+  useEffect(() => {
+    async function gettype() {
+      let response = await axios.get(
+        `http://localhost:3001/api/business/products/type`
+      );
+      setType(response.data);
+    }
+    gettype();
+  }, []);
+  console.log(type);
+
+  //包裝
+  useEffect(() => {
+    async function getpackage() {
+      let response = await axios.get(
+        `http://localhost:3001/api/business/products/package`
+      );
+      setBoxing(response.data);
+    }
+    getpackage();
+  }, []);
+  console.log(boxing);
 
   return (
     <div className="chicofgo_white">
@@ -53,43 +80,61 @@ function BusinessProducts() {
                   />
                 </InputGroup>
               </Col>
-              <Col sm={6} className="my-2">
-                <InputGroup className="mb-3">
-                  <div className="d-flex align-items-center mx-2">商品貨號</div>
-                  <Form.Control
-                    aria-label="Example text with button addon"
-                    aria-describedby="basic-addon1"
-                    placeholder="請輸入商品貨號"
-                    value={searchNumber}
-                    onChange={handleChangeNumber}
-                  />
-                </InputGroup>
-              </Col>
-              <Col sm={6} className="my-2">
-                <InputGroup className="mb-3">
-                  <div className="d-flex align-items-center mx-2">商品類別</div>
-                  <Form.Control
-                    aria-label="Example text with button addon"
-                    aria-describedby="basic-addon1"
-                    placeholder="請輸入商品類別"
-                    value={searchType}
+              <Col sm={6}></Col>
+              <InputGroup className="align-items-center pb-2 ms-2">
+                商品類別
+                <Col sm={3} className="my-2 mx-2">
+                  <Form.Select
+                    aria-label="Default select example"
+                    size="sm"
+                    className=""
+                    name="singleType"
                     onChange={handleChangeType}
-                  />
-                </InputGroup>
-              </Col>
+                  >
+                    <option>類別</option>
+                    {type.map((type) => {
+                      return (
+                        <option value={type.tid} key={type.tid}>
+                          {type.type}
+                        </option>
+                      );
+                    })}
+                  </Form.Select>
+                </Col>
+                <Col sm={3} className="my-2">
+                  <Form.Select
+                    aria-label="Default select example"
+                    size="sm"
+                    className="me-2"
+                    name="singlePackage"
+                    onChange={handleChangePackage}
+                  >
+                    <option>包裝</option>
+                    {boxing.map((boxing) => {
+                      return (
+                        <option value={boxing.pid} key={boxing.pid}>
+                          {boxing.package}
+                        </option>
+                      );
+                    })}
+                  </Form.Select>
+                </Col>
+              </InputGroup>
               <div className="chicofgo_gray d-flex text-center py-2">
                 <Col className="option">商品名稱</Col>
-                <Col className="option">商品貨號</Col>
+                <Col className="option">商品類別</Col>
+                <Col className="option">商品包裝</Col>
                 <Col className="option">價錢</Col>
                 <Col className="option">商品數量</Col>
-                <Col className="option">已售出</Col>
                 <Col className="option">狀態</Col>
               </div>
             </Row>
             <ProductsList
               searchName={searchName}
-              searchNumber={searchNumber}
               searchType={searchType}
+              searchPackage={searchPackage}
+              boxing={boxing}
+              type={type}
             />
           </Col>
         </Row>
