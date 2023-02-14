@@ -13,7 +13,8 @@ import axios from 'axios';
 import { useAuth } from '../../Contexts/AuthContext';
 
 function Login() {
-  const { isLoggedIn, setUsername, setIsLoggedIn, setUserid } = useAuth();
+  const { isLoggedIn, setUsername, setIsLoggedIn, setUserid, setUserRank } =
+    useAuth();
   const [loginErrors, setLoginErrors] = useState(false);
   const [loginCheckbox, setLoginCheckbox] = useState(false);
 
@@ -27,15 +28,15 @@ function Login() {
     isLoggedIn ? navigate('/') : console.log('尚未登入');
   }, [isLoggedIn, navigate]);
 
-  // const [member, setMember] = useState({
-  //   account: 'c8763',
-  //   password: 'test1234',
-  // });
+  const [member, setMember] = useState({
+    account: 'c8763',
+    password: 'test1234',
+  });
 
   //-----------記住帳號功能-------------
-  const [member, setMember] = useState({
-    account: localStorage.getItem('accountRememberMe') || '',
-  });
+  // const [member, setMember] = useState({
+  //   account: localStorage.getItem('accountRememberMe') || '',
+  // });
   //-----------記住帳號功能-------------
 
   function handleChange(e) {
@@ -62,13 +63,14 @@ function Login() {
           withCredentials: true,
         }
       );
-      // console.log(response.data);
+      console.log(response.data);
       // console.log(response.status);
       if (response.status === 200) {
         console.log('登入成功');
         setIsLoggedIn(true);
         setUsername(response.data.member.name);
         setUserid(response.data.member.id);
+        setUserRank(response.data.member.rank);
         navigate(-1);
       }
     } catch (e) {

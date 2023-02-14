@@ -12,12 +12,12 @@ import axios from 'axios';
 function Login() {
   const navigate = useNavigate();
   const [member, setMember] = useState({
-    // account: 'c8763333',
-    // email: '7788@gmail.com',
-    // phone: '0912345678',
-    // name: '阿明',
-    // password: 'test1234',
-    // confirmPassword: 'test1234',
+    account: 'c8763',
+    email: '7788@gmail.com',
+    phone: '0912345678',
+    name: '阿明',
+    password: 'test1234',
+    confirmPassword: 'test1234',
   });
 
   const [regErrors, setregErrors] = useState({

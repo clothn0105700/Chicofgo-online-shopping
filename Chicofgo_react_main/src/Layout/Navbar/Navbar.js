@@ -12,12 +12,24 @@ import React from 'react';
 import axios from 'axios';
 
 function ChicofgoNavBar() {
-  const { isLoggedIn, username, setIsLoggedIn, userRank } = useAuth();
+  const {
+    isLoggedIn,
+    setIsLoggedIn,
+    username,
+    setUsername,
+    userid,
+    setUserid,
+    userRank,
+    setUserRank,
+  } = useAuth();
   async function handleLogout() {
     await axios.get('http://localhost:3001/api/auth/logout', {
       withCredentials: true,
     });
     setIsLoggedIn(false);
+    setUserid('');
+    setUsername('');
+    setUserRank('');
   }
 
   return (

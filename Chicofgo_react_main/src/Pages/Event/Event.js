@@ -15,19 +15,19 @@ function Event() {
       />
       <Carousels
         showImg={['Event2-1.png', 'Event2-2.png', 'Event2-3.png']}
-        srcollTo={window.innerHeight}
+        srcollTo={window.innerHeight - 66}
         changeDelay={2000}
         fade={true}
       />
       <Carousels
         showImg={['Event3-1.png', 'Event3-2.png', 'Event3-3.png']}
-        srcollTo={2 * window.innerHeight}
+        srcollTo={2 * window.innerHeight - 132}
         changeDelay={2000}
         fade={true}
       />
       <Carousels
         showImg={['Event4-1.png', 'Event4-2.png']}
-        srcollTo={3 * window.innerHeight}
+        srcollTo={3 * window.innerHeight - 198}
         changeDelay={2000}
         fade={true}
       />

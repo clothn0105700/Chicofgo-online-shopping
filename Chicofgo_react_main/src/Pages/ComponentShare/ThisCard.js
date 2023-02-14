@@ -17,8 +17,11 @@ function ThisCard(props) {
   const [isShow, setIsShow] = useState(false);
   const [showMsg, setShowMsg] = useState('');
   const handleClose = () => setIsShow(false);
+  const [isShowC, setIsShowC] = useState(false);
+  const [showMsgC, setShowMsgC] = useState('');
+  const handleCloseC = () => setIsShowC(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     async function getProductData() {
       try {
         let response = await axios.get(
@@ -80,8 +83,39 @@ function ThisCard(props) {
       setIsShow(true);
     }
   }
+  //加入收藏
+  async function sendCollect() {
+    if (isLoggedIn) {
+      try {
+        let response = await axios.post(
+          'http://localhost:3001/api/members/sendUserCollect',
+          {
+            product_id: backendData.product_id,
+            member_id: userid,
+            // cartPrice: backendData.price,
+            // cartQuantity: 1,
+          }
+        );
+        if (response.data.result === 'ok') {
+          setIsShowC(true);
+          setShowMsgC('成功加入收藏');
+        } else if (response.data.result === 'been added') {
+          setIsShowC(true);
+          setShowMsgC('已加入過收藏囉，看看其他商品吧');
+        } else {
+          setIsShowC(true);
+          setShowMsgC('加入失敗');
+        }
+        console.log(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      setIsShow(true);
+    }
+  }
   return (
-    <Card className={`${style.thisCard} m-0`}>
+    <Card className={`${style.thisCard} m-0 mx-auto`}>
       <Link
         className={`${style.LinkHover} text-decoration-none chicofgo_dark_font chicofgo-font`}
         to={`/products/product_detail/${product_id}`}
@@ -113,9 +147,11 @@ function ThisCard(props) {
             </span>
           </Col>
           <Col className={`col-3`}>
-            <span className={`chicofgo_brown_font`}>
-              {/* <FaBookmark /> */}
-            </span>
+            <div className={`${style.useFinger}`} onClick={sendCollect}>
+              <span className={`chicofgo_brown_font`}>
+                <FaBookmark />
+              </span>
+            </div>
           </Col>
           <Col className={`col-3`}>
             <div className={`${style.useFinger}`} onClick={sendCart}>
@@ -146,6 +182,32 @@ function ThisCard(props) {
               to="/login"
               variant="outline-chicofgo-green"
               onClick={handleClose}
+            >
+              前往登入
+            </Button>
+          )}
+        </Modal.Footer>
+      </Modal>
+      {/* 彈出視窗-加入收藏 */}
+      <Modal show={isShowC} onHide={handleCloseC} centered size="sm">
+        <Modal.Header closeButton>
+          <Modal.Title className={`fs-5 mx-1`}>加入收藏</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className={`mx-1`}>
+          {isLoggedIn ? showMsgC : '尚未登入,請登入後開始收藏!'}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="outline-chicofgo-brown" onClick={handleCloseC}>
+            關閉
+          </Button>
+          {isLoggedIn ? (
+            ''
+          ) : (
+            <Button
+              as={Link}
+              to="/login"
+              variant="outline-chicofgo-green"
+              onClick={handleCloseC}
             >
               前往登入
             </Button>

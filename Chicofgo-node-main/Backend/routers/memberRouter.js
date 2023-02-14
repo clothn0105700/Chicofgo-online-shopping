@@ -423,25 +423,7 @@ router.post('/addresschange', checkLogin, addresschangeRules, async (req, res, n
 });
 
 router.use('/getreview', checkLogin, async (req, res, next) => {
-  console.log('getreview', req.body);
-  // console.log('I am session', req.session.member.id);
-  // let [myaddressDatas] = await pool.execute('SELECT * FROM user_address_county');
-  // let [myaddressDatas2] = await pool.execute('SELECT * FROM user_address_district');
-  // let [oldAddressDatas] = await pool.execute('SELECT * FROM user_member WHERE id = ?', [req.session.member.id]);
-  // let oldAddressData = oldAddressDatas[0];
-  // if (myaddressDatas.length > 0) {
-  //   return res.json({
-  //     county: myaddressDatas,
-  //     district: myaddressDatas2,
-  //     address: oldAddressData.address,
-  //     name: oldAddressData.name,
-  //     phone: oldAddressData.phone,
-  //   });
-  // } else {
-  //   return res.status(401).json({
-  //     msg: '沒有資料喔',
-  //   });
-  // }
+  // console.log('getreview', req.body);
 });
 
 router.post('/sendreview', checkLogin, async (req, res, next) => {
@@ -479,8 +461,45 @@ router.post('/sendreview', checkLogin, async (req, res, next) => {
   });
 });
 
+router.use('/sendUserCollect', async (req, res, next) => {
+  let [collectData] = await pool.execute('SELECT * FROM user_collect WHERE product_id= ? AND member_id = ?', [req.body.product_id, req.body.member_id]);
+  console.log('reviewData', collectData);
+  try {
+    if (collectData.length === 0) {
+      console.log('沒有舊資料');
+      let insertCollect = await pool.execute('INSERT INTO user_collect (product_id, member_id, valid) VALUES (?, ?, ?);', [req.body.product_id, req.body.member_id, 1]);
+      // console.log('insertCollect新增結果', insertCollect);
+      res.json({ result: 'ok' });
+    } else {
+      // let updateCollect = await pool.execute('UPDATE user_collect SET valid= ? WHERE product_id=? AND member_id = ?;', [1, req.body.product_id, req.session.member.id]);
+      // console.log('updateResult更新結果', updateResult);
+      res.json({ result: 'been added' });
+      return;
+    }
+  } catch (e) {
+    console.log(e); //對
+    res.json({ result: 'fail' });
+  }
+});
 
-
-
+router.get('/getUserCollect', checkLogin, async (req, res, next) => {
+  let [userCollectDatas] = await pool.execute('SELECT * FROM user_collect WHERE valid = ? AND member_id = ?', [1, req.session.member.id]);
+  console.log(userCollectDatas);
+  let output = [];
+  if (userCollectDatas.length > 0) {
+    const newObjects = userCollectDatas.map((obj) => {
+      output = [...output, obj.product_id];
+    });
+    return res.json(output);
+  } else {
+    return res.status(400).json({
+      errors: [
+        {
+          msg: '無資料',
+        },
+      ],
+    });
+  }
+});
 
 module.exports = router;

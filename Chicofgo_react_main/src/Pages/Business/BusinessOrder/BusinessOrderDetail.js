@@ -47,9 +47,7 @@ function BusinessOrder() {
               </Col>
               <Row className="text-center border-top border-bottom ms-1 py-3">
                 <Col sm={3}>圖片</Col>
-                <Col sm={3}>
-                  【情人節禮物首選】 經典香水禮盒 過年送禮生日禮物男女都適合
-                </Col>
+                <Col sm={3}>{data.name}</Col>
                 <Col sm={3}>x1</Col>
                 <Col sm={3}>790</Col>
               </Row>
