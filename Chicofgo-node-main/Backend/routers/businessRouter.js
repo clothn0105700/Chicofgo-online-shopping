@@ -74,7 +74,7 @@ const uploader = multer({
 //訂單列表
 router.get('/order', async (req, res, next) => {
     console.log('這裡是 /api/order')
-    let [data] = await pool.query('SELECT *,shopping_cart.member, shopping_cart.order_id FROM order_list JOIN shopping_cart ON order_list.id = shopping_cart.order_id');
+    let [data] = await pool.query('SELECT *,shopping_cart.member,order_list.id AS memberInfo, shopping_cart.order_id FROM order_list JOIN shopping_cart ON order_list.id = shopping_cart.order_id');
       // console.log(data);
       const newObjects = data.map((obj) => {
         const date = new Date(obj.time);
@@ -91,7 +91,8 @@ router.get('/order', async (req, res, next) => {
           price: obj.total_price,
           status: obj.status,
           name: obj.name,
-          member: obj.member
+          member: obj.member,
+          memberInfo: obj.memberInfo
         };
       });
       // console.log(newObjects);
@@ -100,10 +101,10 @@ router.get('/order', async (req, res, next) => {
 })
 
 //訂單細節頁
-router.get('/order/:orderId/:memberId', async(req, res, next) => {
+router.get('/order/:orderId/:memberId/:memberinfoId', async(req, res, next) => {
   console.log('memberId.orderId => ' , req.params.memberId , req.params.orderId);
   
-  let [orderDatas] = await pool.execute('SELECT * FROM order_list WHERE id = ? AND member_id = ?', [req.params.orderId, req.params.memberId]);
+  let [orderDatas] = await pool.execute('SELECT * FROM order_list WHERE id = ? AND member_id = ?', [req.params.memberinfoId, req.params.memberId]);
   const newObjects = orderDatas.map((obj) => {
     return {
       order_id: obj.id,
@@ -124,8 +125,13 @@ router.get('/order/:orderId/:memberId', async(req, res, next) => {
   let [products] = await pool.query('SELECT shopping_cart.*, product_list.* FROM shopping_cart JOIN product_list ON shopping_cart.product_id = product_list.id WHERE shopping_cart.member = ? AND shopping_cart.order_id = ?', [req.params.memberId, req.params.orderId])
 
   // console.log("資料",products)
-  console.log(orderDatas)
-  res.json(products, orderDatas)
+  // console.log(orderDatas)
+ 
+  const data = {
+    products: products,
+    orderDatas: orderDatas
+  };
+  res.json(data);
 
 })
 

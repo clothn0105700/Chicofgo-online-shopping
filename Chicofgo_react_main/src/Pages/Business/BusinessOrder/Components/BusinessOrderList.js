@@ -3,7 +3,8 @@ import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
-import './BusinessOrderList.scss';
+import style from './BusinessOrderList.module.scss';
+import '../../BusinessProducts/Components/pagination.scss';
 
 function BusinessOrderList(props) {
   const [orders, setOrders] = useState([]);
@@ -57,7 +58,7 @@ function BusinessOrderList(props) {
       {paginatedItems.map((order, index) => {
         return (
           <Row
-            className="text-center border-bottom align-items-center py-1 my-2 list"
+            className={`text-center border-bottom align-items-center py-1 my-2 ${style.list} `}
             key={order.id}
           >
             <Col className="mb-2 ">{order.time}</Col>
@@ -75,7 +76,7 @@ function BusinessOrderList(props) {
             </Col>
             <Col className="text-center">
               <Link
-                to={`/businessOrderDetail/${order.order_id}/${order.member}`}
+                to={`/businessOrderDetail/${order.order_id}/${order.member}/${order.memberInfo}`}
               >
                 <Button
                   className="mb-2 detail"

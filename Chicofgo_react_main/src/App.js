@@ -103,7 +103,7 @@ function App() {
               <Route path="businessOrder" element={<BusinessOrder />} />
 
               <Route
-                path="businessOrderDetail/:orderId/:memberId"
+                path="businessOrderDetail/:orderId/:memberId/:memberinfoId"
                 element={<BusinessOrderDetail />}
               />
 

@@ -12,7 +12,7 @@ import {
 } from 'react-bootstrap';
 import BusinessSiderbar from '../Components/BusinessSiderbar';
 import BusinessOrderList from './Components/BusinessOrderList';
-import './BusinessOrder.scss';
+import style from './BusinessOrder.module.scss';
 
 function BusinessOrder() {
   const [search, setSearch] = useState('');
@@ -40,7 +40,7 @@ function BusinessOrder() {
                 <h4>訂單管理</h4>
               </Col>
               <Col className="col-2"></Col>
-              <Col className="text-center col-2 button">
+              <Col className={`text-center col-2 ${style.button}`}>
                 <Button
                   variant="chicofgo-brown text-white"
                   value={''}
@@ -120,7 +120,7 @@ function BusinessOrder() {
                 <Col>編號</Col>
                 <Col>購買人</Col>
                 <Col>狀態</Col>
-                <Col className="control">操作</Col>
+                <Col className={`${style.control}`}>操作</Col>
               </div>
             </Row>
             <Col>

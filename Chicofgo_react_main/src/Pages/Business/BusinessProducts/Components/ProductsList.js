@@ -14,7 +14,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
-import './productsList.scss';
+import style from './productsList.module.scss';
+import './pagination.scss';
 
 function ProductsList(props) {
   const [products, setProducts] = useState([]);
@@ -139,18 +140,22 @@ function ProductsList(props) {
               {product.name}
             </Col>
             <Col sm={2} className="my-1">
+              <span className={`${style.select} py-4`}>種類：</span>
               {product.type}
             </Col>
             <Col sm={2} className="my-1">
+              <span className={`${style.select} py-4`}>包裝：</span>
               {product.package}
             </Col>
             <Col sm={2} className="my-1">
+              <span className={`${style.select} py-4`}>價格：</span>
               {product.price}
             </Col>
             <Col sm={2} className="my-1">
+              <span className={`${style.select} py-4`}>數量：</span>
               {product.amount}
             </Col>
-            <Col sm={2} className="text-center">
+            <Col md={2} className="text-center">
               {/* <Button
                       className="px-2 mx-1"
                       variant="chicofgo-brown text-white"
@@ -182,7 +187,7 @@ function ProductsList(props) {
 
             <Col className="pb-2">
               <Row className="justify-content-between text-center">
-                <Col sm={2} className="text-center">
+                <Col md={2} className="text-center">
                   <Link to={`/products/product_detail/${product.id}`}>
                     <Button
                       className="px-2 mx-1 btn-danger"
@@ -194,7 +199,7 @@ function ProductsList(props) {
                     </Button>
                   </Link>
                 </Col>
-                <Col sm={2} className="text-center">
+                <Col md={2} className="text-center">
                   <Button
                     className="px-2 mx-1 btn-danger"
                     id={product.id}
@@ -210,8 +215,8 @@ function ProductsList(props) {
         );
       })}
       <Row className="my-5 ">
-        <Col className="col-4"></Col>
-        <Col className="d-flex col-4">
+        <Col className="col-md-4"></Col>
+        <Col className="d-flex col-md-4">
           <ReactPaginate
             previousLabel={'<'}
             nextLabel={'>'}
@@ -234,7 +239,7 @@ function ProductsList(props) {
             renderOnZeroPageCount={null}
           />
         </Col>
-        <Col className="col-4"></Col>
+        <Col className="col-md-4"></Col>
       </Row>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
