@@ -20,8 +20,10 @@ function Home() {
   const { chooseCategory, setChooseCategory } = useProduct();
 
   const navigate = useNavigate();
-  let productsViewedItem =
-    JSON.parse(localStorage.getItem('productsViewed'))[0].productsViewed || [];
+  let localData = JSON.parse(localStorage.getItem('productsViewed')) || [
+    { userId: 99999, productsViewed: [] },
+  ];
+  let productsViewedItem = localData[0].productsViewed || [];
 
   return (
     <Container fluid>
