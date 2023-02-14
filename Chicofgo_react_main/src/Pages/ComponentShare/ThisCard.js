@@ -21,7 +21,7 @@ function ThisCard(props) {
   const [showMsgC, setShowMsgC] = useState('');
   const handleCloseC = () => setIsShowC(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     async function getProductData() {
       try {
         let response = await axios.get(
@@ -115,7 +115,7 @@ function ThisCard(props) {
     }
   }
   return (
-    <Card className={`${style.thisCard} m-0`}>
+    <Card className={`${style.thisCard} m-0 mx-auto`}>
       <Link
         className={`${style.LinkHover} text-decoration-none chicofgo_dark_font chicofgo-font`}
         to={`/products/product_detail/${product_id}`}
