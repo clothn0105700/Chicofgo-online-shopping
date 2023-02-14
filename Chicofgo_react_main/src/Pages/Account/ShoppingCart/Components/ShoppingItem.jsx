@@ -62,7 +62,7 @@ const ShoppingItem = ({
                   variant="chicofgo-green"
                   className={`mt-2 chicofgo_white_font `}
                 >
-                  進店逛逛
+                  商品詳細
                 </Button>
               </Col>
               <Col className={`col-12 col-xxl-6 ps-xxl-1`}>
@@ -70,7 +70,7 @@ const ShoppingItem = ({
                   variant="chicofgo-brown"
                   className={`mt-2 chicofgo_white_font `}
                 >
-                  聯絡店家
+                  加入收藏
                 </Button>
               </Col>
             </Row>

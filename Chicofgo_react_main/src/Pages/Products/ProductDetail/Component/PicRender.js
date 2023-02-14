@@ -7,7 +7,10 @@ import { v4 } from 'uuid';
 import { Link, useLocation } from 'react-router-dom';
 
 const PicRender = (props) => {
-  const { product_id } = props;
+  const location = useLocation();
+  const urlArray = location.pathname.split('/');
+  const id = parseInt(urlArray[urlArray.length - 1]);
+  const product_id = id;
   const [imageUrls, setImageUrls] = useState([]);
   useEffect(() => {
     const fetchImages = async (index) => {
