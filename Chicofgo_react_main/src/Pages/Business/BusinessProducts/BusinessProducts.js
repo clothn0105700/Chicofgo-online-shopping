@@ -44,7 +44,9 @@ function BusinessProducts() {
     }
     gettype();
   }, []);
-  console.log(type);
+  // console.log(type);
+  console.log(searchType);
+  console.log(searchPackage)
 
   //包裝
   useEffect(() => {
@@ -56,7 +58,7 @@ function BusinessProducts() {
     }
     getpackage();
   }, []);
-  console.log(boxing);
+  // console.log(boxing);
 
   return (
     <div className="chicofgo_white">
@@ -89,12 +91,13 @@ function BusinessProducts() {
                     size="sm"
                     className=""
                     name="singleType"
+                    value={type.type}
                     onChange={handleChangeType}
                   >
                     <option>類別</option>
                     {type.map((type) => {
                       return (
-                        <option value={type.tid} key={type.tid}>
+                        <option value={type.type} key={type.type}>
                           {type.type}
                         </option>
                       );
@@ -107,12 +110,13 @@ function BusinessProducts() {
                     size="sm"
                     className="me-2"
                     name="singlePackage"
+                    value={boxing.package}
                     onChange={handleChangePackage}
                   >
                     <option>包裝</option>
                     {boxing.map((boxing) => {
                       return (
-                        <option value={boxing.pid} key={boxing.pid}>
+                        <option value={boxing.package} key={boxing.package}>
                           {boxing.package}
                         </option>
                       );
@@ -133,8 +137,6 @@ function BusinessProducts() {
               searchName={searchName}
               searchType={searchType}
               searchPackage={searchPackage}
-              boxing={boxing}
-              type={type}
             />
           </Col>
         </Row>

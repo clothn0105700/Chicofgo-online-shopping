@@ -36,16 +36,20 @@ function ProductsList(props) {
         ? product
         : product.name.toLowerCase().includes(props.searchName);
     })
-    // .filter((product) => {
-    //   return props.searchType.toLowerCase() === ''
-    //     ? product
-    //     : product.type.toLowerCase().includes(props.searchType);
-    // })
-    // .filter((product) => {
-    //   return props.searchPackage.toLowerCase() === ''
-    //     ? product
-    //     : product.package.toLowerCase().includes(props.searchPackage);
-    // })
+    .filter((product) => {
+      return props.searchType === ''
+        ? product
+        : props.searchType === '類別'
+        ? product
+        : product.type === props.searchType;
+    })
+    .filter((product) => {
+      return props.searchPackage === ''
+        ? product
+        : props.searchType === '包裝'
+        ? product
+        : product.package === props.searchPackage;
+    })
     .filter((product) => {
       return product.valid < 2;
     });
@@ -105,18 +109,6 @@ function ProductsList(props) {
     }
   };
 
-  //刪除商品
-  // const handleDelete = async (productId) => {
-  //   try {
-  //     const responseDelete = await axios.put(
-  //       `http://localhost:3001/api/business/products/delete/${productId}`
-  //     );
-  //     setShow(true);
-  //     console.log(responseDelete);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
   const handleDelete = async (productId) => {
     try {
       const responseDelete = await axios.put(
@@ -132,13 +124,7 @@ function ProductsList(props) {
     }
   };
 
-  const types = props.type.map((map) => map.tid);
-  const boxings = props.boxing.map((map) => map.pid);
-
-  console.log(handleOn);
-  // console.log('type', types);
-  console.log('Newtype', types);
-  console.log('Newbox', boxings);
+  // console.log(handleGo)
   //取得陣列資料放進products
 
   return (
@@ -195,7 +181,19 @@ function ProductsList(props) {
             </Col>
 
             <Col className="pb-2">
-              <Row className="justify-content-end text-center">
+              <Row className="justify-content-between text-center">
+                <Col sm={2} className="text-center">
+                  <Link to={`/products/product_detail/${product.id}`}>
+                    <Button
+                      className="px-2 mx-1 btn-danger"
+                      id={product.id}
+                      value={product.valid}
+                      variant="chicofgo-green"
+                    >
+                      前往商品
+                    </Button>
+                  </Link>
+                </Col>
                 <Col sm={2} className="text-center">
                   <Button
                     className="px-2 mx-1 btn-danger"

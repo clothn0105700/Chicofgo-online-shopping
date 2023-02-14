@@ -27,7 +27,7 @@ function BusinessOrder() {
     setSelectedStatus(e.target.value);
   };
   // console.log(search);
-  // console.log(selectedStatus);
+  console.log(selectedStatus);
 
   return (
     <div className="chicofgo_white">
@@ -70,7 +70,7 @@ function BusinessOrder() {
               <Col className="text-center col-2">
                 <Button
                   variant="chicofgo-brown text-white"
-                  value="3"
+                  value="已完成"
                   onClick={handleSelect}
                 >
                   已完成

@@ -74,8 +74,8 @@ const uploader = multer({
 //訂單列表
 router.get('/order', async (req, res, next) => {
     console.log('這裡是 /api/order')
-    let [data] = await pool.query('SELECT * FROM order_list ');
-      // console.log(orderDatas);
+    let [data] = await pool.query('SELECT *,shopping_cart.member, shopping_cart.order_id FROM order_list JOIN shopping_cart ON order_list.id = shopping_cart.order_id');
+      // console.log(data);
       const newObjects = data.map((obj) => {
         const date = new Date(obj.time);
         const formattedDate = date.toLocaleDateString('zh-TW', {
@@ -85,13 +85,13 @@ router.get('/order', async (req, res, next) => {
         });
         
         return {
-          order_id: obj.id,
+          order_id: obj.order_id,
           number: obj.id + 735560800000,
           time: formattedDate,
           price: obj.total_price,
           status: obj.status,
-          name: obj.name
-
+          name: obj.name,
+          member: obj.member
         };
       });
       // console.log(newObjects);
@@ -100,16 +100,39 @@ router.get('/order', async (req, res, next) => {
 })
 
 //訂單細節頁
-router.get('/order/:orderId', async(req, res, next) => {
-  console.log('/order/:orderId => ' , req.params.orderId );
-  let [data] = await pool.query('SELECT * FROM order_list WHERE id=?', [req.params.orderId])
-  res.json(data)
+router.get('/order/:orderId/:memberId', async(req, res, next) => {
+  console.log('memberId.orderId => ' , req.params.memberId , req.params.orderId);
+  
+  let [orderDatas] = await pool.execute('SELECT * FROM order_list WHERE id = ? AND member_id = ?', [req.params.orderId, req.params.memberId]);
+  const newObjects = orderDatas.map((obj) => {
+    return {
+      order_id: obj.id,
+      name: obj.name,
+      phone: obj.phone,
+      pay: obj.pay,
+      send_information: obj.send_information,
+      pay_info: obj.pay_info,
+      bill_id: obj.bill_id,
+      address: obj.address,
+      coupon: obj.coupon_id,
+      status: obj.status,
+      total: obj.total_price,
+    };
+
+  });
+
+  let [products] = await pool.query('SELECT shopping_cart.*, product_list.* FROM shopping_cart JOIN product_list ON shopping_cart.product_id = product_list.id WHERE shopping_cart.member = ? AND shopping_cart.order_id = ?', [req.params.memberId, req.params.orderId])
+
+  // console.log("資料",products)
+  console.log(orderDatas)
+  res.json(products, orderDatas)
+
 })
 
 //商品列表
 router.get('/products', async (req, res, next) => {
   console.log('這裡是 /api/products')
-  let [data] = await pool.query('SELECT * FROM product_list');
+  let [data] = await pool.query('SELECT * FROM product_list JOIN product_type ON product_list.type = product_type.tid JOIN product_package ON product_list.package = product_package.pid');
   res.json(data)
 })
 

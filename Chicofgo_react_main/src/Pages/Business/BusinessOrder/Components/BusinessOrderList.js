@@ -23,9 +23,13 @@ function BusinessOrderList(props) {
         : order.name.toLowerCase().includes(props.search);
     })
     .filter((order) => {
-      return props.selectedStatus === ''
-        ? order
-        : order.status == props.selectedStatus;
+      if (props.selectedStatus === '') {
+        return order;
+      } else if (props.selectedStatus === '已完成') {
+        return order.status === 3 || order.status === 4 || order.status === 5;
+      } else {
+        return order.status == props.selectedStatus;
+      }
     });
 
   const paginatedItems = filteredOrders.slice(
@@ -47,7 +51,7 @@ function BusinessOrderList(props) {
   // console.log(props.search);
   // console.log(props.selectedStatus);
   // console.log(orders);
-
+  console.log('訂單', orders);
   return (
     <>
       {paginatedItems.map((order, index) => {
@@ -62,13 +66,17 @@ function BusinessOrderList(props) {
             <Col className="mb-2 ">
               {' '}
               {order.status === 1
-                ? '未出貨'
+                ? '待出貨'
                 : order.status === 2
-                ? '出貨中'
-                : '已出貨'}
+                ? '運送中'
+                : order.status === 3 || order.status === 4 || order.status === 5
+                ? '已完成'
+                : '未知狀態'}
             </Col>
             <Col className="text-center">
-              <Link to={`/businessOrderDetail/${order.order_id}`}>
+              <Link
+                to={`/businessOrderDetail/${order.order_id}/${order.member}`}
+              >
                 <Button
                   className="mb-2 detail"
                   variant="chicofgo-khaki text-white"
