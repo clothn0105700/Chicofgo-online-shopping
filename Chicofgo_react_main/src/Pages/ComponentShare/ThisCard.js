@@ -1,13 +1,12 @@
 import style from './ThisCard.module.scss';
 import { v4 } from 'uuid';
 import { FaShoppingCart, FaBookmark } from 'react-icons/fa';
-import { Card, Row, Col, Button, Container } from 'react-bootstrap';
+import { Card, Row, Col, Button, Container, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Contexts/AuthContext';
 import { minHeight } from '@mui/system';
-import Modal from 'react-bootstrap/Modal';
 
 function ThisCard(props) {
   const { isLoggedIn, userid } = useAuth();

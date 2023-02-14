@@ -35,10 +35,19 @@ const ProductDetail = () => {
 
     if (currentUserDataIndex === -1) {
       localStorage.removeItem('productsViewed');
-      localStorage.setItem(
-        'productsViewed',
-        JSON.stringify([{ userId: currentUserId, productsViewed: [detail.id] }])
-      );
+      if (detail.id) {
+        localStorage.setItem(
+          'productsViewed',
+          JSON.stringify([
+            { userId: currentUserId, productsViewed: [detail.id] },
+          ])
+        );
+      } else {
+        localStorage.setItem(
+          'productsViewed',
+          JSON.stringify([{ userId: currentUserId, productsViewed: [] }])
+        );
+      }
     } else {
       const currentUserData = existingData[currentUserDataIndex];
 

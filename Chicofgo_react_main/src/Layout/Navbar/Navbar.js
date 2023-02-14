@@ -30,6 +30,7 @@ function ChicofgoNavBar() {
     setUserid('');
     setUsername('');
     setUserRank('');
+    localStorage.removeItem('productsViewed');
   }
 
   return (
@@ -109,7 +110,7 @@ function ChicofgoNavBar() {
           </Button> */}
           <Button
             as={Link}
-            to={userRank == '2' ? '/businessOrder' : '/'}
+            to={userRank == '2' ? '/businessOrder' : '/member/collect/items'}
             variant=""
             className={`me-1 mb-1`}
           >

@@ -15,27 +15,41 @@ const registerRules = [
     .withMessage('帳號長度至少為 4')
     .isLength({ max: 15 })
     .withMessage('帳號長度最多為 15')
+    .notEmpty()
+    .withMessage('不得為空')
     .custom(async (value, { req }) => {
-      let [membersAccount] = await pool.execute('SELECT * FROM user_member WHERE account = ?', [value]);
-      if (membersAccount.length > 0) {
-        throw new Error('帳號已被註冊');
+      if (value) {
+        let [membersAccount] = await pool.execute('SELECT * FROM user_member WHERE account = ?', [value]);
+        if (membersAccount.length > 0) {
+          throw new Error('帳號已被註冊');
+        }
+        return true;
+      } else {
+        console.log('帳號欄位是空的');
       }
-      return true;
     }),
   body('email')
     .isEmail()
     .withMessage('請輸入正確格式的 Email')
     .isLength({ max: 30 })
     .withMessage('Email長度最多為 30')
+    .notEmpty()
+    .withMessage('不得為空')
     .custom(async (value, { req }) => {
-      let [membersEmail] = await pool.execute('SELECT * FROM user_member WHERE email = ?', [value]);
-      if (membersEmail.length > 0) {
-        throw new Error('email 已被註冊');
+      if (value) {
+        let [membersEmail] = await pool.execute('SELECT * FROM user_member WHERE email = ?', [value]);
+        if (membersEmail.length > 0) {
+          throw new Error('email 已被註冊');
+        }
+        return true;
+      } else {
+        console.log('email欄位是空的');
       }
-      return true;
     }),
 
   body('phone')
+    .notEmpty()
+    .withMessage('不得為空')
     .custom((value, { req }) => {
       var MobileReg = /^(09)[0-9]{8}$/;
       return value.match(MobileReg);
