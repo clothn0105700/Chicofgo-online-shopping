@@ -440,8 +440,8 @@ const List = () => {
           <div className={`${card_block} col-12 col-md-10 `}>
             <div className="search_box d-flex">
               <div
-                style={{ backgroundColor: 'rgb(161, 113, 98)' }}
-                className={`${productd_search} d-flex`}
+                style={{ backgroundColor: '' }}
+                className={`${productd_search} d-flex border rounded-3`}
               >
                 <Search>
                   <SearchIconWrapper>

@@ -25,8 +25,8 @@ const MoreCard = (props) => {
           slidesToShow: 2,
           slidesToScroll: 1,
           infinite: true,
-          dots: true,
-          centerMode: true,
+          dots: false,
+          // centerMode: true,
         },
       },
       {

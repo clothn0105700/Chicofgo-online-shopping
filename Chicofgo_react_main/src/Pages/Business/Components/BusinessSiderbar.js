@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import style from './BusinessSiderbar.module.scss';
 
 function BusinessSiderbar() {
   return (
-    <Col sm={3} className="vh-100 ">
+    <Col md={3} xs={12} className="">
       <div className="text-center d-flex justify-content-center">
-        <ul className="list-unstyled w-75 vh-100 d-flex flex-column">
+        <ul
+          className={`list-unstyled w-75 d-flex flex-column ${style.BusinessUl}`}
+        >
           <div className="bg-white">
             <li className="py-3 my-2 ">
               <Link
@@ -37,14 +40,14 @@ function BusinessSiderbar() {
                 賣場管理
               </Link>
             </li> */}
-            <li className="py-3 my-2 ">
+            {/* <li className="py-3 my-2 ">
               <Link
                 to="/businessReview"
                 className={`${style.BusinessSiderbarLink}`}
               >
                 賣場評價
               </Link>
-            </li>
+            </li> */}
             {/* <li className="py-3 my-2 ">
               <Link to="/businissCoupon" className={`${style.BusinessSiderbarLink}`}>
                 優惠券
