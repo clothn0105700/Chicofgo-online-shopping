@@ -82,6 +82,7 @@ const List = () => {
     list_sendCart,
     brands_show,
     brands_show2,
+    box1,
   } = styles;
 
   const goToTop = () => {
@@ -295,120 +296,154 @@ const List = () => {
         <Path pathObj={{ path: ['商品列表'] }} />
 
         <div className={`${list_control} row mx-2`}>
-          <div className={`${sidebar} col-md-2 d-flex flex-column `}>
-            <div className={`${block_brand} d-flex flex-column px-2`}>
-              <h4>品牌</h4>
+          <div
+            className={`${sidebar} col-md-2 d-flex flex-row flex-md-column  `}
+          >
+            <div className={`${box1}`}>
+              <div className={`${block_brand} d-flex flex-column px-2`}>
+                <h4>品牌</h4>
 
-              {brands
-                .filter((brand, index) => (showMore ? true : index <= 3))
-                .map((brand) => {
-                  return (
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value={brand.name}
-                        onChange={checkBrandHandler}
-                      />
-                      <label class="form-check-label" for="gridCheck1">
-                        {brand.name}
-                      </label>
-                    </div>
-                  );
-                })}
+                {brands
+                  .filter((brand, index) => (showMore ? true : index <= 3))
+                  .map((brand) => {
+                    return (
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          value={brand.name}
+                          onChange={checkBrandHandler}
+                        />
+                        <label class="form-check-label" for="gridCheck1">
+                          {brand.name}
+                        </label>
+                      </div>
+                    );
+                  })}
 
-              {/* <button className={`${brands_show} btn2`} onClick={clickHandler}>
-                {showMore ? '▲' : '▼'}
-              </button> */}
-              {!showMore && (
                 <button
-                  className={`${brands_show2} btn2`}
+                  className={`${brands_show} btn2 d-block d-md-none`}
                   onClick={clickHandler}
                 >
-                  更多 ▼
+                  {showMore ? 'close ▲' : 'open ▼'}
                 </button>
-              )}
-            </div>
+                {!showMore && (
+                  <button
+                    className={`${brands_show2} btn2 d-none d-md-block`}
+                    onClick={clickHandler}
+                  >
+                    更多 ▼
+                  </button>
+                )}
+              </div>
 
-            <div className={`${block_cate} d-flex flex-column px-2`}>
-              <h4>類別</h4>
-              {cates
-                .filter((cate, index) => (showMoreCate ? true : index <= 3))
-                .map((cate) => {
-                  return (
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value={cate.name}
-                        onChange={checkCateHandler}
-                      />
-                      <label class="form-check-label" for="gridCheck1">
-                        {cate.name}
-                      </label>
-                    </div>
-                  );
-                })}
-              {/* <button onClick={clickHandler}>{showMore ? '▲' : '▼'}</button> */}
-              {!showMoreCate && (
-                <button className="btn2" onClick={clickHandlerCate}>
-                  更多▼
+              <div className={`${block_cate} d-flex flex-column px-2`}>
+                <h4>類別</h4>
+                {cates
+                  .filter((cate, index) => (showMoreCate ? true : index <= 3))
+                  .map((cate) => {
+                    return (
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          value={cate.name}
+                          onChange={checkCateHandler}
+                        />
+                        <label class="form-check-label" for="gridCheck1">
+                          {cate.name}
+                        </label>
+                      </div>
+                    );
+                  })}
+                <button
+                  className="btn2 d-block d-md-none"
+                  onClick={clickHandlerCate}
+                >
+                  {showMoreCate ? 'close ▲' : 'open ▼'}
                 </button>
-              )}
+                {!showMoreCate && (
+                  <button
+                    className="btn2 d-none d-md-block"
+                    onClick={clickHandlerCate}
+                  >
+                    更多▼
+                  </button>
+                )}
+              </div>
             </div>
-
-            <div className={`${block_items} d-flex flex-column px-2`}>
-              <h4>包裝</h4>
-              {items
-                .filter((item, index) => (showMoreItem ? true : index <= 3))
-                .map((item) => {
-                  return (
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value={item.name}
-                        onChange={checkPackageHandler}
-                      />
-                      <label class="form-check-label" for="gridCheck1">
-                        {item.name}
-                      </label>
-                    </div>
-                  );
-                })}
-              {/* <button onClick={clickHandler}>{showMore ? '▲' : '▼'}</button> */}
-              {!showMoreItem && (
-                <button className="btn2" onClick={clickHandlerItem}>
-                  更多▼
+            <div className={`${box1}`}>
+              <div className={`${block_items} d-flex flex-column px-2`}>
+                <h4>包裝</h4>
+                {items
+                  .filter((item, index) => (showMoreItem ? true : index <= 3))
+                  .map((item) => {
+                    return (
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          value={item.name}
+                          onChange={checkPackageHandler}
+                        />
+                        <label class="form-check-label" for="gridCheck1">
+                          {item.name}
+                        </label>
+                      </div>
+                    );
+                  })}
+                <button
+                  className="btn2 d-block d-md-none"
+                  onClick={clickHandlerItem}
+                >
+                  {showMoreItem ? 'close ▲' : 'open ▼'}
                 </button>
-              )}
-            </div>
+                {!showMoreItem && (
+                  <button
+                    className="btn2 d-none d-md-block"
+                    onClick={clickHandlerItem}
+                  >
+                    更多▼
+                  </button>
+                )}
+              </div>
 
-            <div className={`${block_origin} d-flex flex-column px-2`}>
-              <h4>產地</h4>
-              {origins
-                .filter((origin, index) => (showMoreOrigin ? true : index <= 3))
-                .map((origin) => {
-                  return (
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        value={origin.name}
-                        onChange={checkOrginHandler}
-                      />
-                      <label class="form-check-label" for="gridCheck1">
-                        {origin.name}
-                      </label>
-                    </div>
-                  );
-                })}
-              {/* <button onClick={clickHandler}>{showMore ? '▲' : '▼'}</button> */}
-              {!showMoreOrigin && (
-                <button className="btn2" onClick={clickHandlerOrigin}>
-                  更多▼
+              <div className={`${block_origin} d-flex flex-column px-2`}>
+                <h4>產地</h4>
+                {origins
+                  .filter((origin, index) =>
+                    showMoreOrigin ? true : index <= 3
+                  )
+                  .map((origin) => {
+                    return (
+                      <div className="form-check">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          value={origin.name}
+                          onChange={checkOrginHandler}
+                        />
+                        <label class="form-check-label" for="gridCheck1">
+                          {origin.name}
+                        </label>
+                      </div>
+                    );
+                  })}
+                <button
+                  className="btn2 d-block d-md-none"
+                  onClick={clickHandlerOrigin}
+                >
+                  {showMoreOrigin ? 'close ▲' : 'open ▼'}
                 </button>
-              )}
+                {!showMoreOrigin && (
+                  <button
+                    className="btn2 d-none d-md-block"
+                    onClick={clickHandlerOrigin}
+                  >
+                    更多▼
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* <div className={`${block_price} d-flex flex-column px-2`}>
