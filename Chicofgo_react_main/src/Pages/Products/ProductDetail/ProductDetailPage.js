@@ -227,6 +227,7 @@ const ProductDetail = () => {
                     time={mes.message_time}
                     s={mes.speak}
                     name={mes.account}
+                    img={mes.img}
                   />
                 </Fragment>
               );

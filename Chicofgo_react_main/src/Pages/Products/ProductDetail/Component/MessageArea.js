@@ -5,7 +5,7 @@ import { v4 } from 'uuid';
 import { Image } from 'react-bootstrap';
 
 const MessageArea = (props) => {
-  const { rating, time, s, name } = props;
+  const { rating, time, s, name, img } = props;
   console.log(time);
   const numberRating = useMemo(() => {
     return Number.isNaN(parseInt(rating)) ? 1 : parseInt(rating);
@@ -31,10 +31,13 @@ const MessageArea = (props) => {
               alt=""
               width={150}
               height={150}
-              src={`http://localhost:3001/api/images/member/uploads/1676260514036.png`}
+              src={
+                img
+                  ? `http://localhost:3001/api/images/member/${img}`
+                  : require('../../../../Img/messagedefultimg.PNG')
+              }
               className={`border border-3 rounded-circle  ${main_pic}`}
             />
-
           </div>
           <div className={`${member_name} mt-3 text-center`}>{name}</div>
         </div>
