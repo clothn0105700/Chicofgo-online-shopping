@@ -29,7 +29,7 @@ function CollectItem() {
     }
     getCollectData();
   }, []);
-
+  
   return (
     <>
       {/* {cardInfo.map((info) => {
@@ -51,7 +51,7 @@ function CollectItem() {
         {collects.map((v, i) => {
           return (
             <Col className={` col-6 col-md-3 my-md-3 my-2`}>
-              <ThisCard product_id={i + 1} />
+              <ThisCard product_id={v} />
             </Col>
           );
         })}

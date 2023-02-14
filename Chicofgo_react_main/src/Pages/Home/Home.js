@@ -188,12 +188,12 @@ function Home() {
             <Col
               className={`${style.pageTwoBg} col-md-6 justify-content-center text-center px-5`}
             >
-              <span className={`${style.subTitle}`}>
+              <span className={`${style.subTitle} mb-md-5`}>
                 新春優惠價!眾多折扣商品
                 <br className={`d-none d-md-inline`} />
                 開放搶購!
               </span>
-              <div className={`py-3`}>
+              <div className={`py-3 my-xl-5`}>
                 <CardListS
                   showImg={[125, 130, 135, 140]}
                   cardHeight={'153px'}
