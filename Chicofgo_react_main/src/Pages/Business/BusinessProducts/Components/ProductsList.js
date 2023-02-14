@@ -8,6 +8,7 @@ import {
   Image,
   pagination,
   Modal,
+  InputGroup,
 } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -29,7 +30,27 @@ function ProductsList(props) {
     setCurrentPage(data.selected);
   };
 
-  const paginatedItems = products.slice(
+  const filteredOrders = products
+    .filter((product) => {
+      return props.searchName.toLowerCase() === ''
+        ? product
+        : product.name.toLowerCase().includes(props.searchName);
+    })
+    // .filter((product) => {
+    //   return props.searchType.toLowerCase() === ''
+    //     ? product
+    //     : product.type.toLowerCase().includes(props.searchType);
+    // })
+    // .filter((product) => {
+    //   return props.searchPackage.toLowerCase() === ''
+    //     ? product
+    //     : product.package.toLowerCase().includes(props.searchPackage);
+    // })
+    .filter((product) => {
+      return product.valid < 2;
+    });
+
+  const paginatedItems = filteredOrders.slice(
     currentPage * perPage,
     currentPage * perPage + perPage
   );
@@ -85,120 +106,118 @@ function ProductsList(props) {
   };
 
   //刪除商品
+  // const handleDelete = async (productId) => {
+  //   try {
+  //     const responseDelete = await axios.put(
+  //       `http://localhost:3001/api/business/products/delete/${productId}`
+  //     );
+  //     setShow(true);
+  //     console.log(responseDelete);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   const handleDelete = async (productId) => {
     try {
       const responseDelete = await axios.put(
-        `http://localhost:3001/api/business/products/delete/${productId}`
+        `http://localhost:3001/api/business/products/${productId}`,
+        {
+          valid: '2',
+        }
       );
-      setShow(true);
+      setValid(2);
       console.log(responseDelete);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const types = props.type.map((map) => map.tid);
+  const boxings = props.boxing.map((map) => map.pid);
+
   console.log(handleOn);
+  // console.log('type', types);
+  console.log('Newtype', types);
+  console.log('Newbox', boxings);
   //取得陣列資料放進products
 
   return (
     <>
-      {paginatedItems
-        .filter((product) => {
-          return props.searchName.toLowerCase() === ''
-            ? product
-            : product.name.toLowerCase().includes(props.searchName);
-        })
-        .filter((product) => {
-          return props.searchNumber.toLowerCase() === ''
-            ? product
-            : product.number.toLowerCase().includes(props.searchNumber);
-        })
-        .filter((product) => {
-          return props.searchType.toLowerCase() === ''
-            ? product
-            : product.name.toLowerCase().includes(props.searchType);
-        })
-        .map((product) => {
-          return (
-            <Row
-              className="text-center border-bottom align-items-center py-1 mt-1 d-flex"
-              key={product.id}
-            >
-              <Col sm={2} className="my-1">
-                {product.name}
-              </Col>
-              <Col sm={2} className="my-1">
-                <span className="select">商品貨號：</span>1
-              </Col>
-              <Col sm={2} className="my-1">
-                <span className="select">價錢</span>
-                {product.price}
-              </Col>
-              <Col sm={2} className="my-1">
-                <span className="select">商品數量：</span>
-                123
-              </Col>
-              <Col sm={2} className="my-1">
-                <span className="select">已售出：</span>
-                123
-              </Col>
-              <Col sm={2} className="my-1">
-                <span className="select">狀態：</span>
-                123
-              </Col>
-              <Col className="pb-2">
-                <Row className="justify-content-between text-center">
-                  <Col sm={2} className="text-center">
-                    <Button
-                      className="px-2 mx-1 btn-danger"
-                      id={product.id}
-                      value={product.valid}
-                      onClick={(e) => handleDelete(e.target.id)}
-                    >
-                      刪除
-                    </Button>
-                  </Col>
-                  <Col sm={2} className="text-center">
-                    {/* <Button
+      {paginatedItems.map((product) => {
+        return (
+          <Row
+            className="text-center border-bottom align-items-center py-1 mt-1 d-flex"
+            key={product.id}
+          >
+            <Col sm={2} className="my-1">
+              {product.name}
+            </Col>
+            <Col sm={2} className="my-1">
+              {product.type}
+            </Col>
+            <Col sm={2} className="my-1">
+              {product.package}
+            </Col>
+            <Col sm={2} className="my-1">
+              {product.price}
+            </Col>
+            <Col sm={2} className="my-1">
+              {product.amount}
+            </Col>
+            <Col sm={2} className="text-center">
+              {/* <Button
                       className="px-2 mx-1"
                       variant="chicofgo-brown text-white"
                     >
                       詳細
                     </Button> */}
-                    {product.valid === 1 ? (
-                      <Button
-                        className="px-2 mx-1"
-                        variant="chicofgo-khaki text-white"
-                        id={product.id}
-                        value={product.valid}
-                        onClick={(e) => handleOn(e.target.id)}
-                      >
-                        上架
-                      </Button>
-                    ) : (
-                      <Button
-                        className="px-2 mx-1"
-                        id={product.id}
-                        value={product.valid}
-                        variant="chicofgo-brown text-white"
-                        onClick={(e) => handleOff(e.target.id)}
-                      >
-                        下架
-                      </Button>
-                    )}
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          );
-        })}
+              {product.valid === 1 ? (
+                <Button
+                  className="px-2 mx-1"
+                  variant="chicofgo-khaki text-white"
+                  id={product.id}
+                  value={product.valid}
+                  onClick={(e) => handleOn(e.target.id)}
+                >
+                  上架
+                </Button>
+              ) : (
+                <Button
+                  className="px-2 mx-1"
+                  id={product.id}
+                  value={product.valid}
+                  variant="chicofgo-brown text-white"
+                  onClick={(e) => handleOff(e.target.id)}
+                >
+                  下架
+                </Button>
+              )}
+            </Col>
+
+            <Col className="pb-2">
+              <Row className="justify-content-end text-center">
+                <Col sm={2} className="text-center">
+                  <Button
+                    className="px-2 mx-1 btn-danger"
+                    id={product.id}
+                    value={product.valid}
+                    onClick={(e) => handleDelete(e.target.id)}
+                  >
+                    刪除
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        );
+      })}
       <Row className="my-5 ">
         <Col className="col-4"></Col>
         <Col className="d-flex col-4">
           <ReactPaginate
             previousLabel={'<'}
             nextLabel={'>'}
-            pageCount={Math.ceil(products.length / perPage)}
+            pageCount={Math.ceil(filteredOrders.length / perPage)}
             marginPagesDisplayed={2}
             pageRangeDisplayed={3}
             onPageChange={handlePageClick}

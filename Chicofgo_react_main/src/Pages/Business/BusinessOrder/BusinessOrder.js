@@ -27,7 +27,7 @@ function BusinessOrder() {
     setSelectedStatus(e.target.value);
   };
   // console.log(search);
-  console.log(selectedStatus);
+  // console.log(selectedStatus);
 
   return (
     <div className="chicofgo_white">
@@ -52,7 +52,7 @@ function BusinessOrder() {
               <Col className="text-center col-2">
                 <Button
                   variant="chicofgo-brown text-white"
-                  value="待出貨"
+                  value="1"
                   onClick={handleSelect}
                 >
                   待出貨
@@ -61,7 +61,7 @@ function BusinessOrder() {
               <Col className="text-center col-2">
                 <Button
                   variant="chicofgo-brown text-white"
-                  value="運送中"
+                  value="2"
                   onClick={handleSelect}
                 >
                   運送中
@@ -70,7 +70,7 @@ function BusinessOrder() {
               <Col className="text-center col-2">
                 <Button
                   variant="chicofgo-brown text-white"
-                  value="已完成"
+                  value="3"
                   onClick={handleSelect}
                 >
                   已完成

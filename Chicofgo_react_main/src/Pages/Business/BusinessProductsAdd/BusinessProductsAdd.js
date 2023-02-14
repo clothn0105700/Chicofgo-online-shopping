@@ -18,6 +18,7 @@ import axios from 'axios';
 function BusinessProductsAdd() {
   const [placeOfOrigin, setPlaceOfOrigin] = useState([]);
   const [type, setType] = useState([]);
+  const [boxing, setBoxing] = useState([]);
   //彈跳視窗
   const [show, setShow] = useState(false);
 
@@ -26,11 +27,14 @@ function BusinessProductsAdd() {
 
   //物件寫法
   const [addProduct, setAddProduct] = useState({
+    brand: '',
     name: '',
     singlePlace: '',
     singleType: '',
+    singlePackage: '',
     amount: '',
     price: '',
+    detail: '',
     introduction: '',
     photo: '',
   });
@@ -69,15 +73,29 @@ function BusinessProductsAdd() {
   }, []);
   console.log(type);
 
+  //包裝
+  useEffect(() => {
+    async function getpackage() {
+      let response = await axios.get(
+        `http://localhost:3001/api/business/products/package`
+      );
+      setBoxing(response.data);
+    }
+    getpackage();
+  }, []);
+  console.log(boxing);
+
   //上架，點擊按鈕把資料送到後端
   async function handleSubmitOn(e) {
     let formData = new FormData();
-
+    formData.append('brand', addProduct.brand);
     formData.append('name', addProduct.name);
     formData.append('singlePlace', addProduct.singlePlace);
     formData.append('singleType', addProduct.singleType);
+    formData.append('singlePackage', addProduct.singlePackage);
     formData.append('amount', addProduct.amount);
     formData.append('price', addProduct.price);
+    formData.append('detail', addProduct.detail);
     formData.append('introduction', addProduct.introduction);
     // formData.append('photo', addProduct.photo);
 
@@ -93,26 +111,32 @@ function BusinessProductsAdd() {
     console.log(response.data);
     //清空表單
     setAddProduct({
+      brand: '',
       name: '',
       singlePlace: '',
       singleType: '',
+      singlePackage: '',
       amount: '',
       price: '',
+      detail: '',
       introduction: '',
       photo: '',
     });
     //彈跳出視窗
     setShow(true);
   }
-
+  //新增並下架
   async function handleSubmitOff(e) {
     //有檔案的表單
     let formData = new FormData();
+    formData.append('brand', addProduct.brand);
     formData.append('name', addProduct.name);
     formData.append('singlePlace', addProduct.singlePlace);
     formData.append('singleType', addProduct.singleType);
+    formData.append('singlePackage', addProduct.singlePackage);
     formData.append('amount', addProduct.amount);
     formData.append('price', addProduct.price);
+    formData.append('detail', addProduct.detail);
     formData.append('introduction', addProduct.introduction);
     formData.append('price', addProduct.price);
     formData.append('photo', addProduct.photo);
@@ -124,11 +148,14 @@ function BusinessProductsAdd() {
     console.log(response.data);
     //清空表單
     setAddProduct({
+      brand: '',
       name: '',
       singlePlace: '',
       singleType: '',
+      singlePackage: '',
       amount: '',
       price: '',
+      detail: '',
       introduction: '',
       photo: '',
     });
@@ -160,6 +187,19 @@ function BusinessProductsAdd() {
               </Col>
               <Col sm={10} className="my-2">
                 <InputGroup className="align-items-center pb-2">
+                  品牌：
+                  <Form.Control
+                    size="sm"
+                    type="text"
+                    id="brand"
+                    name="brand"
+                    value={addProduct.brand}
+                    onChange={handleChange}
+                  />
+                </InputGroup>
+              </Col>
+              <Col sm={10} className="my-2">
+                <InputGroup className="align-items-center pb-2">
                   商品名稱：
                   <Form.Control
                     size="sm"
@@ -185,7 +225,7 @@ function BusinessProductsAdd() {
                     <option>產地</option>
                     {placeOfOrigin.map((origin) => {
                       return (
-                        <option key={origin.id} value={origin.id}>
+                        <option key={origin.oid} value={origin.oid}>
                           {origin.place}
                         </option>
                       );
@@ -202,7 +242,7 @@ function BusinessProductsAdd() {
                     <option>類別</option>
                     {type.map((type) => {
                       return (
-                        <option value={type.id} key={type.id}>
+                        <option value={type.tid} key={type.tid}>
                           {type.type}
                         </option>
                       );
@@ -211,12 +251,19 @@ function BusinessProductsAdd() {
                   <Form.Select
                     aria-label="Default select example"
                     size="sm"
-                    className=""
+                    className="me-2"
+                    name="singlePackage"
+                    value={addProduct.singlePackage}
+                    onChange={handleChange}
                   >
-                    <option>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>{' '}
+                    <option>包裝</option>
+                    {boxing.map((boxing) => {
+                      return (
+                        <option value={boxing.pid} key={boxing.pid}>
+                          {boxing.package}
+                        </option>
+                      );
+                    })}
                   </Form.Select>
                 </InputGroup>
               </Col>
@@ -245,6 +292,18 @@ function BusinessProductsAdd() {
                     onChange={handleChange}
                   />
                 </InputGroup>
+              </Col>
+              <Col sm={10} className="my-2">
+                <Form.Label>商品細節</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  type="text"
+                  id="detail"
+                  name="detail"
+                  value={addProduct.detail}
+                  onChange={handleChange}
+                />
               </Col>
               <Col sm={10} className="my-2">
                 <Form.Label>商品描述</Form.Label>

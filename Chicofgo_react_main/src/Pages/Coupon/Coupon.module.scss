@@ -5,6 +5,7 @@ $font-family_1: 'Roboto', sans-serif;
 $font-family_2: 'Noto Sans TC', sans-serif;
 
 @import 'https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Roboto:wght@400;700;900&display=swap';
+
 .couponContainer {
   background: rgb(54, 111, 84);
   font-family: $font-family_1;
@@ -14,17 +15,21 @@ $font-family_2: 'Noto Sans TC', sans-serif;
 .oneArea {
   background: rgb(166, 155, 132);
   border-radius: 30px;
+  padding: 20px 30px;
 }
+
 .oneAreaTitle {
   text-align: center;
   color: $color_1;
   font-weight: 900;
 }
+
 .mainPage {
-  // min-height: 100vh;
+  min-height: calc(100vh - 78px);
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   h1 {
     font-size: 40px;
     font-weight: 700;
@@ -32,24 +37,31 @@ $font-family_2: 'Noto Sans TC', sans-serif;
     color: $color_3;
   }
 }
-.firstPage {
-  min-height: 100vh;
-}
-.secendPage2 {
-  min-height: calc(100vh - 24px);
-}
-.row2 {
-  border-top: 12px rgb(166, 155, 132) dashed;
+
+
+
+.borderBottom {
   border-bottom: 12px rgb(166, 155, 132) dashed;
 }
-.row3 {
+
+
+.lightBg {
   background: rgb(248, 245, 234);
-}
-.threeAreaTitle {
-  text-align: center;
-  color: $color_2;
-  font-weight: 900;
+
   h1 {
     color: $color_2;
+
+  }
+}
+
+@media (max-width:768px) {
+  .oneArea {
+    padding: 10px 5px;
+  }
+
+  .mainPage {
+    h1 {
+      font-size: 28px;
+    }
   }
 }

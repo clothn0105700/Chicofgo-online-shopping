@@ -4,7 +4,7 @@ import styles from './PicRender.module.scss';
 // import littlePic2 from '../../../../Img/ProductsTest/test2.jpg';
 // import littlePic3 from '../../../../Img/ProductsTest/test3.jpg';
 import { v4 } from 'uuid';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const PicRender = (props) => {
   const location = useLocation();
