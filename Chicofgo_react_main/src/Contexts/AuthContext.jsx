@@ -44,6 +44,7 @@ const AuthContextProvider = (props) => {
         userid,
         setUserid,
         userRank,
+        setUserRank,
       }}
     >
       {props.children}

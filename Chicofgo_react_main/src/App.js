@@ -93,10 +93,10 @@ function App() {
                   <Route
                     index
                     element={
-                      <Navigate to="/member/collect/shop" replace={true} />
+                      <Navigate to="/member/collect/items" replace={true} />
                     }
                   />
-                  <Route path="shop" element={<CollectShop />} />
+                  {/* <Route path="shop" element={<CollectShop />} /> */}
                   <Route path="items" element={<CollectItem />} />
                 </Route>
               </Route>

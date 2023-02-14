@@ -15,27 +15,41 @@ import MessageArea from './Component/MessageArea';
 import axios from 'axios';
 import { useProduct } from '../../../Contexts/ProductProvider';
 import { useMessage } from '../../../Contexts/MessageProvider';
+import { useAuth } from '../../../Contexts/AuthContext';
 
 const ProductDetail = () => {
   const { products, getProducts } = useProduct();
   const { message, getMessage } = useMessage();
+  const { userid } = useAuth();
 
   useEffect(() => {
     // ---------------2/12新增 存入看過的產品---------------
-    // 取得已有資料
+
     const existingData =
       JSON.parse(localStorage.getItem('productsViewed')) || [];
+    const currentUserId = userid; // replace with actual user id
 
-    // 如果矩陣數量大於10，則刪除最舊的項目
-    if (existingData.length >= 10) {
-      existingData.shift();
-    }
-    // 判斷新增資料是否已存在
-    const isExisting = existingData.includes(detail.id);
+    const currentUserDataIndex = existingData.findIndex(
+      (item) => item.userId === currentUserId
+    );
 
-    // 如果不存在則新增
-    if (!isExisting) {
-      existingData.push(detail.id);
+    if (currentUserDataIndex === -1) {
+      localStorage.removeItem('productsViewed');
+      localStorage.setItem(
+        'productsViewed',
+        JSON.stringify([{ userId: currentUserId, productsViewed: [detail.id] }])
+      );
+    } else {
+      const currentUserData = existingData[currentUserDataIndex];
+
+      const isExisting = currentUserData.productsViewed.includes(detail.id);
+      if (!isExisting && detail.id != null) {
+        if (currentUserData.productsViewed.length >= 10) {
+          currentUserData.productsViewed.shift();
+        }
+        currentUserData.productsViewed.push(detail.id);
+      }
+      existingData[currentUserDataIndex] = currentUserData;
       localStorage.setItem('productsViewed', JSON.stringify(existingData));
     }
     // ------------------------------

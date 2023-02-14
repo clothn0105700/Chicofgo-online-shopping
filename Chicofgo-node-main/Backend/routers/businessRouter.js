@@ -18,8 +18,9 @@ router.use((req, res, next) => {
   });
 
 //生成檔案夾
-let fileNumber = 2001;
-let putPhoto = 2000;
+let fileNumber = 1087;
+let putPhoto = 1086;
+
 
 
 function createDirectory() {
@@ -45,7 +46,7 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     console.log('multer storage', file);
     const ext = file.originalname.split('.').pop();
-    cb(null, `coffee_1-${++counter}.${ext}`);
+    cb(null, `coffee_${putPhoto}-${++counter}.${ext}`);
   },
 })
 
@@ -73,8 +74,29 @@ const uploader = multer({
 //訂單列表
 router.get('/order', async (req, res, next) => {
     console.log('這裡是 /api/order')
-    let [data] = await pool.query('SELECT * FROM order_list');
-    res.json(data)
+    let [data] = await pool.query('SELECT * FROM order_list ');
+      // console.log(orderDatas);
+      const newObjects = data.map((obj) => {
+        const date = new Date(obj.time);
+        const formattedDate = date.toLocaleDateString('zh-TW', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        });
+        
+        return {
+          order_id: obj.id,
+          number: obj.id + 735560800000,
+          time: formattedDate,
+          price: obj.total_price,
+          status: obj.status,
+          name: obj.name
+
+        };
+      });
+      // console.log(newObjects);
+      return res.json(newObjects);
+    // res.json(data)
 })
 
 //訂單細節頁
@@ -103,15 +125,16 @@ router.put('/products/:productId', async (req, res, next) => {
 });
 
 //刪除商品
-router.put('/products/delete/:productId', async (req, res, next) => {
-  console.log('/order/delete/:productId => ', req.params.productId);
-  console.log('payload => ', req.body);
-  let [data] = await pool.query(
-    'DELETE FROM product_list WHERE id=?',
-    [req.params.productId]
-  );
-  res.json(data);
-});
+//硬刪除，會刪除資料庫的資料，和新增商品id會衝突，注意
+// router.put('/products/delete/:productId', async (req, res, next) => {
+//   console.log('/order/delete/:productId => ', req.params.productId);
+//   console.log('payload => ', req.body);
+//   let [data] = await pool.query(
+//     'DELETE FROM product_list WHERE id=?',
+//     [req.params.productId]
+//   );
+//   res.json(data);
+// });
 
 
 
@@ -129,7 +152,12 @@ router.get('/products/type', async (req, res, next) => {
   res.json(data)
 })
 
-
+//商品包裝
+router.get('/products/package', async (req, res, next) => {
+  console.log('這裡是 /api/products/package')
+  let [data] = await pool.query('SELECT * FROM product_package');
+  res.json(data)
+})
 
 
 
@@ -140,7 +168,7 @@ router.post('/productOn',uploader.array('photo'),async (req, res) => {
   console.log('POST /api/product photos', req.files);
   // req.body.productId, req.body.productName
   // 完成 insert
-  let results = await pool.query('INSERT INTO product_list (name, place_of_orgin, type, amount, price, introduction, valid) VALUES (?, ?, ? ,? ,? ,?, 0);', [req.body.name, req.body.singlePlace, req.body.type, req.body.amount, req.body.price, req.body.introduction]);
+  let results = await pool.query('INSERT INTO product_list (brand, name, place_of_orgin, type, package, amount, price, detail ,introduction, valid) VALUES (?, ?, ?, ?, ?, ? ,? ,? ,?, 0);', [req.body.brand, req.body.name, req.body.singlePlace, req.body.singleType, req.body.singlePackage, req.body.amount, req.body.price, req.body.detail , req.body.introduction]);
   console.log('POST product results', results);
   res.json({ result: 'ok' });
   createDirectory();
@@ -157,7 +185,7 @@ router.post('/productOff',uploader.array('photo'),async (req, res) => {
   console.log('POST /api/product photos', req.files);
   // req.body.productId, req.body.productName
   // 完成 insert
-  let results = await pool.query('INSERT INTO product_list (name, place_of_orgin, type, amount, price, introduction, valid) VALUES (?, ?, ? ,? ,? ,?, 1);', [req.body.name, req.body.singlePlace, req.body.type, req.body.amount, req.body.price, req.body.introduction]);
+  let results = await pool.query('INSERT INTO product_list (brand, name, place_of_orgin, type, package, amount, price, detail ,introduction, valid) VALUES (?, ?, ?, ? ,? ,? ,? , ?, ?, 1);', [req.body.brand, req.body.name, req.body.singlePlace, req.body.singleType, req.body.singlePackage, req.body.amount, req.body.price, req.body.detail, req.body.introduction]);
   console.log('POST product results', results);
   res.json({ result: 'ok' });
   createDirectory();
