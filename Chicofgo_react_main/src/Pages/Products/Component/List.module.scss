@@ -20,7 +20,7 @@ label {
 }
 
 .block_brand {
-  margin-top: 55px;
+  margin-top: 32px;
 }
 
 .block_cate {
@@ -94,4 +94,36 @@ label {
     margin-right: -70px;
     width: 600px;
   }
+
+  
+  .box1 {
+    width: 150px;
+   
+  }
+
+  .sidebar{
+
+   
+    justify-content:space-around
+    
+
+  }
+
+  .block_brand{
+    height: 340px;
+  }
+  .block_cate{
+    height: 270px;
+    margin: 0px;
+  }
+  .block_items {
+    
+    height: 340px;
+  }
+
+  .block_origin {
+    margin-top: 0px;
+  }
+
+
 }
