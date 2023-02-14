@@ -1,5 +1,6 @@
 import Card from 'react-bootstrap/Card';
 import CardGroup from 'react-bootstrap/CardGroup';
+import { Link, useNavigate } from 'react-router-dom';
 
 function CardListS(props) {
   const imgName = props.showImg;
@@ -7,23 +8,33 @@ function CardListS(props) {
     <>
       <CardGroup>
         {imgName.map((v, i) => {
+          let product_id = v;
           return (
-            <Card
-              className={`text-white`}
-              key={i}
-              style={{
-                border: '0px solid #000',
-              }}
-            >
-              <Card.Img
-                src={require('../../../Img/Home/' + v)}
-                alt="Card image"
+            <>
+              <Card
+                className={`text-white mx-2`}
+                key={i}
                 style={{
-                  height: props.cardHeight,
-                  objectFit: 'contain',
+                  border: '0px solid #000',
                 }}
-              />
-            </Card>
+              >
+                <Link
+                  className={``}
+                  to={`/products/product_detail/${product_id}`}
+                >
+                  <Card.Img
+                    // src={require('../../../Img/Home/' + v)}
+                    src={`http://localhost:3001/api/images/productImg/coffee_${product_id}/coffee_${product_id}-1.png`}
+                    alt="Card image"
+                    style={{
+                      // height: props.cardHeight,
+                      objectFit: 'contain',
+                    }}
+                    className={`rounded-5`}
+                  />
+                </Link>
+              </Card>
+            </>
           );
         })}
       </CardGroup>

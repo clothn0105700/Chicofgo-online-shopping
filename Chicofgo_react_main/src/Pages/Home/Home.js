@@ -9,10 +9,12 @@ import { cardInfo } from '../../Config/ProductConfig';
 import { useNavigate } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
 import Nav from 'react-bootstrap/Nav';
-import React from 'react';
+// import React from 'react';
 import Button from 'react-bootstrap/Button';
 import MoreCard from '../ComponentShare/MoreCard';
 import { useProduct } from '../../Contexts/ProductProvider';
+import React, { useEffect, useState, useMemo, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
 function Home() {
   const { chooseCategory, setChooseCategory } = useProduct();
@@ -127,7 +129,7 @@ function Home() {
                 <Col
                   className={`${style.pageTitle} text-center mt-5 mb-3 chicofgo_brown_font`}
                 >
-                  <p>本日精選商品!第二件6折</p>
+                  <p>本日精選商品!站長推薦</p>
                 </Col>
               </Row>
               <Row>
@@ -137,16 +139,7 @@ function Home() {
                   </p>
                   <CardListS
                     className={`start-5 position-relative`}
-                    showImg={[
-                      'producet1.png',
-                      'producet2.png',
-                      'producet3.png',
-                      'producet4.png',
-                      'producet5.png',
-                      'producet6.png',
-                      'producet7.png',
-                      'producet8.png',
-                    ]}
+                    showImg={[99, 100, 101, 102, 103, 104, 105, 106]}
                     cardHeight={'153px'}
                   />
                 </Col>
@@ -169,7 +162,7 @@ function Home() {
         <Col>
           <Row>
             <Col className={`${style.pageTitle2} text-center mt-5 mb-3`}>
-              <p>眾多優惠價商品任君挑選</p>
+              <p>眾多咖啡商品任君挑選</p>
             </Col>
           </Row>
           <Row className={`justify-content-center`}>
@@ -181,12 +174,12 @@ function Home() {
               </p>
               <CardListS
                 // className={`start-5`}
-                showImg={['producet2.png']}
+                showImg={[108]}
                 cardHeight={'153px'}
               />
               <CardListS
                 // className={`start-5`}
-                showImg={['producet3.png']}
+                showImg={[109]}
                 cardHeight={'153px'}
               />
             </Col>
@@ -195,22 +188,20 @@ function Home() {
             >
               <span className={`${style.subTitle}`}>
                 新春優惠價!眾多折扣商品
-                <br />
+                <br className={`d-none d-md-inline`} />
                 開放搶購!
               </span>
-              <CardListS
-                // className={`start-5`}
-                showImg={[
-                  'producet2.png',
-                  'producet3.png',
-                  'producet4.png',
-                  'producet5.png',
-                ]}
-                cardHeight={'153px'}
-              />
+              <div className={`py-3`}>
+                <CardListS
+                  showImg={[125, 130, 135, 140]}
+                  cardHeight={'153px'}
+                />
+              </div>
               <Button
-                bsPrefix="none"
-                className={`${style.pageTwoBtn} mt-4 px-5 py-1`}
+                variant="chicofgo-green"
+                className={`mt-4 px-5 py-1 chicofgo-font-700 rounded-5`}
+                as={Link}
+                to={'/products'}
               >
                 立即前往商場
               </Button>
@@ -230,28 +221,17 @@ function Home() {
                 <br />
                 開放搶購!
               </span>
-              <CardListS
-                showImg={[
-                  'producet2.png',
-                  'producet5.png',
-                  'producet3.png',
-                  'producet4.png',
-                ]}
-                cardHeight={'153px'}
-              />
+              <CardListS showImg={[145, 146, 147, 148]} cardHeight={'153px'} />
               <CardListS
                 // className={`start-5`}
-                showImg={[
-                  'producet4.png',
-                  'producet3.png',
-                  'producet2.png',
-                  'producet1.png',
-                ]}
+                showImg={[152, 156, 159, 162]}
                 cardHeight={'153px'}
               />
               <Button
-                bsPrefix="none"
-                className={`${style.pageTwoBtn} mt-5 mb-3  px-5 py-1`}
+                variant="chicofgo-green"
+                className={` mt-5 mb-3 px-5 py-1 chicofgo-font-700 rounded-5`}
+                as={Link}
+                to={'/products'}
               >
                 立即前往商場
               </Button>
@@ -259,20 +239,20 @@ function Home() {
             <Col
               className={`${style.pageTwoBg} col-3 text-center  d-none d-xl-inline`}
             >
-              <span className={`${style.subTitle}`}>日本熱銷新品</span>
-              <div className={`py-4`}>
-                <CardListS
-                  showImg={['producet4.png', 'producet3.png']}
-                  cardHeight={'153px'}
-                />
-                <CardListS
-                  showImg={['producet4.png', 'producet3.png']}
-                  cardHeight={'153px'}
-                />
+              <span className={`${style.subTitle}`}>
+                日本熱銷新品
+                <br />
+                立即購買!
+              </span>
+              <div className={`pt-4 pb-4`}>
+                <CardListS showImg={[200, 256]} cardHeight={'153px'} />
+                <CardListS showImg={[287, 288]} cardHeight={'153px'} />
               </div>
               <Button
-                bsPrefix="none"
-                className={`${style.pageTwoBtn} mt-4 mb-3 px-4 py-1`}
+                variant="chicofgo-green"
+                className={`mt-4 mb-3 px-4 py-1 chicofgo-font-700 rounded-5`}
+                as={Link}
+                to={'/products'}
               >
                 立即前往商場
               </Button>
@@ -301,7 +281,7 @@ function Home() {
           </Row>
           <Row className={`justify-content-center  text-center`}>
             <Col
-              className={`${style.pageBgGray} position-relative col-md-4 me-3 py-3`}
+              className={`${style.pageBgGray} position-relative mx-5 col-md-4 ms-md-2 me-md-3 py-3`}
             >
               <span className={`${style.subTitle} my-5`}>環境友善相關商品</span>
               <br />
@@ -311,17 +291,21 @@ function Home() {
                 <Image src={require('../../Img/Home/bird_friendly.png')} />
                 {/* ./Component/bird_friendly.png */}
               </p>
-              <Image
-                className={`${style.leftUpImg} m-3`}
-                src={require('../../Img/Home/producet2.png')}
-              />
-              <Image
-                className={`${style.leftUpImg} m-3`}
-                src={require('../../Img/Home/producet3.png')}
-              />
+              <Link to={`/products/product_detail/${946}`}>
+                <Image
+                  className={`${style.leftUpImg} m-3`}
+                  src={`http://localhost:3001/api/images/productImg/coffee_${946}/coffee_${946}-1.png`}
+                />
+              </Link>
+              <Link to={`/products/product_detail/${946}`}>
+                <Image
+                  className={`${style.leftUpImg} m-3`}
+                  src={`http://localhost:3001/api/images/productImg/coffee_${949}/coffee_${949}-1.png`}
+                />
+              </Link>
             </Col>
             <Col
-              className={`${style.pageBgGray} position-relative  col-md-3 ms-md-3 py-3`}
+              className={`${style.pageBgGray} position-relative  col-md-3 ms-md-3 py-3 d-none d-md-inline`}
             >
               <span className={`${style.subTitle} `}>環境友善認證</span>
               <p
@@ -338,7 +322,7 @@ function Home() {
           </Row>
           <Row className={`justify-content-center my-5`}>
             <Col
-              className={`${style.pageBgGray}  position-relative col-7 ms-3 py-3 d-flex `}
+              className={`${style.pageBgGray}  position-relative col-10 col-md-7 ms-md-3 py-3 d-flex `}
             >
               <p
                 class={`${style.leftUpImgBody} position-absolute top-5 start-0 translate-middle d-none d-xl-inline`}
