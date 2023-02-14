@@ -10,6 +10,8 @@ export function useProduct() {
 function ProductProvider(props) {
   const { children } = props;
   const [products, setProducts] = useState([]);
+  const [chooseCategory, setChooseCategory] = useState([]);
+
   // const [realIsLoading, setRealIsLoading] = useState(false);
   // const [errorMessage, setErrorMessage] = useState('');
   async function getProducts() {
@@ -32,7 +34,9 @@ function ProductProvider(props) {
   }
   return (
     // <ProductContext.Provider value={{ products, getProducts, realIsLoading, errorMessage }}>
-    <ProductContext.Provider value={{ products, getProducts }}>
+    <ProductContext.Provider
+      value={{ products, getProducts, chooseCategory, setChooseCategory }}
+    >
       {children}
     </ProductContext.Provider>
   );

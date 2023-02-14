@@ -8,6 +8,7 @@ import RatingButton from './RatingButton';
 import axios from 'axios';
 import { useAuth } from '../../Contexts/AuthContext';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function OrderStatus() {
   // ---訂單資料---
@@ -15,6 +16,7 @@ function OrderStatus() {
   let { order_id } = useParams();
   const [orderStatusInfo, setOrderStatusInfo] = useState([]);
   const [orderMemberInfo, setOrderMemberInfo] = useState([]);
+  const [orderReviewInfo, setOrderReviewInfo] = useState([]);
 
   useLayoutEffect(() => {
     async function getOrderData() {
@@ -25,9 +27,13 @@ function OrderStatus() {
             withCredentials: true,
           }
         );
-        console.log(response.data.products);
+        console.log('OrderStatus', response.data.products);
+        console.log('Member', response.data.member[0]);
+        console.log('review', response.data.review);
+
         setOrderMemberInfo(response.data.member[0]);
         setOrderStatusInfo(response.data.products);
+        setOrderReviewInfo(response.data.review);
       } catch (e) {
         if (e.response.status === 400) {
           console.log('訂單是空的');
@@ -46,13 +52,13 @@ function OrderStatus() {
       <Col>
         <Row>
           <Col>
-            <h1 className={`${style.orderTitle} text-center pt-5 py-4`}>
+            <h1 className={`${style.orderTitle} text-center pt-3 pb-2 py-md-5`}>
               訂單狀態
             </h1>
           </Col>
         </Row>
         <Row
-          className={`${style.orderStatusTitle} d-flex justify-content-between py-5 px-4`}
+          className={`${style.orderStatusTitle} d-flex justify-content-between py-2 py-md-5 px-4`}
         >
           {/* 內容1 */}
           {/* 出貨狀態 */}
@@ -156,14 +162,14 @@ function OrderStatus() {
           </Col>
         </Row>
         <Row
-          className={`chicofgo_gray justify-content-evenly text-center px-4 py-3 mb-3`}
+          className={`chicofgo_gray justify-content-evenly text-center px-0 px-md-4 pt-1 py-md-4 mb-md-3`}
         >
           <Col className={`col-7`}>商家/商品資訊</Col>
           <Col className={`col-5`}>
             <Row>
-              <Col className={`col`}>數量</Col>
-              <Col className={`col`}>單價</Col>
-              <Col className={`col-6`}></Col>
+              <Col className={`col text-nowrap`}>數量</Col>
+              <Col className={`col text-nowrap`}>單價</Col>
+              <Col className={`col-md-6`}></Col>
             </Row>
           </Col>
         </Row>
@@ -177,19 +183,19 @@ function OrderStatus() {
               return (
                 <Row
                   key={info.shoppingcart_id}
-                  className={`align-items-center ${style.poductInfo} px-4 py-3`}
+                  className={`align-items-center ${style.poductInfo} px-1 px-md-4 py-3`}
                 >
                   <Col className={`col-7 pe-0`}>
                     <Row
-                      className={`${style.contactShop} justify-content-start `}
+                      className={`${style.contactShop} justify-content-evenly `}
                     >
-                      <Col className={`col-4`}>
+                      <Col className={`d-none d-md-block col-4`}>
                         <span>
                           <SlCup />
-                          純粹飲品
+                          {info.brandname}
                         </span>
                       </Col>
-                      <Col className={`col-4 m-0`}>
+                      <Col className={`d-none d-md-block col-4 m-0`}>
                         <p>
                           <TbMessage2 />
                           聯絡商家
@@ -199,16 +205,16 @@ function OrderStatus() {
                     <Row
                       className={`align-items-center  justify-content-between`}
                     >
-                      <Col className={`${style.orderItemImg} col-3 p-0`}>
+                      <Col className={`${style.orderItemImg} col-3 p-0 d-none d-md-block `}>
                         <img
                           src={`http://localhost:3001/api/images/productImg/coffee_${info.product_id}/coffee_${info.product_id}-1.png`}
                           fluid
                           alt="pic"
                         />
                       </Col>
-                      <Col className={`${style.orderItem} col-9 `}>
+                      <Col className={`${style.orderItem} col-12 col-md-9 `}>
                         <p className={`text-truncate`}>{info.title}</p>
-                        <span>{info.desc}</span>
+                        <span className={`text-truncate`}>{info.desc}</span>
                       </Col>
                     </Row>
                   </Col>
@@ -230,10 +236,12 @@ function OrderStatus() {
                           ${info.price}
                         </p>
                       </Col>
-                      <Col className={`col-6 d-grid text-center`}>
+                      <Col className={`col-md-6 d-grid text-center`}>
                         <Button
                           variant="chicofgo-green"
-                          className={`my-1 py-1 chicofgo_white_font`}
+                          className={`my-1 py-1 chicofgo_white_font d-none d-md-block `}
+                          as={Link}
+                          to={`/products/product_detail/${info.product_id}`}
                         >
                           再買一次
                         </Button>
@@ -242,6 +250,9 @@ function OrderStatus() {
                         <RatingButton
                           member_id={userid}
                           product_id={info.product_id}
+                          orderId={orderMemberInfo.order_id}
+                          disabled={orderMemberInfo.status <= 3}
+                          // ||orderReviewInfo.includes(info.product_id.toString()
                         />
 
                         {/* <Button
@@ -268,9 +279,9 @@ function OrderStatus() {
             })}
           </Col>
         </Row>
-        <Row className={`chicofgo_gray  mt-5`}>
+        <Row className={`chicofgo_gray mt-md-5`}>
           {/* 收件人資訊 */}
-          <Col className={`pt-4 pb-3 mx-5 `}>
+          <Col className={`p-1 pt-md-4 pb-md-3 mx-0 mx-md-5`}>
             <Table
               borderless
               hover
@@ -340,10 +351,10 @@ function OrderStatus() {
             </Table>
           </Col>
         </Row>
-        <Row className={`chicofgo_gray mb-5 `}>
-          <Col className={`${style.bgYellow} px-5 my-3 text-end`}>
+        <Row className={`chicofgo_gray mb-4 `}>
+          <Col className={`${style.bgYellow} px-0 px-md-5 my-0 my-md-3 text-end`}>
             {/* 內容4 */}
-            <p className={`${style.priceTotal} my-4 `}>
+            <p className={`${style.priceTotal} my-2 my-md-4`}>
               訂單加總:<span className={`mx-2`}>${orderMemberInfo.total}</span>
             </p>
           </Col>

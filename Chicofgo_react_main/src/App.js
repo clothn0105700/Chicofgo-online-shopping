@@ -51,6 +51,7 @@ function App() {
               {/*product*/}
               <Route path="/products">
                 <Route path="/products" element={<Products />} />
+                <Route path="/products/category" element={<Products />} />
                 <Route
                   path="/products/product_detail/:product_id"
                   element={<ProductDetail />}
@@ -112,7 +113,6 @@ function App() {
                 element={<BusinessProductsAdd />}
               />
               <Route path="businessReview" element={<BusinessReview />} />
-
             </Routes>
           </ScrollToTop>
 

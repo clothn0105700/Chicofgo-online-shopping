@@ -101,7 +101,7 @@ function ChangePassword() {
     >
       <MemberBar />
       <Row className="d-flex justify-content-center">
-        <Col sm={9} className="border border-5  pt-3 pb-4 px-5 mb-5 mt-3 ">
+        <Col sm={9} className="border border-5  pt-3 pb-4 px-md-5 mb-5 mt-3 ">
           <h2 className="text-center chicofgo_brown_font chicofgo-font-700 py-3">
             修改密碼
           </h2>

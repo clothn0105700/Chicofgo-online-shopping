@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import { useProduct } from '../../../Contexts/ProductProvider';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Card from '../../ComponentShare/Card';
 import styles from './List.module.scss';
 import Path from '../../../Layout/Item/Path/Path';
@@ -95,9 +95,13 @@ const List = () => {
 
   //資料庫取資料
   // const [products, setProducts] = useState([]);
+  // ============================2/13改================================
 
-  const { products, getProducts } = useProduct();
-
+  const { products, getProducts, chooseCategory } = useProduct();
+  const location = useLocation();
+  const urlArray = location.pathname.split('/');
+  const lastWord = urlArray[urlArray.length - 1];
+  // ============================2/13改================================
   // 載入指示的spinner動畫用的
   const [isLoading, setIsLoading] = useState(false);
 
@@ -109,7 +113,12 @@ const List = () => {
 
   //種類
   const [brandsValue, setBrandsValue] = useState('');
-  const [catesValue, setCatesValue] = useState('');
+  // ============================2/13改================================
+  const [catesValue, setCatesValue] = useState(
+    lastWord === 'category' ? chooseCategory : []
+  );
+  // ============================2/13改================================
+
   const [orginValue, setOrginValue] = useState('');
   const [packageValue, setPackageValue] = useState('');
 
@@ -337,6 +346,7 @@ const List = () => {
                 )}
               </div>
 
+
               <div className={`${block_cate} d-flex flex-column px-2`}>
                 <h4>類別</h4>
                 {cates
@@ -349,6 +359,9 @@ const List = () => {
                           type="checkbox"
                           value={cate.name}
                           onChange={checkCateHandler}
+                          // ============================2/13改================================
+                        checked={catesValue.includes(cate.name)}
+                        // ============================2/13改================================
                         />
                         <label class="form-check-label" for="gridCheck1">
                           {cate.name}
@@ -361,6 +374,7 @@ const List = () => {
                   onClick={clickHandlerCate}
                 >
                   {showMoreCate ? 'close ▲' : 'open ▼'}
+
                 </button>
                 {!showMoreCate && (
                   <button
@@ -463,8 +477,8 @@ const List = () => {
           <div className={`${card_block} col-12 col-md-10 `}>
             <div className="search_box d-flex">
               <div
-                style={{ backgroundColor: 'rgb(161, 113, 98)' }}
-                className={`${productd_search} d-flex`}
+                style={{ backgroundColor: '' }}
+                className={`${productd_search} d-flex border rounded-3`}
               >
                 <Search>
                   <SearchIconWrapper>

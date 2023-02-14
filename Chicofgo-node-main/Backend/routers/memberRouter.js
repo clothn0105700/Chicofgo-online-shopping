@@ -22,6 +22,7 @@ const storage = multer.diskStorage({
     // }
     const ext = file.originalname.split('.').pop();
     cb(null, `${Date.now()}.${ext}`);
+
   },
 });
 // 處理上傳
@@ -50,11 +51,6 @@ router.get('/', checkLogin, (req, res, next) => {
 });
 
 router.get('/orderDetail/:orderId', checkLogin, async (req, res, next) => {
-  // let [orderDatas] = await pool.execute(
-  //   'SELECT product_list.id AS product_list_id, product_list.*, shopping_cart.id AS shopping_cart_id, shopping_cart.*, order_list.id AS order_list_id, order_list.* FROM product_list JOIN shopping_cart ON product_list.id = shopping_cart.product_id JOIN order_list ON shopping_cart.order_id = order_list.id WHERE order_list.id = ? AND shopping_cart.member = ?',
-  //   [req.params.orderId, req.session.member.id]
-  // );
-  // console.log(orderDatas);
   let [orderDatas] = await pool.execute('SELECT * FROM order_list WHERE id = ? AND member_id = ?', [req.params.orderId, req.session.member.id]);
   const newObjects = orderDatas.map((obj) => {
     return {
@@ -62,7 +58,7 @@ router.get('/orderDetail/:orderId', checkLogin, async (req, res, next) => {
       name: obj.name,
       phone: obj.phone,
       pay: obj.pay,
-      send_information:obj.send_information,
+      send_information: obj.send_information,
       pay_info: obj.pay_info,
       bill_id: obj.bill_id,
       address: obj.address,
@@ -70,25 +66,34 @@ router.get('/orderDetail/:orderId', checkLogin, async (req, res, next) => {
       status: obj.status,
       total: obj.total_price,
     };
+
   });
   let [shoppingCartDatas] = await pool.execute(
     'SELECT shopping_cart.id AS shoppingcart_id, shopping_cart.*, product_list.*  FROM shopping_cart JOIN product_list ON shopping_cart.product_id = product_list.id WHERE shopping_cart.member = ? AND shopping_cart.order_id = ? ',
     [req.session.member.id, req.params.orderId]
   );
   const newObjects2 = shoppingCartDatas.map((obj) => {
+    let string = obj.detail;
+    const descSubstring = string.substring(string.indexOf('：') + 1, string.indexOf('<br>'));
+    descSubstring.length <= 0 ? (descSubstring = string.substring(0, string.indexOf('<br>'))) : '';
     return {
       shoppingcart_id: obj.shoppingcart_id,
       product_id: obj.id,
       brandname: obj.brand,
       title: obj.name,
-      desc: '即品拿鐵無加糖二合一×103包',
+      desc: descSubstring || '',
       quantity: obj.quantity,
       price: obj.price,
       productImg: 'test.jpg',
     };
   });
-  console.log(newObjects);
-  return res.json({ member: newObjects, products: newObjects2 });
+  let [reviewDatas] = await pool.execute('SELECT * FROM member_message WHERE order_id = ? AND member_id = ?', [req.params.orderId, req.session.member.id]);
+  // console.log('reviewDatas', reviewDatas);
+  const newObjects3 = reviewDatas.map((obj) => {
+    return obj.message_with_products_id;
+  });
+  console.log('review:', newObjects3);
+  return res.json({ member: newObjects, products: newObjects2, review: newObjects3 });
 });
 
 router.get('/orders', checkLogin, async (req, res, next) => {
@@ -416,5 +421,66 @@ router.post('/addresschange', checkLogin, addresschangeRules, async (req, res, n
     msg: '修改成功',
   });
 });
+
+router.use('/getreview', checkLogin, async (req, res, next) => {
+  console.log('getreview', req.body);
+  // console.log('I am session', req.session.member.id);
+  // let [myaddressDatas] = await pool.execute('SELECT * FROM user_address_county');
+  // let [myaddressDatas2] = await pool.execute('SELECT * FROM user_address_district');
+  // let [oldAddressDatas] = await pool.execute('SELECT * FROM user_member WHERE id = ?', [req.session.member.id]);
+  // let oldAddressData = oldAddressDatas[0];
+  // if (myaddressDatas.length > 0) {
+  //   return res.json({
+  //     county: myaddressDatas,
+  //     district: myaddressDatas2,
+  //     address: oldAddressData.address,
+  //     name: oldAddressData.name,
+  //     phone: oldAddressData.phone,
+  //   });
+  // } else {
+  //   return res.status(401).json({
+  //     msg: '沒有資料喔',
+  //   });
+  // }
+});
+
+router.post('/sendreview', checkLogin, async (req, res, next) => {
+  console.log('sendreview', req.body);
+
+  let [reviewData] = await pool.execute('SELECT * FROM member_message WHERE message_with_products_id=? AND member_id = ?', [
+    req.body.message_with_products_id,
+    req.session.member.id,
+  ]);
+  console.log('reviewData', reviewData);
+  if (reviewData.length === 0) {
+    console.log('沒有舊資料');
+    let insertResult = await pool.execute('INSERT INTO member_message (message_rating, speak, message_with_products_id, member_id ,order_id) VALUES (?, ?, ?, ?, ?);', [
+      req.body.message_rating || 5,
+      req.body.speak || '',
+      req.body.message_with_products_id,
+      req.body.member_id,
+      req.body.order_id,
+    ]);
+    let updateOrderResult = await pool.execute('UPDATE order_list SET status=? WHERE id=?;', [5, req.body.order_id]);
+    console.log('insertResult新增結果', insertResult);
+  } else {
+    let updateResult = await pool.execute('UPDATE member_message SET message_rating= ?,speak= ? ,order_id=? WHERE message_with_products_id=? AND member_id = ?;', [
+      req.body.message_rating || 5,
+      req.body.speak || '',
+      req.body.order_id,
+      req.body.message_with_products_id,
+      req.body.member_id,
+    ]);
+    let updateOrderResult = await pool.execute('UPDATE order_list SET status=? WHERE id=?;', [5, req.body.order_id]);
+    console.log('updateResult更新結果', updateResult);
+  }
+  return res.json({
+    msg: '評論成功',
+  });
+});
+
+
+
+
 
 module.exports = router;
