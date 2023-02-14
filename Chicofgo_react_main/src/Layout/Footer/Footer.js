@@ -23,7 +23,7 @@ const Footer = () => {
           onClick={handleClick}
           variant="chicofgo-green"
           style={{ position: 'fixed', bottom: '20px', right: '20px' }}
-          className={`rounded-2`}
+          className={`rounded-2 shadow`}
         >
           <FaArrowUp />
         </Button>
