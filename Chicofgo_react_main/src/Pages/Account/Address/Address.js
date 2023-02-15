@@ -1,4 +1,3 @@
-// import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 import MemberBar from '../Components/MemberBar';
 import ChContainer from '../../ComponentShare/ChContainer';

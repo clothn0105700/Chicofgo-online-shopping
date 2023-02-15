@@ -30,6 +30,8 @@ function ChicofgoNavBar() {
     setUserid('');
     setUsername('');
     setUserRank('');
+    localStorage.removeItem('MyCoupon');
+    localStorage.removeItem('productsViewed');
   }
 
   return (
@@ -37,6 +39,7 @@ function ChicofgoNavBar() {
       expand="md"
       sticky="top"
       className={`p-0 chicofgo-font-700 border-bottom shadow-sm`}
+      collapseOnSelect
     >
       <Container fluid className={`${style.navbarBody} py-2`}>
         <Navbar.Brand as={NavLink} to="/home">
@@ -47,17 +50,25 @@ function ChicofgoNavBar() {
             width="80"
           />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll" className={`justify-content-end`}>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse
+          id="responsive-navbar-nav"
+          className={`justify-content-end`}
+        >
           <Nav
             className={`${style.navbarCustom} my-0 text-nowrap py-2`}
             style={{ maxHeight: '100px' }}
             navbarScroll
             variant="chicofgo-brown"
-            defaultActiveKey="/home"
+            defaultActiveKey="home"
           >
             <Nav.Item>
-              <Nav.Link as={NavLink} to="/home" className={`px-3 py-1 me-1`}>
+              <Nav.Link
+                as={NavLink}
+                to="/home"
+                className={`px-3 py-1 me-1`}
+                eventKey="home"
+              >
                 首頁
               </Nav.Link>
             </Nav.Item>
@@ -66,17 +77,28 @@ function ChicofgoNavBar() {
                 as={NavLink}
                 to="/products"
                 className={`px-3 py-1 me-1`}
+                eventKey="products"
               >
                 商品
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link as={NavLink} to="/event" className={`px-3 py-1 me-1`}>
+              <Nav.Link
+                as={NavLink}
+                to="/event"
+                className={`px-3 py-1 me-1`}
+                eventKey="event"
+              >
                 活動專區
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link as={NavLink} to="/coupon" className={`px-3 py-1 me-1`}>
+              <Nav.Link
+                as={NavLink}
+                to="/coupon"
+                className={`px-3 py-1 me-1`}
+                eventKey="coupon"
+              >
                 折價券
               </Nav.Link>
             </Nav.Item>
@@ -107,7 +129,7 @@ function ChicofgoNavBar() {
           {/* <Button as={Link} to="/" variant="" className={`mx-1 mb-1`}>
             <BsFillBellFill />
           </Button> */}
-          <Button as={Link} to={'/'} variant="" className={`me-1 mb-1`}>
+          <Button as={Link} to={'/member/collect/items'} variant="" className={`me-1 mb-1`}>
             <BsSuitHeartFill />
           </Button>
           <Button
