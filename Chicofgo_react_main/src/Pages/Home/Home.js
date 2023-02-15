@@ -1,25 +1,20 @@
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import style from './Home.module.scss';
 import Carousels from './Component/Carousels';
 import CardListS from './Component/CardListS';
-import Card from '../ComponentShare/ThisCard';
-import { cardInfo } from '../../Config/ProductConfig';
-import { useNavigate } from 'react-router-dom';
-import Image from 'react-bootstrap/Image';
-import Nav from 'react-bootstrap/Nav';
-import React from 'react';
-import Button from 'react-bootstrap/Button';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button, Nav, Image, Col, Row, Container } from 'react-bootstrap';
 import MoreCard from '../ComponentShare/MoreCard';
 import { useProduct } from '../../Contexts/ProductProvider';
+import React from 'react';
 
 function Home() {
   const { chooseCategory, setChooseCategory } = useProduct();
 
   const navigate = useNavigate();
-  const productsViewedItem =
-    JSON.parse(localStorage.getItem('productsViewed')) || [];
+  let localData = JSON.parse(localStorage.getItem('productsViewed')) || [
+    { userId: 99999, productsViewed: [] },
+  ];
+  let productsViewedItem = localData[0].productsViewed || [];
 
   return (
     <Container fluid>
@@ -127,7 +122,7 @@ function Home() {
                 <Col
                   className={`${style.pageTitle} text-center mt-5 mb-3 chicofgo_brown_font`}
                 >
-                  <p>本日精選商品!第二件6折</p>
+                  <p>本日精選商品!站長推薦</p>
                 </Col>
               </Row>
               <Row>
@@ -137,16 +132,7 @@ function Home() {
                   </p>
                   <CardListS
                     className={`start-5 position-relative`}
-                    showImg={[
-                      'producet1.png',
-                      'producet2.png',
-                      'producet3.png',
-                      'producet4.png',
-                      'producet5.png',
-                      'producet6.png',
-                      'producet7.png',
-                      'producet8.png',
-                    ]}
+                    showImg={[99, 100, 101, 102, 103, 104, 105, 106]}
                     cardHeight={'153px'}
                   />
                 </Col>
@@ -169,7 +155,7 @@ function Home() {
         <Col>
           <Row>
             <Col className={`${style.pageTitle2} text-center mt-5 mb-3`}>
-              <p>眾多優惠價商品任君挑選</p>
+              <p>眾多咖啡商品任君挑選</p>
             </Col>
           </Row>
           <Row className={`justify-content-center`}>
@@ -181,36 +167,34 @@ function Home() {
               </p>
               <CardListS
                 // className={`start-5`}
-                showImg={['producet2.png']}
+                showImg={[108]}
                 cardHeight={'153px'}
               />
               <CardListS
                 // className={`start-5`}
-                showImg={['producet3.png']}
+                showImg={[109]}
                 cardHeight={'153px'}
               />
             </Col>
             <Col
               className={`${style.pageTwoBg} col-md-6 justify-content-center text-center px-5`}
             >
-              <span className={`${style.subTitle}`}>
+              <span className={`${style.subTitle} mb-md-5`}>
                 新春優惠價!眾多折扣商品
-                <br />
+                <br className={`d-none d-md-inline`} />
                 開放搶購!
               </span>
-              <CardListS
-                // className={`start-5`}
-                showImg={[
-                  'producet2.png',
-                  'producet3.png',
-                  'producet4.png',
-                  'producet5.png',
-                ]}
-                cardHeight={'153px'}
-              />
+              <div className={`py-3 my-xl-5`}>
+                <CardListS
+                  showImg={[125, 130, 135, 140]}
+                  cardHeight={'153px'}
+                />
+              </div>
               <Button
-                bsPrefix="none"
-                className={`${style.pageTwoBtn} mt-4 px-5 py-1`}
+                variant="chicofgo-green"
+                className={`mt-4 px-5 py-1 chicofgo-font-700 rounded-5`}
+                as={Link}
+                to={'/products'}
               >
                 立即前往商場
               </Button>
@@ -230,28 +214,17 @@ function Home() {
                 <br />
                 開放搶購!
               </span>
-              <CardListS
-                showImg={[
-                  'producet2.png',
-                  'producet5.png',
-                  'producet3.png',
-                  'producet4.png',
-                ]}
-                cardHeight={'153px'}
-              />
+              <CardListS showImg={[145, 146, 147, 148]} cardHeight={'153px'} />
               <CardListS
                 // className={`start-5`}
-                showImg={[
-                  'producet4.png',
-                  'producet3.png',
-                  'producet2.png',
-                  'producet1.png',
-                ]}
+                showImg={[152, 156, 159, 162]}
                 cardHeight={'153px'}
               />
               <Button
-                bsPrefix="none"
-                className={`${style.pageTwoBtn} mt-5 mb-3  px-5 py-1`}
+                variant="chicofgo-green"
+                className={` mt-5 mb-3 px-5 py-1 chicofgo-font-700 rounded-5`}
+                as={Link}
+                to={'/products'}
               >
                 立即前往商場
               </Button>
@@ -259,20 +232,20 @@ function Home() {
             <Col
               className={`${style.pageTwoBg} col-3 text-center  d-none d-xl-inline`}
             >
-              <span className={`${style.subTitle}`}>日本熱銷新品</span>
-              <div className={`py-4`}>
-                <CardListS
-                  showImg={['producet4.png', 'producet3.png']}
-                  cardHeight={'153px'}
-                />
-                <CardListS
-                  showImg={['producet4.png', 'producet3.png']}
-                  cardHeight={'153px'}
-                />
+              <span className={`${style.subTitle}`}>
+                日本熱銷新品
+                <br />
+                立即購買!
+              </span>
+              <div className={`pt-4 pb-4`}>
+                <CardListS showImg={[200, 256]} cardHeight={'153px'} />
+                <CardListS showImg={[287, 288]} cardHeight={'153px'} />
               </div>
               <Button
-                bsPrefix="none"
-                className={`${style.pageTwoBtn} mt-4 mb-3 px-4 py-1`}
+                variant="chicofgo-green"
+                className={`mt-4 mb-3 px-4 py-1 chicofgo-font-700 rounded-5`}
+                as={Link}
+                to={'/products'}
               >
                 立即前往商場
               </Button>
@@ -301,7 +274,7 @@ function Home() {
           </Row>
           <Row className={`justify-content-center  text-center`}>
             <Col
-              className={`${style.pageBgGray} position-relative col-md-4 me-3 py-3`}
+              className={`${style.pageBgGray} position-relative mx-5 col-md-4 ms-md-2 me-md-3 py-3`}
             >
               <span className={`${style.subTitle} my-5`}>環境友善相關商品</span>
               <br />
@@ -311,17 +284,21 @@ function Home() {
                 <Image src={require('../../Img/Home/bird_friendly.png')} />
                 {/* ./Component/bird_friendly.png */}
               </p>
-              <Image
-                className={`${style.leftUpImg} m-3`}
-                src={require('../../Img/Home/producet2.png')}
-              />
-              <Image
-                className={`${style.leftUpImg} m-3`}
-                src={require('../../Img/Home/producet3.png')}
-              />
+              <Link to={`/products/product_detail/${946}`}>
+                <Image
+                  className={`${style.leftUpImg} m-3`}
+                  src={`http://localhost:3001/api/images/productImg/coffee_${946}/coffee_${946}-1.png`}
+                />
+              </Link>
+              <Link to={`/products/product_detail/${949}`}>
+                <Image
+                  className={`${style.leftUpImg} m-3`}
+                  src={`http://localhost:3001/api/images/productImg/coffee_${949}/coffee_${949}-1.png`}
+                />
+              </Link>
             </Col>
             <Col
-              className={`${style.pageBgGray} position-relative  col-md-3 ms-md-3 py-3`}
+              className={`${style.pageBgGray} position-relative  col-md-3 ms-md-3 py-3 d-none d-md-inline`}
             >
               <span className={`${style.subTitle} `}>環境友善認證</span>
               <p
@@ -338,7 +315,7 @@ function Home() {
           </Row>
           <Row className={`justify-content-center my-5`}>
             <Col
-              className={`${style.pageBgGray}  position-relative col-7 ms-3 py-3 d-flex `}
+              className={`${style.pageBgGray}  position-relative col-10 col-md-7 ms-md-3 py-3 d-flex `}
             >
               <p
                 class={`${style.leftUpImgBody} position-absolute top-5 start-0 translate-middle d-none d-xl-inline`}
@@ -359,7 +336,7 @@ function Home() {
                 </Col>
                 <Col className={`col-12 col-xl-5 px-3`}>
                   <article className={`${style.picWithText} text-start`}>
-                    關於非格咖啡 Figure & Ground Coffee
+                    關於去咖購 chicofgo
                     <br />
                     <br />
                     <br />
@@ -367,19 +344,19 @@ function Home() {
                     <br />
                     <br />
                     <br />
-                    Figure & Ground Coffee
-                    團隊為設計師出身，並將設計精神帶進咖啡的世界。Figure &
-                    Ground 源自於一種獨特的設計手法，又稱作『圖地反轉』。
+                    去咖購 chicofgo
+                    團隊為設計師出身，並將設計精神帶進咖啡的世界。去咖購
+                    chicofgo 源自於一種獨特的設計手法，又稱作『圖地反轉』。
                     <br />
                     <br />
                     <br />
-                    Figure& Ground Coffee
+                    去咖購 chicofgo
                     團隊從選購高品質生豆，到研究並訂定出最佳的烘焙法層層把關，只為了呈現一
                     杯表現極致風味的咖啡。除了專注於咖啡的風味，我們更將咖啡外包裝加以設計，為每款咖啡豆細心打造獨特的包裝視覺，為每日的咖啡添上活潑的藝術氣息。每個細節，都是整體的一部分。
                     <br />
                     <br />
                     <br />
-                    秉持這個精神，我們創造了非格咖啡 Figure & Ground Coffee
+                    秉持這個精神，我們創造了去咖購 chicofgo
                   </article>
                 </Col>
               </Row>
@@ -406,12 +383,31 @@ function Home() {
           </Row>
           <Row>
             <Col
-              // className={`d-flex justify-content-center flex-wrap mx-0 my-5`}
-              className={`d-flex justify-content-center flex-wrap mx-0 my-5`}
+              className={`${
+                productsViewedItem.length > 0 ? 'd-inline' : 'd-none'
+              } d-flex justify-content-center flex-wrap mx-0 my-5`}
             >
               <MoreCard product_id={productsViewedItem} />
             </Col>
           </Row>
+          {/* ----------------------------------- */}
+          <Row className={`px-5`}>
+            <Col
+              className={`${
+                productsViewedItem.length > 0 ? 'd-none' : 'd-inline'
+              } shadow p-md-5 rounded-5 chicofgo-font text-center m-5`}
+            >
+              <h5
+                className={`py-5 rounded-5 chicofgo-font-700 chicofgo_green_font text-center`}
+              >
+                還沒有看過的商品
+                <br />
+                趕快去看看吧!~
+              </h5>
+            </Col>
+          </Row>
+
+          {/* ----------------------------------- */}
         </Col>
       </Row>
     </Container>

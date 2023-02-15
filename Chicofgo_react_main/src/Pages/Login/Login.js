@@ -1,4 +1,4 @@
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { React, Fragment, useState, useEffect } from 'react';
 import {
   Container,
@@ -13,7 +13,8 @@ import axios from 'axios';
 import { useAuth } from '../../Contexts/AuthContext';
 
 function Login() {
-  const { isLoggedIn, setUsername, setIsLoggedIn, setUserid } = useAuth();
+  const { isLoggedIn, setUsername, setIsLoggedIn, setUserid, setUserRank } =
+    useAuth();
   const [loginErrors, setLoginErrors] = useState(false);
   const [loginCheckbox, setLoginCheckbox] = useState(false);
 
@@ -62,13 +63,14 @@ function Login() {
           withCredentials: true,
         }
       );
-      // console.log(response.data);
+      console.log(response.data);
       // console.log(response.status);
       if (response.status === 200) {
         console.log('登入成功');
         setIsLoggedIn(true);
         setUsername(response.data.member.name);
         setUserid(response.data.member.id);
+        setUserRank(response.data.member.rank);
         navigate(-1);
       }
     } catch (e) {

@@ -1,24 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Fragment } from 'react';
 import Container from 'react-bootstrap/Container';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
-import { Button, Row, Col } from 'react-bootstrap';
+import { Button, Row, Col, Modal } from 'react-bootstrap';
 import style from './Register.module.scss';
 import { useState } from 'react';
 import axios from 'axios';
+import { useAuth } from '../../Contexts/AuthContext';
 
 function Login() {
+  const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
+  const [isShow, setIsShow] = useState(false);
+  const handleClose = () => setIsShow(false);
   const [member, setMember] = useState({
-    // account: 'c8763333',
+    // account: 'c8763',
     // email: '7788@gmail.com',
     // phone: '0912345678',
     // name: '阿明',
     // password: 'test1234',
     // confirmPassword: 'test1234',
   });
+  useEffect(() => {
+    isLoggedIn ? navigate('/') : console.log('尚未登入');
+  }, [isLoggedIn, navigate]);
 
   const [regErrors, setregErrors] = useState({
     accountError: '',
@@ -45,6 +52,7 @@ function Login() {
 
   async function handleSubmit(e) {
     console.log('handleSubmit');
+
     // 關閉表單的預設行為
     e.preventDefault();
     try {
@@ -70,7 +78,7 @@ function Login() {
           confirmPassword: false,
         });
         console.log('註冊成功');
-        navigate('/login');
+        setIsShow(true);
       }
     } catch (e) {
       if (e.response.status === 401) {
@@ -247,36 +255,6 @@ function Login() {
                   </Form.Group>
                 </Col>
               </Row>
-
-              {/* <FloatingLabel
-                controlId="floatingInput"
-                label="地址："
-                className={`mb-3`}
-              >
-                <Form.Control
-                  type="text"
-                  placeholder=" "
-                  // id="address"
-                  name="address"
-                  value={member.address}
-                  onChange={handleChange}
-                />
-              </FloatingLabel> */}
-
-              {/* <FloatingLabel
-                controlId="floatingInput"
-                label="生日："
-                className={`mb-3`}
-              >
-                <Form.Control
-                  type="datetime"
-                  placeholder=" "
-                  // id="birthday"
-                  name="birthday"
-                  value={member.birthday}
-                  onChange={handleChange}
-                />
-              </FloatingLabel> */}
               <div className={`mx-auto pt-3`} style={{ width: 200 }}>
                 <Button
                   className={`${style.doRegisterBtn} mx-auto chicofgo_white_font`}
@@ -287,6 +265,23 @@ function Login() {
                 </Button>
               </div>
             </Form>
+            {/* 彈出視窗-提示訊息 */}
+            <Modal show={isShow} onHide={handleClose} centered size="sm">
+              <Modal.Header closeButton>
+                <Modal.Title className={`fs-5 mx-1`}>註冊狀態</Modal.Title>
+              </Modal.Header>
+              <Modal.Body className={`mx-1`}>註冊成功!~</Modal.Body>
+              <Modal.Footer>
+                <Button
+                  variant="outline-chicofgo-brown"
+                  onClick={() => {
+                    navigate('/login');
+                  }}
+                >
+                  前往登入
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </div>
         </div>
       </Container>

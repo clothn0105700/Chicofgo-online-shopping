@@ -7,8 +7,8 @@ const { body, validationResult } = require('express-validator');
 router.get('/productData/:productId', async (req, res, next) => {
   const product_id = req.params.productId;
   let [productDatas] = await pool.execute('SELECT * FROM product_list WHERE id = ?', [product_id]);
+  console.log("productDatas",productDatas);
   if (productDatas.length > 0) {
-    // console.log(productDatas);
     const newObjects = productDatas.map((obj) => {
       return {
         product_id: obj.id,
