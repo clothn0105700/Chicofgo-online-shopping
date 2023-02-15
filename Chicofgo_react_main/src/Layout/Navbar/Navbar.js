@@ -129,15 +129,15 @@ function ChicofgoNavBar() {
           {/* <Button as={Link} to="/" variant="" className={`mx-1 mb-1`}>
             <BsFillBellFill />
           </Button> */}
+          <Button as={Link} to={'/member/collect/items'} variant="" className={`me-1 mb-1`}>
+            <BsSuitHeartFill />
+          </Button>
           <Button
             as={Link}
-            to={userRank == '2' ? '/businessOrder' : '/member/collect/items'}
+            to={userRank == '2' ? '/businessOrder' : '/member'}
             variant=""
             className={`me-1 mb-1`}
           >
-            <BsSuitHeartFill />
-          </Button>
-          <Button as={Link} to={'/member'} variant="" className={`me-1 mb-1`}>
             <BsFillPersonFill />
           </Button>
           <Button
