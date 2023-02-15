@@ -3,7 +3,8 @@ import { Container, Row, Col, Form, Button, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
-import './BusinessOrderList.scss';
+import style from './BusinessOrderList.module.scss';
+import '../../BusinessProducts/Components/pagination.scss';
 
 function BusinessOrderList(props) {
   const [orders, setOrders] = useState([]);
@@ -23,9 +24,13 @@ function BusinessOrderList(props) {
         : order.name.toLowerCase().includes(props.search);
     })
     .filter((order) => {
-      return props.selectedStatus === ''
-        ? order
-        : order.status == props.selectedStatus;
+      if (props.selectedStatus === '') {
+        return order;
+      } else if (props.selectedStatus === '已完成') {
+        return order.status === 3 || order.status === 4 || order.status === 5;
+      } else {
+        return order.status == props.selectedStatus;
+      }
     });
 
   const paginatedItems = filteredOrders.slice(
@@ -47,13 +52,13 @@ function BusinessOrderList(props) {
   // console.log(props.search);
   // console.log(props.selectedStatus);
   // console.log(orders);
-
+  console.log('訂單', orders);
   return (
     <>
       {paginatedItems.map((order, index) => {
         return (
           <Row
-            className="text-center border-bottom align-items-center py-1 my-2 list"
+            className={`text-center border-bottom align-items-center py-1 my-2 ${style.list} `}
             key={order.id}
           >
             <Col className="mb-2 ">{order.time}</Col>
@@ -62,13 +67,17 @@ function BusinessOrderList(props) {
             <Col className="mb-2 ">
               {' '}
               {order.status === 1
-                ? '未出貨'
+                ? '待出貨'
                 : order.status === 2
-                ? '出貨中'
-                : '已出貨'}
+                ? '運送中'
+                : order.status === 3 || order.status === 4 || order.status === 5
+                ? '已完成'
+                : '未知狀態'}
             </Col>
             <Col className="text-center">
-              <Link to={`/businessOrderDetail/${order.order_id}`}>
+              <Link
+                to={`/businessOrderDetail/${order.order_id}/${order.member}/${order.memberInfo}`}
+              >
                 <Button
                   className="mb-2 detail"
                   variant="chicofgo-khaki text-white"

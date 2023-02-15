@@ -13,7 +13,7 @@ import {
 import BusinessSiderbar from '../Components/BusinessSiderbar';
 import ProductsList from './Components/ProductsList';
 import axios from 'axios';
-import './BusinessProducts.scss';
+import style from './BusinessProducts.module.scss';
 
 function BusinessProducts() {
   const [searchName, setSearchName] = useState('');
@@ -44,7 +44,9 @@ function BusinessProducts() {
     }
     gettype();
   }, []);
-  console.log(type);
+  // console.log(type);
+  console.log(searchType);
+  console.log(searchPackage);
 
   //包裝
   useEffect(() => {
@@ -56,7 +58,7 @@ function BusinessProducts() {
     }
     getpackage();
   }, []);
-  console.log(boxing);
+  // console.log(boxing);
 
   return (
     <div className="chicofgo_white">
@@ -66,7 +68,7 @@ function BusinessProducts() {
           <Col>
             <Row className="bg-white">
               <Col sm={12} className="text-center pt-2">
-                <h4>我的商品</h4>
+                <h4>商品管理</h4>
               </Col>
               <Col sm={6} className="my-2">
                 <InputGroup className="mb-3">
@@ -89,12 +91,13 @@ function BusinessProducts() {
                     size="sm"
                     className=""
                     name="singleType"
+                    value={type.type}
                     onChange={handleChangeType}
                   >
                     <option>類別</option>
                     {type.map((type) => {
                       return (
-                        <option value={type.tid} key={type.tid}>
+                        <option value={type.type} key={type.type}>
                           {type.type}
                         </option>
                       );
@@ -107,12 +110,13 @@ function BusinessProducts() {
                     size="sm"
                     className="me-2"
                     name="singlePackage"
+                    value={boxing.package}
                     onChange={handleChangePackage}
                   >
                     <option>包裝</option>
                     {boxing.map((boxing) => {
                       return (
-                        <option value={boxing.pid} key={boxing.pid}>
+                        <option value={boxing.package} key={boxing.package}>
                           {boxing.package}
                         </option>
                       );
@@ -121,20 +125,18 @@ function BusinessProducts() {
                 </Col>
               </InputGroup>
               <div className="chicofgo_gray d-flex text-center py-2">
-                <Col className="option">商品名稱</Col>
-                <Col className="option">商品類別</Col>
-                <Col className="option">商品包裝</Col>
-                <Col className="option">價錢</Col>
-                <Col className="option">商品數量</Col>
-                <Col className="option">狀態</Col>
+                <Col className={`${style.option}`}>商品名稱</Col>
+                <Col className={`${style.option}`}>商品類別</Col>
+                <Col className={`${style.option}`}>商品包裝</Col>
+                <Col className={`${style.option}`}>價錢</Col>
+                <Col className={`${style.option}`}>商品數量</Col>
+                <Col className={`${style.option}`}>狀態</Col>
               </div>
             </Row>
             <ProductsList
               searchName={searchName}
               searchType={searchType}
               searchPackage={searchPackage}
-              boxing={boxing}
-              type={type}
             />
           </Col>
         </Row>
