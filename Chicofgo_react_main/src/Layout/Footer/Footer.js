@@ -7,12 +7,26 @@ import logoyt from '../../Img/youtube.svg';
 import logoig from '../../Img/instagram.svg';
 import styles from './Footer.module.scss';
 import { Container, Row, Col, Image } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import { FaArrowUp } from 'react-icons/fa';
 
 const Footer = () => {
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const { foot_a, sociallink } = styles;
   return (
     <footer>
       <Container className={`py-5`}>
+        <Button
+          onClick={handleClick}
+          variant="chicofgo-green"
+          style={{ position: 'fixed', bottom: '20px', right: '20px' }}
+          className={`rounded-2 shadow`}
+        >
+          <FaArrowUp />
+        </Button>
         <Row className={``}>
           <Col
             className={`col-12 col-md-auto d-flex justify-content-center align-items-center`}

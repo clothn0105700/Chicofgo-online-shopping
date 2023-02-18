@@ -1,4 +1,4 @@
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { React, Fragment, useState, useEffect } from 'react';
 import {
   Container,
@@ -28,15 +28,15 @@ function Login() {
     isLoggedIn ? navigate('/') : console.log('尚未登入');
   }, [isLoggedIn, navigate]);
 
-  const [member, setMember] = useState({
-    account: 'c8763',
-    password: 'test1234',
-  });
+  // const [member, setMember] = useState({
+  //   account: 'c8763',
+  //   password: 'test1234',
+  // });
 
   //-----------記住帳號功能-------------
-  // const [member, setMember] = useState({
-  //   account: localStorage.getItem('accountRememberMe') || '',
-  // });
+  const [member, setMember] = useState({
+    account: localStorage.getItem('accountRememberMe') || '',
+  });
   //-----------記住帳號功能-------------
 
   function handleChange(e) {

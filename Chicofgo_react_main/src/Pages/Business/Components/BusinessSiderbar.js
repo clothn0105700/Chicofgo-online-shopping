@@ -5,7 +5,7 @@ import style from './BusinessSiderbar.module.scss';
 
 function BusinessSiderbar() {
   return (
-    <Col md={3} xs={12} className="">
+    <Col md={3} xs={12} className="chicofgo-font">
       <div className="text-center d-flex justify-content-center">
         <ul
           className={`list-unstyled w-75 d-flex flex-column ${style.BusinessUl}`}

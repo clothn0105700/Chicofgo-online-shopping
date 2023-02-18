@@ -1,11 +1,10 @@
 import { Row, Col, Form, Button } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
-import Nav from 'react-bootstrap/Nav';
-import { Link, NavLink } from 'react-router-dom';
-
+// import Nav from 'react-bootstrap/Nav';
+// import { Link, NavLink } from 'react-router-dom';
 import ChContainer from '../../ComponentShare/ChContainer';
 import style from './Collect.module.scss';
-import CollectItem from './Component/CollectItem';
+// import CollectItem from './Component/CollectItem';
 function Collect() {
   return (
     <ChContainer
