@@ -36,4 +36,4 @@ $ nodemon run dev
 ```
 
 ## 網頁展示
-<img src="https://imgur.com/a/DVkSdTw" alt="alt text"/>
+![alt text](https://imgur.com/a/DVkSdTw)
