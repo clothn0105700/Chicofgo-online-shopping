@@ -1,61 +1,52 @@
 import React from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Button,
-  Image,
-  InputGroup,
-} from 'react-bootstrap';
-import { Link, NavLink } from 'react-router-dom';
+import { Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import {
   BsPerson,
   BsPencil,
   BsCreditCard2Back,
   BsGeoAlt,
-  BsFillPencilFill,
 } from 'react-icons/bs';
 import { IconContext } from 'react-icons';
-import '../../../GlobalStyles/Global.scss';
 
 function MemberBar() {
   return (
-    <Col sm={12} className="chicofgo_gray my-3">
-      <div className="d-flex justify-content-center ">
-        <IconContext.Provider value={{ className: 'icon chicofgo_brown_font' }}>
-          <Link
-            to="/account"
-            className="px-2 mx-2 my-2 text-decoration-none border chicofgo_brown_font"
-          >
-            <BsPerson />
-            我的帳號
-          </Link>
+    <Col
+      sm={12}
+      className="chicofgo_gray mt-4 px-0 py-2 d-flex justify-content-center"
+    >
+      <IconContext.Provider value={{ className: 'icon chicofgo_brown_font ' }}>
+        <Link
+          to="/member"
+          className="px-md-2 m-md-2 mx-1 text-nowrap text-decoration-none  chicofgo_brown_font chicofgo-font-700"
+        >
+          <BsPerson />
+          &ensp;我的帳號
+        </Link>
 
-          <Link
-            to="/password"
-            className="px-2 mx-2 my-2  text-decoration-none border chicofgo_brown_font"
-          >
-            <BsPencil />
-            修改密碼
-          </Link>
-          <Link
-            to="/creditcard"
-            className="px-2 mx-2 my-2 
-            text-decoration-none border chicofgo_brown_font"
-          >
-            <BsCreditCard2Back />
-            信用卡
-          </Link>
-          <Link
-            to="/address"
-            className="px-2 mx-2 my-2  text-decoration-none border chicofgo_brown_font"
-          >
-            <BsGeoAlt />
-            地址
-          </Link>
-        </IconContext.Provider>
-      </div>
+        <Link
+          to="/member/password"
+          className="px-md-2 m-md-2 mx-1 text-nowrap text-decoration-none  chicofgo_brown_font chicofgo-font-700"
+        >
+          <BsPencil />
+          &ensp;修改密碼
+        </Link>
+        <Link
+          to="/member/creditcard"
+          className="px-md-2 m-md-2 mx-1 text-nowrap 
+            text-decoration-none  chicofgo_brown_font chicofgo-font-700"
+        >
+          <BsCreditCard2Back />
+          &ensp;信用卡
+        </Link>
+        <Link
+          to="/member/address"
+          className="px-md-2 m-md-2 mx-1 text-nowrap text-decoration-none  chicofgo_brown_font chicofgo-font-700"
+        >
+          <BsGeoAlt />
+          &ensp;配送資訊
+        </Link>
+      </IconContext.Provider>
     </Col>
   );
 }

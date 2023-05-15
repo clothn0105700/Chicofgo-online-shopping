@@ -1,115 +1,154 @@
 import React from 'react';
-// import './css/Footer.scss'
 import logoSVG from '../../Img/logo.svg';
-import { Link, Router } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logotw from '../../Img/twitter.svg';
 import logofb from '../../Img/facebook.svg';
 import logoyt from '../../Img/youtube.svg';
 import logoig from '../../Img/instagram.svg';
-import styles from '../Footer/Css/Footer.module.scss';
+import styles from './Footer.module.scss';
+import { Container, Row, Col, Image } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import { FaArrowUp } from 'react-icons/fa';
 
 const Footer = () => {
-  const { sociallink_wrap, foot_a, sociallink } = styles;
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const { foot_a, sociallink } = styles;
   return (
-    <footer className="pt-3">
-      <div className="custom-container row m-auto mt-5 pt-2">
-        <div className="col-2">
-          <Link to="/">
-            <img src={logoSVG} alt="" />
-          </Link>
-        </div>
-        <div className="col-md-10">
-          <div className="d-flex justify-content-md-end pe-md-0">
-            <ul className="list-unstyled px-5">
-              <li className="py-2">
-                <a className={foot_a} href="/">
-                  關於我們
-                </a>
-              </li>
-              <li className="py-2">
-                <a className={foot_a} href="">
-                  品牌故事
-                </a>
-              </li>
-              <li className="py-2">
-                <a className={foot_a} href="">
-                  商店介紹
-                </a>
-              </li>
-              <li className="py-2">
-                <a className={foot_a} href="">
-                  會員權益說明
-                </a>
-              </li>
-            </ul>
-            <ul className="list-unstyled px-5">
-              <li className="py-2">
-                <a className={foot_a} href="">
-                  購物說明
-                </a>
-              </li>
-              <li className="py-2">
-                <a className={foot_a} href="">
-                  付款方式
-                </a>
-              </li>
-              <li className="py-2">
-                <a className={foot_a} href="">
-                  運送方式
-                </a>
-              </li>
-              <li className="py-2">
-                <a className={foot_a} href="">
-                  退換貨方式
-                </a>
-              </li>
-            </ul>
-            <ul className="list-unstyled px-5">
-              <li className="py-2">
-                <a href="" className={foot_a}>
-                  客服資訊
-                </a>
-              </li>
-              <li className="py-2">
-                <a className={foot_a} href="">
-                  客服留言
-                </a>
-              </li>
-              <li className="py-2">
-                <a className={foot_a} href="">
-                  常見問題
-                </a>
-              </li>
-              <li className="py-2">
-                <a className={foot_a} href="">
-                  隱私權及網站使用條款
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div className={`${sociallink_wrap} py-3 d-flex justify-content-between`}>
-        <p className="Copyrighttext">
-          © 2023 Copyright Chicofgo Shop All Rights Reserved.
-        </p>
-        <div
-          className={`${sociallink} d-flex justify-content-between align-items-center`}
+    <footer>
+      <Container className={`py-5`}>
+        <Button
+          onClick={handleClick}
+          variant="chicofgo-green"
+          style={{ position: 'fixed', bottom: '20px', right: '20px' }}
+          className={`rounded-2 shadow`}
         >
-          <a href="" className="px-2">
-            <img src={logotw} alt="" />
-          </a>
-          <a href="" className="px-2">
-            <img src={logofb} alt="" />
-          </a>
-          <a href="" className="px-2">
-            <img src={logoyt} alt="" />
-          </a>
-          <Link to="/" className="px-2">
-            <img src={logoig} alt="" />
-          </Link>
-        </div>
-      </div>
+          <FaArrowUp />
+        </Button>
+        <Row className={``}>
+          <Col
+            className={`col-12 col-md-auto d-flex justify-content-center align-items-center`}
+          >
+            <Link to="/">
+              <Image className={`fluid`} src={logoSVG} alt="" />
+            </Link>
+          </Col>
+          <Col className={`col-12 d-block  d-md-none`}>
+            <hr
+              style={{
+                border: '2px solid rgb(166, 155, 132)',
+                opacity: '1',
+              }}
+              className={`my-5`}
+            />
+          </Col>
+          <Col className={`pt-2 pt-md-5 pb-2`}>
+            <Row className={`justify-content-evenly`}>
+              <Col className={` `}>
+                <ul className={`list-unstyled ps-3`}>
+                  <li className={`py-2`}>
+                    <Link className={foot_a} to="/">
+                      關於我們
+                    </Link>
+                  </li>
+                  <li className={`py-2`}>
+                    <Link className={foot_a} to="">
+                      品牌故事
+                    </Link>
+                  </li>
+                  <li className={`py-2`}>
+                    <Link className={foot_a} to="">
+                      商店介紹
+                    </Link>
+                  </li>
+                  <li className={`py-2`}>
+                    <Link className={foot_a} to="">
+                      會員權益說明
+                    </Link>
+                  </li>
+                </ul>
+              </Col>
+              <Col className={``}>
+                <ul className={`list-unstyled ps-3`}>
+                  <li className={`py-2`}>
+                    <Link className={foot_a} to="">
+                      購物說明
+                    </Link>
+                  </li>
+                  <li className={`py-2`}>
+                    <Link className={foot_a} to="">
+                      付款方式
+                    </Link>
+                  </li>
+                  <li className={`py-2`}>
+                    <Link className={foot_a} to="">
+                      運送方式
+                    </Link>
+                  </li>
+                  <li className={`py-2`}>
+                    <Link className={foot_a} to="">
+                      退換貨方式
+                    </Link>
+                  </li>
+                </ul>
+              </Col>
+              <Col className={``}>
+                <ul className={`list-unstyled ps-3 `}>
+                  <li className={`py-2`}>
+                    <Link href="" className={foot_a}>
+                      客服資訊
+                    </Link>
+                  </li>
+                  <li className={`py-2`}>
+                    <Link className={foot_a} href="">
+                      客服留言
+                    </Link>
+                  </li>
+                  <li className={`py-2`}>
+                    <Link className={foot_a} href="">
+                      常見問題
+                    </Link>
+                  </li>
+                  <li className={`py-2`}>
+                    <Link className={foot_a} href="">
+                      隱私權及
+                      <br className={`d-block  d-md-none`} />
+                      網站使用條款
+                    </Link>
+                  </li>
+                </ul>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+        <Row className={`justify-content-between`}>
+          <Col>
+            <p className={`Copyrighttext`}>
+              © 2023 Copyright Chicofgo Shop All Rights Reserved.
+            </p>
+          </Col>
+          <Col>
+            <div
+              className={`${sociallink} d-flex justify-content-end align-items-center`}
+            >
+              <Link href="" className={`px-2`}>
+                <Image src={logotw} alt="" />
+              </Link>
+              <Link href="" className={`px-2`}>
+                <Image src={logofb} alt="" />
+              </Link>
+              <Link href="" className={`px-2`}>
+                <Image src={logoyt} alt="" />
+              </Link>
+              <Link to="/" className={`px-2`}>
+                <Image src={logoig} alt="" />
+              </Link>
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </footer>
   );
 };
