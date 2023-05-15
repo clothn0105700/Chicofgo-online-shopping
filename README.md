@@ -33,7 +33,7 @@ npm install
 執行
 ```shell
 $ nodemon run dev
-``
+```
 
 ## 網頁展示
-![](https://imgur.com/a/jgBxQlg)
+[](https://imgur.com/a/jgBxQlg)
