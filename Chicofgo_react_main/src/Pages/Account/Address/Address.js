@@ -1,40 +1,21 @@
-import { Link } from 'react-router-dom';
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Button,
-  Image,
-  InputGroup,
-} from 'react-bootstrap';
-import {
-  BsPerson,
-  BsPencil,
-  BsCreditCard2Back,
-  BsGeoAlt,
-  BsFillPencilFill,
-} from 'react-icons/bs';
-import { IconContext } from 'react-icons';
+import { Row, Col } from 'react-bootstrap';
 import MemberBar from '../Components/MemberBar';
-import './Address.scss';
+import ChContainer from '../../ComponentShare/ChContainer';
+import AddressDetail from './AddressDetail';
 
 function Address() {
   return (
-    <div className="custom-container addressWidth">
-      <Row className="border border-5 rounded-5 border-radious">
-        <MemberBar />
-        <div className="d-flex justify-content-center ">
-          <Col sm={7} className="border m-5 p-5 rounded-5">
-            <h2 className="">我的地址</h2>
-            <p>桃園市中壢區新生路二段421號</p>
-            <Link to="/addressDatail" className="btn border">
-              編輯
-            </Link>
-          </Col>
-        </div>
+    <ChContainer
+      ChClass={'chicofgo-font-700 border border-5'}
+      breadCrumb={'地址'}
+    >
+      <MemberBar />
+      <Row className="d-flex justify-content-center">
+        <Col sm={9} className="pt-3 pb-4 px-0 px-md-5 mb-md-5 mb-3 mt-3 ">
+          <AddressDetail />
+        </Col>
       </Row>
-    </div>
+    </ChContainer>
   );
 }
 
