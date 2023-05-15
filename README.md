@@ -37,7 +37,6 @@ $ nodemon run dev
 
 ## 網頁展示
 
-![Alt Text](https://i.imgur.com/OTJ5B4x.gif)
 
 ![螢幕錄影 2023-05-16 上午2 47 27](https://github.com/clothn0105700/Chicofgo-online-shopping/assets/111041362/e4ef1329-60fd-4f0f-8a1d-576fb33378b1)
 
