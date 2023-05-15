@@ -36,5 +36,5 @@ $ nodemon run dev
 ```
 
 ## 網頁展示
-<blockquote class="imgur-embed-pub" lang="en" data-id="a/jgBxQlg" data-context="false" ><a href="//imgur.com/a/jgBxQlg"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+![Alt Text](https://i.imgur.com/jgBxQlg.gif)
 
